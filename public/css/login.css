@@ -1,0 +1,98 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.main-content {
+  display: flex;
+}
+
+.form-container > div {
+  padding: 0 40px;
+}
+
+.form-container .box {
+  border-radius: 1px;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+}
+
+.form-container .app-name {
+  margin: 22px auto 36px;
+  height: 51px;
+  width: 175px;
+  display: block;
+}
+
+.form-container .input-container {
+  position: relative;
+  height: 36px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-container .input-container .upper-placeholder {
+  padding-left: 8px;
+  padding-top: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 12px;
+}
+
+.form-container .input-container input {
+  padding: 14px 0 2px 8px;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #dbdbdb;
+}
+
+.form-container .login-form .submit-btn {
+  background-color: #0095f6;
+  width: 100%;
+  color: white;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  padding: 5px 0;
+  font-weight: bolder;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.form-container .separator {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 18px;
+}
+
+.form-container .separator .content {
+  margin: 0 18px;
+  color: #8e8e8e;
+  font-size: 13px;
+}
+
+.form-container .separator .line {
+  height: 1px;
+  flex-grow: 1;
+  background-color: #dbdbdb;
+}
+
+.form-container .apps > img {
+  height: 40px;
+}
+
