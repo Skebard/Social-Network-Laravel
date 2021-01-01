@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network</title>
 
+    <!-- Scripts -->
+    <script defer src="{{asset('js/login.js')}}"></script>
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/login.css')}}" class="">
 </head>
@@ -13,7 +15,7 @@
 <body>
     <main class="main-content">
         <div class="slider-container">
-            <div class="slider-container__images">
+            <div class="slider-container__images" id='slider-container-id'>
                 <img class='active' src="{{asset('images/login/slider1.jpg')}}" alt="">
                 <img src="{{asset('images/login/slider2.jpg')}}" alt="">
                 <img src="{{asset('images/login/slider3.jpg')}}" alt="">
