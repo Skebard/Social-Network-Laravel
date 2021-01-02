@@ -10,6 +10,10 @@ body {
   height: 100%;
 }
 
+ul {
+  list-style-type: none;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -20,6 +24,7 @@ body {
 
 .main-content {
   display: flex;
+  margin-bottom: 100px;
 }
 
 .slider-container {
@@ -36,6 +41,13 @@ body {
   right: 64px;
   top: 100px;
   transition: opacity 2s;
+}
+
+.form-container .error-message {
+  color: red;
+  font-size: 14px;
+  margin: 10px 0;
+  text-align: center;
 }
 
 .form-container > div {
@@ -66,6 +78,25 @@ body {
   height: 36px;
   display: block;
   margin-bottom: 6px;
+  display: flex;
+}
+
+.form-container .input-container__end {
+  padding-left: 8px;
+  background-color: #fafafa;
+  border: 1px solid #dbdbdb;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+  border-left: none;
+  font-size: 14px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+}
+
+.form-container .input-container__show {
+  padding-right: 8px;
+  cursor: pointer;
 }
 
 .form-container .input-container .upper-placeholder {
@@ -83,6 +114,13 @@ body {
   width: 100%;
   border-radius: 3px;
   border: 1px solid #dbdbdb;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.form-container .input-container input:focus {
+  outline: none;
 }
 
 .form-container .login-form .submit-btn {
@@ -95,6 +133,7 @@ body {
   font-weight: bolder;
   font-size: 14px;
   margin: 8px 0;
+  cursor: pointer;
 }
 
 .form-container .separator {
@@ -145,6 +184,7 @@ body {
 
 .form-container .apps > img {
   height: 40px;
+  cursor: pointer;
 }
 
 .form-container .apps__text {
@@ -164,5 +204,48 @@ body {
   text-decoration: none;
   font-weight: bolder;
   color: #0095f6;
+}
+
+footer {
+  color: #8e8e8e;
+  font-size: 12px;
+}
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+footer ul li {
+  margin: 0 8px;
+}
+
+footer .lang-copyright {
+  padding-top: 12px;
+}
+
+footer .lang-copyright .select-lang-container {
+  position: relative;
+}
+
+footer .lang-copyright .select-lang {
+  background-color: #fafafa;
+  border: none;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+footer .lang-copyright .select-lang__arrow {
+  margin-left: 6px;
+}
+
+@media screen and (max-width: 875px) {
+  .slider-container {
+    display: none;
+  }
 }
 

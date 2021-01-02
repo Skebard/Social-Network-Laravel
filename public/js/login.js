@@ -97,13 +97,32 @@ var SLIDING_PERIOD_MS = 3000;
 var sliderContainer = document.getElementById('slider-container-id');
 var sliderImages = sliderContainer.children;
 var NUM_IMAGES = sliderImages.length;
-var currentImage = 0;
+var showPassBtn = document.getElementById('show-password-btn');
+var inputPass = document.getElementById('input-password-id');
+var currentImage = 0; //Set interval to change de image of the phone slider periodically
+
 setInterval(showNextImage, SLIDING_PERIOD_MS);
+showPassBtn.addEventListener('click', showHidePassword);
+/**
+ * Remove class active to an image and set it to the next in the HTMLCollection
+ */
 
 function showNextImage() {
   sliderImages[currentImage].classList.remove('active');
   currentImage = (currentImage + 1) % NUM_IMAGES;
   sliderImages[currentImage].classList.add('active');
+}
+
+function showHidePassword() {
+  if (inputPass.type === 'password') {
+    inputPass.type = 'text';
+    showPassBtn.textContent = 'Hide';
+  } else {
+    inputPass.type = 'password';
+    showPassBtn.textContent = 'Show';
+  }
+
+  console.log(inputPass.type);
 }
 
 /***/ }),
