@@ -13,10 +13,12 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/login.js', 'public/js')
+    .js('resources/js/home.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
     ])
     .webpackConfig(require('./webpack.config'));
 
-    mix.sass('resources/sass/login.scss', 'public/css');
+mix.sass('resources/sass/login.scss', 'public/css')
+    .sass('resources/sass/home.scss', 'public/css');

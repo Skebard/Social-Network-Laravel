@@ -1,0 +1,38 @@
+
+.arrow-btn {
+
+
+    position: absolute;
+    z-index: 10;
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    .fas {
+        font-size: 24px;
+        color: white;
+        border-radius: 50%;
+        box-shadow: 0 0 4px black;
+        cursor: pointer;
+        
+    }
+    &.left-arrow{
+        margin-left: 8px;
+        left: 0;
+    }
+    &.right-arrow{
+        margin-right: 8px;
+        right: 0;
+    }
+
+
+}
+
+
+.left-arrow {
+
+}
+
+.right-arrow {
+
+}

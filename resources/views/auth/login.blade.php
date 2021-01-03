@@ -12,6 +12,7 @@
     <script defer src="{{asset('js/login.js')}}"></script>
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/login.css')}}" class="">
+
 </head>
 
 <body>

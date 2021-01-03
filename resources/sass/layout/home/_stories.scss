@@ -1,0 +1,28 @@
+.stories {
+    padding: 16px 0;
+    position: relative;
+
+    &__username {
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+
+    &__content::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+        /* width of the entire scrollbar */
+    }
+
+    &__content {
+        overflow: scroll;
+        touch-action: auto;
+        scroll-behavior: smooth;
+        display: flex;
+        justify-content: flex-start;
+        padding: 0 6px;
+
+
+    }
+}
+

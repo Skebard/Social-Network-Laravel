@@ -1,0 +1,19 @@
+
+header{
+    position:sticky;
+    top:0;
+    background-color: red;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    margin-bottom:10px;
+}
+
+.header-content{
+    width:100%;
+    max-width:975px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    height:55px;
+}

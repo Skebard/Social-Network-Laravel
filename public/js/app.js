@@ -21331,6 +21331,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/home.scss":
+/*!**********************************!*\
+  !*** ./resources/sass/home.scss ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/login.scss":
 /*!***********************************!*\
   !*** ./resources/sass/login.scss ***!
@@ -21343,14 +21354,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/login.scss ./resources/css/app.css ***!
-  \***************************************************************************************/
+/*!******************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/login.scss ./resources/sass/home.scss ./resources/css/app.css ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/js/app.js */"./resources/js/app.js");
 __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/login.scss */"./resources/sass/login.scss");
+__webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/home.scss */"./resources/sass/home.scss");
 module.exports = __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/css/app.css */"./resources/css/app.css");
 
 

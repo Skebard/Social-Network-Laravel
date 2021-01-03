@@ -7,6 +7,18 @@
 html,body{
     height:100%;
 }
+body{
+    background-color: $primary-bg-color;
+}
 ul{
     list-style-type:none;
+}
+
+.box {
+    border-radius: 1px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+}
+.hide{
+    display:none;
 }

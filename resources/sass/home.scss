@@ -1,0 +1,20 @@
+@import 'base/global';
+@import 'layout/home/footer';
+@import 'layout/home/header';
+@import 'layout/home/post';
+@import 'layout/home/stories';
+// Components
+@import 'components/roundImg';
+@import 'components/arrowBtn';
+
+
+a{
+    text-decoration:none;
+}
+.max-width{
+    max-width: 975px;
+}
+main{
+    max-width:614px;
+    margin: 0 auto;
+}
