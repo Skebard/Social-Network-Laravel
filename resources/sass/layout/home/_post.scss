@@ -5,12 +5,23 @@
         margin-left:12px;
     }
     &__header{
+        padding:12px;
         display:flex;
         justify-content: space-between;
         align-items:center;
         .profile-info{
             .round-profile-img{
                 flex-direction:row;
+                .profile-image-container{
+
+                    height:46px;
+                    width:46px;
+                    img{
+                        height:42px;
+                        width:42px;
+                    }
+                }
+
             }
         }
     }
@@ -22,6 +33,7 @@
         }
         &--images{
             width:100%;
+            scroll-behavior: smooth;
             &::-webkit-scrollbar {
                 width: 0px;
                 height: 0px;
@@ -41,6 +53,91 @@
             object-fit:cover;
             display:block;
         }
+        }
+    }
+
+    &__actions{
+        display:flex;
+        justify-content:space-between;
+
+        .left-actions{
+            width:130px;
+        }
+        .right-actions{
+            width:130px;
+            display:flex;
+            justify-content: flex-end;
+        }
+        svg{
+            margin:8px;
+            width:24px;
+            height:24px;
+        }
+
+        .images-indicator{
+            ul{
+                display:flex;
+                justify-content: center;
+                margin: 8px;
+                li{
+                    margin: 0 3px;
+                    height:6px;
+                    width:6px;
+                    border-radius:50%;
+                    background-color:#8e8e8e;
+                &.active{
+                    background-color:#0095f6;
+                }
+                }
+            }
+        }
+    }
+    &__likes{
+        margin:0 8px 8px;
+        font-weight:bolder;
+        font-size:14px;
+    }
+    &__description{
+        font-size:14px;
+        .post__username{
+            margin-left:8px;
+        }
+    }
+    &__comments{
+        margin: 8px;
+        font-size:14px;
+        &--show-all{
+            color:#8e8e8e;
+            cursor:pointer;
+        }
+    }
+    &__publishing-date{
+        font-size:10px;
+        color:#8e8e8e;
+        margin:8px;
+    }
+    &__add-comment{
+        border-top:1px solid #dbdbdb;
+        form{
+            margin:16px 8px;
+            font-size:14px;
+            display:flex;
+            input{
+                font-size:14px;
+                border:none;
+                outline:none;
+                background-color:transparent;
+            }
+            input[type=text]{
+                
+                flex-grow:1;
+               
+            }
+            input[type=submit]{
+                font-weight:bolder;
+                color:#0095f6;
+                cursor:pointer;
+            }
         }
     }
 }

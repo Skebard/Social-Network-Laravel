@@ -93,9 +93,82 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+//** MODULES */
 var stories = __webpack_require__(/*! ./home/stories */ "./resources/js/home/stories.js");
 
+var posts = __webpack_require__(/*! ./home/posts */ "./resources/js/home/posts.js");
+
+var body = document.querySelector('body');
 stories.slideStoriesEvents();
+body.addEventListener('click', posts.postSlider);
+
+/***/ }),
+
+/***/ "./resources/js/home/posts.js":
+/*!************************************!*\
+  !*** ./resources/js/home/posts.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function postSlider(e) {
+  //Check which arrow has been pressed: right(next) or left(prev)
+  //check if arrow has been pressed
+  var parent = e.target.parentElement;
+
+  if (parent.classList.contains('post__slider--arrow')) {
+    var postHtml = e.target.parentElement.parentElement.parentElement;
+    var prevBtn = postHtml.querySelector('.left-arrow.post__slider--arrow');
+    var nextBtn = postHtml.querySelector('.right-arrow.post__slider--arrow');
+    var imagesSlider = postHtml.querySelector('.post__slider--images');
+    var sliderIndicator = postHtml.querySelector(".post__actions .images-indicator");
+
+    if (parent.classList.contains('right-arrow')) {
+      nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator);
+    } else if (parent.classList.contains('left-arrow')) {
+      previousImage(imagesSlider, nextBtn, prevBtn, sliderIndicator);
+    }
+  }
+}
+/**
+ * Displays the next image of the slider and hide/show the correspondent buttons
+ * @param {HTMLElement} imagesSlider slider containing all the images
+ * @param {HTMLElement} nextBtn 
+ * @param {HTMLElement} prevBtn 
+ * @param {HTMLElement} imagesIndicator points that indicate the visible image
+ */
+
+
+function previousImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
+  imagesSlider.scrollLeft -= imagesSlider.offsetWidth;
+  var activeImageInd = sliderIndicator.querySelector('.active');
+  activeImageInd.previousElementSibling.classList.add('active');
+  activeImageInd.classList.remove('active');
+  nextBtn.classList.remove('hide');
+
+  if (imagesSlider.scrollLeft - imagesSlider.offsetWidth <= 0) {
+    prevBtn.classList.add('hide');
+  }
+}
+
+function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
+  if (imagesSlider.scrollWidth - imagesSlider.scrollLeft > imagesSlider.offsetWidth) {
+    imagesSlider.scrollLeft += imagesSlider.offsetWidth;
+    var activeImageInd = sliderIndicator.querySelector('.active');
+    console.log(activeImageInd.nextElementSibling);
+    activeImageInd.nextElementSibling.classList.add('active');
+    activeImageInd.classList.remove('active');
+    console.log(imagesSlider.scrollLeft);
+
+    if (imagesSlider.scrollWidth - imagesSlider.scrollLeft - imagesSlider.offsetWidth <= imagesSlider.offsetWidth) {
+      nextBtn.classList.add('hide');
+    }
+
+    prevBtn.classList.remove('hide');
+  }
+}
+
+exports.postSlider = postSlider;
 
 /***/ }),
 
