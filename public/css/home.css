@@ -49,6 +49,39 @@ header {
   height: 55px;
 }
 
+.header-content .search {
+  display: flex;
+  justify-content: center;
+}
+
+.header-content .search input {
+  outline: none;
+  background-color: #fafafa;
+  max-width: 215px;
+  border: 1px solid #dbdbdb;
+  font-size: 14px;
+  padding: 3px 10px 3px 26px;
+}
+
+.header-content .user-actions a {
+  margin: 0 8px;
+}
+
+.header-content .user-actions a img {
+  height: 24px;
+  width: 24px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+
+.header-content .user-actions a .fa-bell {
+  width: 22px;
+  height: 22px;
+  font-size: 24px;
+  color: black;
+}
+
 .post__username {
   font-weight: bolder;
   font-size: 14px;
@@ -211,6 +244,8 @@ header {
 }
 
 .stories {
+  margin-bottom: 24px;
+  margin-top: 30px;
   padding: 16px 0;
   position: relative;
 }

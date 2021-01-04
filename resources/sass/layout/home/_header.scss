@@ -11,6 +11,36 @@ header{
 }
 
 .header-content{
+
+    .search{
+        display:flex;
+        justify-content:center;
+        input{
+            outline:none;
+            background-color:$primary-bg-color;
+            max-width:215px;
+            border: 1px solid #dbdbdb;
+            font-size:14px;
+            padding:3px 10px 3px 26px;
+        }
+    }
+    .user-actions{
+        a{
+            margin:0 8px;
+            img{
+                height:24px;
+                width:24px;
+                object-fit:cover;
+                border-radius:50%;
+            }
+            .fa-bell{
+                width:22px;
+                height:22px;
+                font-size:24px;
+                color:black;
+            }
+        }
+    }
     width:100%;
     max-width:975px;
     display:flex;
