@@ -75,7 +75,8 @@ header {
   border-radius: 50%;
 }
 
-.header-content .user-actions a .fa-bell {
+.header-content .user-actions a .fa-bell,
+.header-content .user-actions a .fa-plus-square {
   width: 22px;
   height: 22px;
   font-size: 24px;
@@ -339,6 +340,113 @@ header {
 .arrow-btn.right-arrow {
   margin-right: 8px;
   right: 0;
+}
+
+.modal {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.multi-images-form .images-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 612px;
+}
+
+.multi-images-form .input-container {
+  background-color: grey;
+  margin: 8px;
+  cursor: pointer;
+  width: 180px;
+  position: relative;
+  height: 240px;
+}
+
+.multi-images-form .input-container input,
+.multi-images-form .input-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.multi-images-form .input-container input {
+  outline: none;
+  z-index: 20;
+  cursor: pointer;
+  font-size: 0;
+  opacity: 0;
+}
+
+.multi-images-form .input-container input:hover {
+  cursor: pointer;
+}
+
+.multi-images-form .input-container img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.multi-images-form .input-container:hover img {
+  opacity: 0.6;
+}
+
+.multi-images-form .input-container:hover .add-image-btn.active,
+.multi-images-form .input-container:hover .edit-image-btn.active,
+.multi-images-form .input-container:hover .delete-image-btn {
+  display: block;
+}
+
+.multi-images-form .input-container:hover .delete-image-btn.last {
+  display: none;
+}
+
+.multi-images-form__btn {
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  display: none;
+  border: none;
+  outline: none;
+}
+
+.multi-images-form__btn.add-image-btn,
+.multi-images-form__btn.edit-image-btn {
+  padding: 8px;
+  border-radius: 3px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.multi-images-form__btn.delete-image-btn {
+  z-index: 100;
+  top: 4px;
+  right: 4px;
+}
+
+.multi-images-form__btn .fa-trash-alt {
+  font-size: 18px;
+  color: black;
+  padding: 4px;
+}
+
+.multi-images-form__btn .fa-plus,
+.multi-images-form__btn .fa-edit {
+  font-size: 35px;
+  color: black;
 }
 
 a {

@@ -1,0 +1,81 @@
+.multi-images-form{
+    .images-container{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        max-width:612px;
+    }
+    .input-container{
+        background-color: grey;
+        margin:8px;
+        cursor:pointer;
+        width:180px;
+        position:relative;
+        height:240px;
+
+        input,img{
+            position:absolute;
+            top:0;
+            left:0;
+            height:100%;
+            width:100%;
+        }
+        input{
+            outline:none;
+            z-index: 20;
+            cursor:pointer;
+            font-size:0;
+            opacity:0;
+        }
+        input:hover{
+            cursor:pointer;
+        }
+        img{
+            width:100%;
+            height:100%;
+            object-fit: cover;
+        }
+
+        &:hover{
+            img{
+                opacity:0.6;
+            }
+            .add-image-btn.active, .edit-image-btn.active, .delete-image-btn{
+                display:block;
+            }
+            .delete-image-btn.last{
+                display:none;
+            }
+        }
+    }
+    &__btn{
+        z-index:10;
+        background-color: rgba(255, 255, 255, 0.7);
+        position:absolute;
+        display:none;
+        border:none;
+        outline:none;
+        &.add-image-btn, &.edit-image-btn{
+            padding:8px;
+            border-radius:3px;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        &.delete-image-btn{
+            z-index:100;
+            top:4px;
+            right:4px;
+        }
+        .fa-trash-alt{
+            font-size:18px;
+            color:black;
+            padding:4px;
+        }
+        .fa-plus, .fa-edit{
+            font-size:35px;
+            color:black;
+        }
+    }
+
+}

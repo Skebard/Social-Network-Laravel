@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/9547750bbd.js" crossorigin="anonymous"></script>
     <!-- Scripts -->
@@ -22,7 +27,7 @@
             <div class='logo-container'>
                 <img src="{{asset('images/login/instagramTitle.png')}}" alt="">
             </div>
-                <!-- SEARCH -->
+            <!-- SEARCH -->
             <div class='search'>
                 <input type="text" placeholder='Search'>
             </div>
@@ -40,10 +45,13 @@
                 </a>
 
 
-                <a href="#">
+                <!-- <a href="#">
                     <svg aria-label="Find People" class="_8-yf5 " fill="#262626" height="22" viewBox="0 0 48 48" width="22">
                         <path clip-rule="evenodd" d="M24 0C10.8 0 0 10.8 0 24s10.8 24 24 24 24-10.8 24-24S37.2 0 24 0zm0 45C12.4 45 3 35.6 3 24S12.4 3 24 3s21 9.4 21 21-9.4 21-21 21zm10.2-33.2l-14.8 7c-.3.1-.6.4-.7.7l-7 14.8c-.3.6-.2 1.3.3 1.7.3.3.7.4 1.1.4.2 0 .4 0 .6-.1l14.8-7c.3-.1.6-.4.7-.7l7-14.8c.3-.6.2-1.3-.3-1.7-.4-.5-1.1-.6-1.7-.3zm-7.4 15l-5.5-5.5 10.5-5-5 10.5z" fill-rule="evenodd"></path>
                     </svg>
+                </a> -->
+                <a href="#">
+                    <i class="far fa-plus-square"></i>
                 </a>
 
                 <a href="#">
@@ -52,7 +60,7 @@
                     </svg>
                 </a>
                 <a href="#">
-                <i class="far fa-bell"></i>
+                    <i class="far fa-bell"></i>
                 </a>
                 <a href="#">
                     <img src="https://scontent-hel3-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s750x750/135741997_712504992733878_274376449055805313_n.jpg?_nc_ht=scontent-hel3-1.cdninstagram.com&_nc_cat=1&_nc_ohc=T4s12Mwh6ZkAX8tNq5W&tp=1&oh=bbc0ab8e8f10c4eff30960524e9349d8&oe=601B0BE6" alt="Profile user image">
@@ -384,5 +392,37 @@
     </main>
     <footer></footer>
 </body>
+
+<!-- CREATE POST -->
+<div class="modal create-post">
+    <div class="modal-content">
+        <button class="close-modal">
+                Close modal
+        </button>
+
+        <form id='new-post-form-id' class='new-post-form multi-images-form' action="/1/posts" method='POST' enctype="multipart/form-data">
+            @csrf
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
+            <div class="images-container" id='images-container-id'>
+                <div class="input-container">
+                    <div class=" last multi-images-form__btn delete-image-btn multi-images-form__btn"><i class="fas fa-trash-alt"></i></div>
+                    <button class=" active add-image-btn multi-images-form__btn"><i class="fas fa-plus"></i></button>
+                    <div class=" edit-image-btn  multi-images-form__btn"><i class="far fa-edit"></i></div>
+                    <img class='image-display' src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="">
+                    <input id='input-1-id' type="file" name='image[]' class="multi-images-form__image-input">
+                </div>
+
+            </div>
+            <!-- <input type='file' name='image[]' data-pos='1'> -->
+
+            @error('image')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
+            <button type='submit'>Create</button>
+            <button>Cancel</button>
+        </form>
+    </div>
+</div>
 
 </html>
