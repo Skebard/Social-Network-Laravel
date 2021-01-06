@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ Route::get('/', function () {
 });
 
 Route::resource('/{username}/posts',PostController::class);
+
+Route::resource('/{postId}/postComments',PostCommentController::class);
 
 Route::get('/homePage',function (){
     return view('homePage');

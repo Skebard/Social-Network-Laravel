@@ -24,7 +24,8 @@ ul {
   border: 1px solid #dbdbdb;
 }
 
-.hide {
+.hide,
+.modal.hide {
   display: none;
 }
 

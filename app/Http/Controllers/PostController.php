@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Hashing\BcryptHasher;
+use App\Models\Post;
+use App\Models\PostImage;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
 
 class PostController extends Controller
 {
@@ -20,6 +26,25 @@ class PostController extends Controller
     public function index()
     {
         //
+        echo 'HI <br>';
+        // $data  = Post::where('user_id',1)->get();
+        $posts = Post::getPosts(2,4);
+        //var_dump($data->content);
+        foreach( $posts as $key => &$post){
+            echo '<h1>'.$post->username.'</h1>';
+            echo $post->content;
+            echo '<br>';
+
+            $images = PostImage::where('post_id',$post->id)->get();
+            //var_dump($images);
+            foreach($images as $key => $value){
+                echo $value;
+                echo "<br>";
+            }
+            $post->images = $images;
+        }
+         var_dump($posts[1]->images[0]->image);
+        return view('home.posts',compact('posts'));
     }
 
     /**
@@ -46,15 +71,39 @@ class PostController extends Controller
             echo 'exists';
         }
         echo $request->content;
+
+        Post::insert([
+            'user_id'=>Auth::user()->id,
+            'content'=>$request->content,
+            'status'=>0,
+            'likes'=>0,
+            'comments'=>0,
+            'published_at'=>Carbon::now(),
+            'created_at' => Carbon::now(),
+        ]);
+        $postId=DB::getPdo()->lastInsertId();
+        echo 'last ID' . $postId ."            /";
+
+
+        $img_position= 1;
         foreach ($images as $image) {
             echo 'ANOTHER IMAGE   ';
             $name_gen = hexdec(uniqid());
             $img_ext = strtolower($image->getClientOriginalExtension());
             $img_name = $name_gen . '.' . $img_ext;
             $up_location = 'images/posts/';
-        // $last_img = $up_location . $img_name;
-        //    $image->move($up_location, $img_name);
+            $img_location = $up_location . $img_name;
+            $image->move($up_location, $img_name);
+
+        PostImage::insert([
+            'post_id'=>$postId,
+            'image'=>$img_location,
+            'position'=> $img_position++,
+            'created_at' => Carbon::now(),
+        ]);
         }
+
+        return Redirect()->back()->with('success','Post created successfully');
     }
 
     /**

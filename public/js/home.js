@@ -98,18 +98,41 @@ var stories = __webpack_require__(/*! ./home/stories */ "./resources/js/home/sto
 
 var posts = __webpack_require__(/*! ./home/posts */ "./resources/js/home/posts.js");
 
+var createPost = __webpack_require__(/*! ./home/createPost */ "./resources/js/home/createPost.js");
+
+var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.js");
+
 var body = document.querySelector('body');
 stories.slideStoriesEvents();
+createPost.addEvents();
 body.addEventListener('click', posts.postSlider);
-var imagesContainer = document.getElementById("images-container-id");
-var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\" active add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">";
+modal.addEvents();
+
+/***/ }),
+
+/***/ "./resources/js/home/createPost.js":
+/*!*****************************************!*\
+  !*** ./resources/js/home/createPost.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//Container will al input containers
+var imagesContainer = document.getElementById("images-container-id"); //template to create new inputs
+
+var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\" active add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">"; //Initial image input
+
 var firstInput = document.getElementById('input-1-id');
-firstInput.addEventListener('change', handleImageInputs);
-imagesContainer.addEventListener('click', deleteImageInput);
+
+function addEvents() {
+  firstInput.addEventListener('change', handleImageInputs);
+  imagesContainer.addEventListener('click', deleteImageInput);
+}
 /**
  * 
  * @param {} e 
  */
+
 
 function deleteImageInput(e) {
   console.log(e.target);
@@ -120,9 +143,7 @@ function deleteImageInput(e) {
 }
 
 function handleImageInputs(e) {
-  console.log(e.target);
-  var input = e.currentTarget;
-  console.log(imagesContainer.lastElementChild); //Check if a file has been selected
+  var input = e.currentTarget; //Check if a file has been selected
 
   var inputContainer = input.parentElement;
 
@@ -171,6 +192,37 @@ function createImageInput() {
     input: inputImage
   };
 }
+
+exports.addEvents = addEvents;
+
+/***/ }),
+
+/***/ "./resources/js/home/modal.js":
+/*!************************************!*\
+  !*** ./resources/js/home/modal.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var modal = document.querySelector('.modal');
+var newPostBtn = document.getElementById('new-post-btn-id');
+
+function addEvents() {
+  modal.addEventListener('click', handleModal);
+  newPostBtn.addEventListener('click', openModal);
+}
+
+function openModal() {
+  modal.classList.remove('hide');
+}
+
+function handleModal(e) {
+  if (e.target.classList.contains('close-modal')) {
+    modal.classList.add('hide');
+  }
+}
+
+exports.addEvents = addEvents;
 
 /***/ }),
 

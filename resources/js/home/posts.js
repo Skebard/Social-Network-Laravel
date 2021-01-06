@@ -49,4 +49,9 @@ function nextImage(imagesSlider, nextBtn, prevBtn,sliderIndicator) {
         prevBtn.classList.remove('hide');
     }
 }
+
+
+
+
+
 exports.postSlider = postSlider;

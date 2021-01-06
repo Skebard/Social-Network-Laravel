@@ -20,4 +20,5 @@ class Relationship extends Model
         "action_user_id",
     ];
 
+
 }
