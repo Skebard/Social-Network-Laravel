@@ -1,3 +1,6 @@
+const POSTS_LIMIT = 10;
+
+
 function postSlider(e) {
     //Check which arrow has been pressed: right(next) or left(prev)
 
@@ -52,8 +55,12 @@ function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
 
 
 
-function likeDislikeEvent(e) {
-    e.preventDefault();
+/**
+ * Handles the event for giving likes to a post and for saving posts
+ * @param {*} e 
+ */
+function likeSaveEvent(e) {
+    
     let element = e.target;
     let parentElement = element.parentElement;
     let anchor;
@@ -63,7 +70,7 @@ function likeDislikeEvent(e) {
         anchor = parentElement;
     }
     if (anchor) {
-        let anchorParent = anchor.parentElement;
+        e.preventDefault();
         let classes = anchor.classList;
 
         if (classes.contains('like')) {
@@ -99,20 +106,18 @@ function likeDislikeEvent(e) {
             anchorGetAndToggle(anchor,'save');
 
         }
-        if (parentElement.parentElement.classList.contains('') === 'A') {
-            console.log('found');
-            e.preventDefault();
-
-        }
     }
 
-    console.log(e.target);
-    console.log(e.target.tagName);
 }
 
-function anchorGetAndToggle(anchor, classToShow) {
-
-    console.log(anchor);
+/**
+ * Makes a GET request to the anchor's link and upon success hides the given anchor and the sibling anchor with the given class
+ * @param {HTMLElement} anchor anchor element that has the link to make an action
+ * @param {string} classToShow name of the class that belongs to the sibling anchor to be shown when the action
+ *                              is successfully performed (status = 1)
+ */
+function anchorGetAndToggle(anchor, classToShow)
+{
     return fetch(anchor.href)
         .then(resp => resp.json())
         .then(data => {
@@ -127,5 +132,38 @@ function anchorGetAndToggle(anchor, classToShow) {
 }
 
 
+let offset = 0;
+/**
+ * Fetches new posts and appends them at the end of the container.
+ */
+function loadPosts()
+{
+    fetch('/posts?offset='+offset+'&limit='+POSTS_LIMIT)
+    .then(resp=>resp.json())
+    .then(data=>{
+        if(data.status===1){
+            document.querySelector('.posts-container .posts').innerHTML += data.data;
+        }
+    });
+    offset+=POSTS_LIMIT;
+}
+
+/**
+ * Shows the hidden comments and hides the comments counter
+ * @param {*} e event
+ */
+function viewAllComments(e){
+    if(e.target.classList.contains('post__comments--show-all')){
+        let hiddenComments = e.target.parentElement.querySelectorAll('.post__comments--list li.hide');
+        hiddenComments.forEach(comment=>{
+            comment.classList.remove('hide');
+        })
+        e.target.classList.add('hide');
+    }
+}
+
+
 exports.postSlider = postSlider;
-exports.likeDislikeEvent = likeDislikeEvent;
+exports.likeSaveEvent = likeSaveEvent;
+exports.loadPosts = loadPosts;
+exports.viewAllComments= viewAllComments;

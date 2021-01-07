@@ -42,17 +42,17 @@ class PostCommentController extends Controller
 
         //!verify that the post belongs to the user or to a friend of the user
 
-        echo $postId;
-        echo "<br>" . $request->comment;
-        PostComment::insert([
-            'user_id'=>Auth::user()->id,
-            'post_id'=>$request->post_id,
-            'comment'=>$request->comment,
-            'published_at' =>Carbon::now(),
-            'created_at' => Carbon::now(),
-        ]);
+            PostComment::insert([
+                'user_id'=>Auth::user()->id,
+                'post_id'=>$request->post_id,
+                'comment'=>$request->comment,
+                'published_at' =>Carbon::now(),
+                'created_at' => Carbon::now(),
+            ]);
 
         Post::addOneComment($request->post_id);
+
+        return Redirect()->back()->with('success','Comment added successfully');
 
     }
 
@@ -61,6 +61,8 @@ class PostCommentController extends Controller
     {
         PostComment::where('user_id',Auth::user()->id)
                     ->where('id',$commentId)->delete();
+        return Redirect()->back()->with('success','Comment removed successfully');
+
     }
 
     /**

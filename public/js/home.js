@@ -106,8 +106,24 @@ var body = document.querySelector('body');
 stories.slideStoriesEvents();
 createPost.addEvents();
 body.addEventListener('click', posts.postSlider);
-body.addEventListener('click', posts.likeDislikeEvent);
+body.addEventListener('click', posts.likeSaveEvent);
+body.addEventListener('click', posts.viewAllComments);
 modal.addEvents();
+posts.loadPosts(); //Lazy load posts
+
+var active = true;
+$(window).scroll(function () {
+  if ($(window).scrollTop() + $(window).height() > $("#posts-list-id").height()) {
+    if (active) {
+      //timer to avoid calling the loadPosts function too many times.
+      setTimeout(function () {
+        active = true;
+      }, 500);
+      active = false;
+      posts.loadPosts();
+    }
+  }
+});
 
 /***/ }),
 
@@ -234,6 +250,8 @@ exports.addEvents = addEvents;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+var POSTS_LIMIT = 10;
+
 function postSlider(e) {
   //Check which arrow has been pressed: right(next) or left(prev)
   //check if arrow has been pressed
@@ -290,9 +308,13 @@ function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
     prevBtn.classList.remove('hide');
   }
 }
+/**
+ * Handles the event for giving likes to a post and for saving posts
+ * @param {*} e 
+ */
 
-function likeDislikeEvent(e) {
-  e.preventDefault();
+
+function likeSaveEvent(e) {
   var element = e.target;
   var parentElement = element.parentElement;
   var anchor;
@@ -304,7 +326,7 @@ function likeDislikeEvent(e) {
   }
 
   if (anchor) {
-    var anchorParent = anchor.parentElement;
+    e.preventDefault();
     var classes = anchor.classList;
 
     if (classes.contains('like')) {
@@ -329,19 +351,17 @@ function likeDislikeEvent(e) {
       console.log('unsave');
       anchorGetAndToggle(anchor, 'save');
     }
-
-    if (parentElement.parentElement.classList.contains('') === 'A') {
-      console.log('found');
-      e.preventDefault();
-    }
   }
-
-  console.log(e.target);
-  console.log(e.target.tagName);
 }
+/**
+ * Makes a GET request to the anchor's link and upon success hides the given anchor and the sibling anchor with the given class
+ * @param {HTMLElement} anchor anchor element that has the link to make an action
+ * @param {string} classToShow name of the class that belongs to the sibling anchor to be shown when the action
+ *                              is successfully performed (status = 1)
+ */
+
 
 function anchorGetAndToggle(anchor, classToShow) {
-  console.log(anchor);
   return fetch(anchor.href).then(function (resp) {
     return resp.json();
   }).then(function (data) {
@@ -357,8 +377,41 @@ function anchorGetAndToggle(anchor, classToShow) {
   });
 }
 
+var offset = 0;
+/**
+ * Fetches new posts and appends them at the end of the container.
+ */
+
+function loadPosts() {
+  fetch('/posts?offset=' + offset + '&limit=' + POSTS_LIMIT).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    if (data.status === 1) {
+      document.querySelector('.posts-container .posts').innerHTML += data.data;
+    }
+  });
+  offset += POSTS_LIMIT;
+}
+/**
+ * Shows the hidden comments and hides the comments counter
+ * @param {*} e event
+ */
+
+
+function viewAllComments(e) {
+  if (e.target.classList.contains('post__comments--show-all')) {
+    var hiddenComments = e.target.parentElement.querySelectorAll('.post__comments--list li.hide');
+    hiddenComments.forEach(function (comment) {
+      comment.classList.remove('hide');
+    });
+    e.target.classList.add('hide');
+  }
+}
+
 exports.postSlider = postSlider;
-exports.likeDislikeEvent = likeDislikeEvent;
+exports.likeSaveEvent = likeSaveEvent;
+exports.loadPosts = loadPosts;
+exports.viewAllComments = viewAllComments;
 
 /***/ }),
 

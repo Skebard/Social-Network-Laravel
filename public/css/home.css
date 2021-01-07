@@ -5,8 +5,7 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-html,
-body {
+html {
   height: 100%;
 }
 
@@ -204,6 +203,11 @@ header {
 
 .post__comments {
   margin: 8px;
+  font-size: 14px;
+}
+
+.post__comments--username {
+  font-weight: bolder;
   font-size: 14px;
 }
 

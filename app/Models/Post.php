@@ -10,6 +10,10 @@ use Auth;
 
 class Post extends Model
 {
+    //Default values
+    const POST_LIMIT = 10;
+    const POST_OFFSET = 0;
+
     use HasFactory;
             /**
      * The attributes that are mass assignable.
@@ -25,13 +29,14 @@ class Post extends Model
         "comments",
     ];
 
-    public static function getPosts(int $offset, int $limit){
+    public static function getPosts(int $offset=self::POST_OFFSET, int $limit=self::POST_LIMIT){
         //get self Id and friends' ids
         $sql_friends ='SELECT user_two_id FROM relationships WHERE user_one_id = '.Auth::user()->id;
         $sql_friends .= ' UNION SELECT user_one_id FROM relationships WHERE user_two_id = '.Auth::user()->id;
         $sql_friends .= ' UNION SELECT '.Auth::user()->id;
 
-        $sql =' SELECT posts.id,posts.user_id, posts.likes, posts.comments, posts.content, posts.published_at, users.username FROM posts LEFT JOIN users ';
+        $sql =' SELECT posts.id,posts.user_id, posts.likes, posts.comments, posts.content, posts.published_at, users.username, users.profile_photo_path FROM posts ';
+        $sql .= ' LEFT JOIN users';
         $sql .= ' ON posts.user_id = users.id';
         $sql .= ' WHERE posts.user_id IN ( '.$sql_friends.' ) ORDER BY posts.published_at DESC';
         $sql .= ' LIMIT '.$limit.' OFFSET '.$offset;

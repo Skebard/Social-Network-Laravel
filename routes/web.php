@@ -19,10 +19,18 @@ use App\Http\Controllers\LikesController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/indexMy', function () {
+    return view('home.index');
+});
 
 Route::resource('/{username}/posts',PostController::class);
 
 Route::resource('/{postId}/postComments',PostCommentController::class);
+
+
+//Posts
+Route::get('/',[PostController::class,'index1']);
+Route::get('/posts',[PostController::class,'posts']);
 
 
 //Save post

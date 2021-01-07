@@ -6,21 +6,20 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Hashing\BcryptHasher;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\PostImage;
 use App\Models\LikedPost;
 use App\Models\SavedPost;
+use App\Models\PostComment;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
-
-
-
+use stdClass;
 
 class PostController extends Controller
 {
 
     // $this->middleware('auth')->except(['show']);
-
 
     /**
      * Display a listing of the resource.
@@ -30,21 +29,17 @@ class PostController extends Controller
     public function index()
     {
         //
-        echo 'HI <br>';
-        // $data  = Post::where('user_id',1)->get();
-        $posts = Post::getPosts(2,4);
-        //var_dump($data->content);
+        if(isset($_GET['limit'],$_GET['offset'])){
+            echo 'LIMIT AND OFFSET';
+            $posts = Post::getPosts($_GET['limit'],$_GET['offset']);
+        }else{
+            $posts = Post::getPosts();
+        }
+
         foreach( $posts as $key => &$post){
-            echo '<h1>'.$post->username.'</h1>';
-            echo $post->content;
-            echo '<br>';
 
             //get post images
             $images = PostImage::where('post_id',$post->id)->get();
-            foreach($images as $key => $value){
-                echo $value;
-                echo "<br>";
-            }
             $post->images = $images;
 
             $post->userLike = LikedPost::where('post_id',$post->id)
@@ -53,10 +48,59 @@ class PostController extends Controller
             $post->saved = SavedPost::where('post_id',$post->id)
                                         ->where('user_id',Auth::user()->id)
                                         ->get();
-            
         }
-         var_dump($posts[1]->images[0]->image);
         return view('home.posts',compact('posts'));
+    }
+
+
+    public function index1()
+    {
+        return view('welcome');
+    }
+
+    public function posts()
+    {
+
+        if(isset($_GET['limit'],$_GET['offset'])){
+            $offset = intval($_GET['offset']);
+            $limit = intval($_GET['limit']);
+            $posts = Post::getPosts($offset,$limit);
+
+        }else{
+            $posts = Post::getPosts();
+        }
+
+        foreach( $posts as $key => &$post){
+
+            //get post images
+            if($post->profile_photo_path==''){
+                $post->profile_photo_path = 'images/users/defaultProfileImage.png';
+            }
+            $images = PostImage::where('post_id',$post->id)->get();
+            $post->images = $images;
+
+            $post->userLike = LikedPost::where('post_id',$post->id)
+                                    ->where('user_id',Auth::user()->id)
+                                    ->get();
+            $post->saved = SavedPost::where('post_id',$post->id)
+                                        ->where('user_id',Auth::user()->id)
+                                        ->get();
+            $post->numComments = $post->comments;
+            $post->comments = PostComment::where('post_id',$post->id)->orderByDesc('published_at')->get();
+            foreach($post->comments as &$comment){
+                $comment->username  = User::select('username')
+                ->where('id',$comment->user_id)
+                ->first()->username;
+            }
+        }
+
+        $status = 1;
+        if(count($posts)===0){
+            $status = 2;    //indicates that there are no more results
+        }
+        $postsView = view('home.posts',compact('posts'));
+        return json_encode( (object) ['status' => $status,'data'=>strval($postsView),'count'=>count($posts)]);
+
     }
 
     /**
