@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PostComment;
+use App\Models\Post;
 use Auth;
 use Illuminate\Support\Carbon;
 
@@ -35,7 +36,7 @@ class PostCommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($postId,Request $request)
+    public function addComment($postId,Request $request)
     {
         //
 
@@ -51,6 +52,15 @@ class PostCommentController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
+        Post::addOneComment($request->post_id);
+
+    }
+
+
+    public function removeComment($commentId)
+    {
+        PostComment::where('user_id',Auth::user()->id)
+                    ->where('id',$commentId)->delete();
     }
 
     /**

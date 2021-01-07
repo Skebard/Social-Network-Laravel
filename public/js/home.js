@@ -106,6 +106,7 @@ var body = document.querySelector('body');
 stories.slideStoriesEvents();
 createPost.addEvents();
 body.addEventListener('click', posts.postSlider);
+body.addEventListener('click', posts.likeDislikeEvent);
 modal.addEvents();
 
 /***/ }),
@@ -290,7 +291,74 @@ function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
   }
 }
 
+function likeDislikeEvent(e) {
+  e.preventDefault();
+  var element = e.target;
+  var parentElement = element.parentElement;
+  var anchor;
+
+  if (element.tagName === 'path') {
+    anchor = parentElement.parentElement;
+  } else if (element.tagName === 'svg') {
+    anchor = parentElement;
+  }
+
+  if (anchor) {
+    var anchorParent = anchor.parentElement;
+    var classes = anchor.classList;
+
+    if (classes.contains('like')) {
+      anchorGetAndToggle(anchor, 'dislike').then(function (status) {
+        if (status) {
+          var likes = anchor.parentElement.parentElement.parentElement.querySelector('.post__likes--number');
+          likes.textContent = parseInt(likes.textContent) + 1;
+        }
+      });
+      console.log('like');
+    } else if (classes.contains('dislike')) {
+      anchorGetAndToggle(anchor, 'like').then(function (status) {
+        if (status) {
+          var likes = anchor.parentElement.parentElement.parentElement.querySelector('.post__likes--number');
+          likes.textContent = parseInt(likes.textContent) - 1;
+        }
+      });
+    } else if (classes.contains('save')) {
+      console.log('save');
+      anchorGetAndToggle(anchor, 'unsave');
+    } else if (classes.contains('unsave')) {
+      console.log('unsave');
+      anchorGetAndToggle(anchor, 'save');
+    }
+
+    if (parentElement.parentElement.classList.contains('') === 'A') {
+      console.log('found');
+      e.preventDefault();
+    }
+  }
+
+  console.log(e.target);
+  console.log(e.target.tagName);
+}
+
+function anchorGetAndToggle(anchor, classToShow) {
+  console.log(anchor);
+  return fetch(anchor.href).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    console.log(data);
+
+    if (data.status == 1) {
+      anchor.classList.add('hide');
+      anchor.parentElement.querySelector('.' + classToShow).classList.remove('hide');
+      return true;
+    }
+
+    return false;
+  });
+}
+
 exports.postSlider = postSlider;
+exports.likeDislikeEvent = likeDislikeEvent;
 
 /***/ }),
 

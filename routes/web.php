@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostCommentController;
+use App\Http\Controllers\LikesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,21 @@ Route::get('/', function () {
 Route::resource('/{username}/posts',PostController::class);
 
 Route::resource('/{postId}/postComments',PostCommentController::class);
+
+
+//Save post
+Route::get('/{postId}/save',[PostController::class,'savePost']);
+Route::get('/{postId}/save/remove',[PostController::class,'removeSavedPost']);
+
+
+//Comment Post
+Route::post('/{postId}/comment',[PostCommentController::class,'addComment']);
+Route::get('/{postId}/comment/remove',[PostCommentController::class,'removeComment']);
+
+//Like posts
+Route::get('/{postId}/like',[LikesController::class,'likePost']);
+Route::get('/{postId}/like/remove',[LikesController::class,'removeLikePost']);
+
 
 Route::get('/homePage',function (){
     return view('homePage');

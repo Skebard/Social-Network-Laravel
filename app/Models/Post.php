@@ -31,11 +31,28 @@ class Post extends Model
         $sql_friends .= ' UNION SELECT user_one_id FROM relationships WHERE user_two_id = '.Auth::user()->id;
         $sql_friends .= ' UNION SELECT '.Auth::user()->id;
 
-        $sql =' SELECT posts.id,posts.user_id, posts.content, posts.published_at, users.username FROM posts LEFT JOIN users ';
+        $sql =' SELECT posts.id,posts.user_id, posts.likes, posts.comments, posts.content, posts.published_at, users.username FROM posts LEFT JOIN users ';
         $sql .= ' ON posts.user_id = users.id';
         $sql .= ' WHERE posts.user_id IN ( '.$sql_friends.' ) ORDER BY posts.published_at DESC';
         $sql .= ' LIMIT '.$limit.' OFFSET '.$offset;
         $results = DB::select( DB::raw($sql), array());
         return $results;
+    }
+    public static function addOneComment(int $postId){
+        $sql = 'UPDATE posts SET comments = comments + 1 WHERE id ='.$postId;
+        DB::update(DB::raw($sql),[]);
+    }
+    public static function addOneLike( int $postId){
+        $sql = 'UPDATE posts SET likes = likes + 1 WHERE id='.$postId;
+        DB::update(DB::raw($sql),[]);
+    }
+
+    public static function removeOneLike( int $postId){
+        $sql = 'UPDATE posts SET likes = likes - 1 WHERE id='.$postId;
+        DB::update(DB::raw($sql),[]);
+    }
+    public static function removeOneComment( int $postId){
+        $sql = 'UPDATE posts SET comments = comments - 1 WHERE id='.$postId;
+        DB::update(DB::raw($sql),[]);
     }
 }

@@ -7,8 +7,12 @@ use Auth;
 use Illuminate\Hashing\BcryptHasher;
 use App\Models\Post;
 use App\Models\PostImage;
+use App\Models\LikedPost;
+use App\Models\SavedPost;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
+
 
 
 
@@ -35,13 +39,21 @@ class PostController extends Controller
             echo $post->content;
             echo '<br>';
 
+            //get post images
             $images = PostImage::where('post_id',$post->id)->get();
-            //var_dump($images);
             foreach($images as $key => $value){
                 echo $value;
                 echo "<br>";
             }
             $post->images = $images;
+
+            $post->userLike = LikedPost::where('post_id',$post->id)
+                                    ->where('user_id',Auth::user()->id)
+                                    ->get();
+            $post->saved = SavedPost::where('post_id',$post->id)
+                                        ->where('user_id',Auth::user()->id)
+                                        ->get();
+            
         }
          var_dump($posts[1]->images[0]->image);
         return view('home.posts',compact('posts'));
@@ -150,4 +162,33 @@ class PostController extends Controller
     {
         //
     }
+
+
+    public function savePost($postId)
+    {
+
+        try{
+            SavedPost::insert([
+                'user_id'=>Auth::user()->id,
+                'post_id'=>$postId,
+            ]);
+            return  json_encode( (object) ['status' => 1]);
+        }catch(QueryException $e){
+            return  json_encode( (object) ['status' => 0]);
+        }
+    }
+
+    public function removeSavedPost($postId)
+    {
+        try{
+            SavedPost::where('user_id',Auth::user()->id)
+            ->where('post_id',$postId)
+            ->delete();
+            return  json_encode( (object) ['status' => 1]);
+        }catch(QueryException $e){
+            return  json_encode( (object) ['status' => 0]);
+        }
+
+    }
+
 }
