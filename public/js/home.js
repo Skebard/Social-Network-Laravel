@@ -108,6 +108,7 @@ createPost.addEvents();
 body.addEventListener('click', posts.postSlider);
 body.addEventListener('click', posts.likeSaveEvent);
 body.addEventListener('click', posts.viewAllComments);
+body.addEventListener('click', posts.viewPostOptions);
 modal.addEvents();
 posts.loadPosts(); //Lazy load posts
 
@@ -225,7 +226,7 @@ var modal = document.querySelector('.modal');
 var newPostBtn = document.getElementById('new-post-btn-id');
 
 function addEvents() {
-  modal.addEventListener('click', handleModal);
+  document.querySelector('html').addEventListener('click', handleModal);
   newPostBtn.addEventListener('click', openModal);
 }
 
@@ -234,7 +235,9 @@ function openModal() {
 }
 
 function handleModal(e) {
-  if (e.target.classList.contains('close-modal')) {
+  var modal = e.target.closest('.modal');
+
+  if (modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))) {
     modal.classList.add('hide');
   }
 }
@@ -408,10 +411,32 @@ function viewAllComments(e) {
   }
 }
 
+var postOptionsModal = document.querySelector('.modal-post-options');
+
+function viewPostOptions(e) {
+  var options = e.target.closest('.post-options');
+
+  if (options) {
+    postOptionsModal.classList.remove('hide');
+    console.log(options.dataset.owner);
+    console.log(options.dataset.post_id);
+    var postId = options.dataset.post_id;
+
+    if (options.dataset.owner) {
+      html = "\n        <li>\n            <a class='options-modal__alert' href=\"/posts/".concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Edit Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Archive Post</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>");
+    } else {
+      html = " <li>\n            <a class='options-modal__alert' href=\"#\">Report</a>\n        </li>\n        <li>\n            <a class='options-modal__alert' href=\"#\">Unfollow</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>";
+    }
+
+    postOptionsModal.querySelector('.options-modal').innerHTML = html;
+  }
+}
+
 exports.postSlider = postSlider;
 exports.likeSaveEvent = likeSaveEvent;
 exports.loadPosts = loadPosts;
 exports.viewAllComments = viewAllComments;
+exports.viewPostOptions = viewPostOptions;
 
 /***/ }),
 

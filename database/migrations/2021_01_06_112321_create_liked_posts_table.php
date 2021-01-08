@@ -15,9 +15,16 @@ class CreateLikedPostsTable extends Migration
     {
         Schema::create('liked_posts', function (Blueprint $table) {
             $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')
+                    ->references('id')
+                    ->on('posts')
+                    ->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
+
             $table->timestamps();
             $table->unique(['user_id','post_id']);
         });

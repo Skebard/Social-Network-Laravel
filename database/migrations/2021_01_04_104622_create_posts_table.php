@@ -24,6 +24,7 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('likes'); //total number of likes
             $table->unsignedBigInteger('comments'); //total number of comments
             //both likes anc comments could be calculated but adding this fields in this table reduces work from the database
+            $table->SoftDeletes();
         });
     }
 

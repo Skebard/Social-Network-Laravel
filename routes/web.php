@@ -16,21 +16,19 @@ use App\Http\Controllers\LikesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/indexMy', function () {
-    return view('home.index');
-});
 
-Route::resource('/{username}/posts',PostController::class);
 
-Route::resource('/{postId}/postComments',PostCommentController::class);
+
+//Route::resource('/posts',PostController::class);
+
+//Route::resource('/{postId}/postComments',PostCommentController::class);
 
 
 //Posts
-Route::get('/',[PostController::class,'index1']);
+Route::get('/',[PostController::class,'home']);
 Route::get('/posts',[PostController::class,'posts']);
+Route::get('/posts/{postId}/delete',[PostController::class,'destroy'])->middleware('auth');
+Route::post('/posts',[PostController::class,'store']);
 
 
 //Save post

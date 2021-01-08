@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 
 
@@ -14,6 +15,7 @@ class Post extends Model
     const POST_LIMIT = 10;
     const POST_OFFSET = 0;
 
+    use SoftDeletes;
     use HasFactory;
             /**
      * The attributes that are mass assignable.
@@ -38,7 +40,8 @@ class Post extends Model
         $sql =' SELECT posts.id,posts.user_id, posts.likes, posts.comments, posts.content, posts.published_at, users.username, users.profile_photo_path FROM posts ';
         $sql .= ' LEFT JOIN users';
         $sql .= ' ON posts.user_id = users.id';
-        $sql .= ' WHERE posts.user_id IN ( '.$sql_friends.' ) ORDER BY posts.published_at DESC';
+        $sql .= ' WHERE posts.user_id IN ( '.$sql_friends.' ) AND posts.deleted_at IS NULL ';
+        $sql .= ' ORDER BY posts.published_at DESC';
         $sql .= ' LIMIT '.$limit.' OFFSET '.$offset;
         $results = DB::select( DB::raw($sql), array());
         return $results;

@@ -12,6 +12,7 @@ createPost.addEvents();
 body.addEventListener('click', posts.postSlider);
 body.addEventListener('click',posts.likeSaveEvent);
 body.addEventListener('click',posts.viewAllComments);
+body.addEventListener('click',posts.viewPostOptions);
 modal.addEvents();
 
 posts.loadPosts();

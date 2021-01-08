@@ -110,6 +110,13 @@ header {
   width: 42px;
 }
 
+.post__header .post-options {
+  cursor: pointer;
+  height: 46px;
+  display: flex;
+  align-items: center;
+}
+
 .post__slider {
   position: relative;
   max-width: 612px;
@@ -451,6 +458,47 @@ header {
 .multi-images-form__btn .fa-plus,
 .multi-images-form__btn .fa-edit {
   font-size: 35px;
+  color: black;
+}
+
+.options-modal {
+  background-color: white;
+  border-radius: 12px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.options-modal > li {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.options-modal > li a {
+  padding: 4px 8px;
+  min-height: 48px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.options-modal > li:last-child {
+  border-radius: 12px;
+}
+
+.options-modal__alert {
+  color: #ed4956;
+  font-weight: bolder;
+}
+
+a {
   color: black;
 }
 

@@ -29,33 +29,13 @@ class PostController extends Controller
     public function index()
     {
         //
-        if(isset($_GET['limit'],$_GET['offset'])){
-            echo 'LIMIT AND OFFSET';
-            $posts = Post::getPosts($_GET['limit'],$_GET['offset']);
-        }else{
-            $posts = Post::getPosts();
-        }
-
-        foreach( $posts as $key => &$post){
-
-            //get post images
-            $images = PostImage::where('post_id',$post->id)->get();
-            $post->images = $images;
-
-            $post->userLike = LikedPost::where('post_id',$post->id)
-                                    ->where('user_id',Auth::user()->id)
-                                    ->get();
-            $post->saved = SavedPost::where('post_id',$post->id)
-                                        ->where('user_id',Auth::user()->id)
-                                        ->get();
-        }
-        return view('home.posts',compact('posts'));
+       
     }
 
 
-    public function index1()
+    public function home()
     {
-        return view('welcome');
+        return view('home.index');
     }
 
     public function posts()
@@ -205,6 +185,33 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        echo 'DESTROYED'.$id;
+        try{
+            $post = Post::find(intval($id));
+            var_dump($post);
+            $post->delete();
+            
+            return  Redirect()->back()->with('success','Post deleted successfully');
+        }catch(QueryException $e){
+            //return  Redirect()->back()->with('error','Error ocurred, post has not been deleted');
+        }
+    }
+
+    public function softDelete($id){
+        //$delete = Category::find($id)->delete();
+        return Redirect()->back()->with('success','Category Soft Delete Successfully');
+    }
+
+    public function restore($id){
+        //$delete = Category::withTrashed()->find($id)->restore();
+        return Redirect()->back()->with('success','Category Restored Successfully');
+
+    }
+
+    public function pdelete($id){
+        //$delete = Category::onlyTrashed()->find($id)->forceDelete();
+        return Redirect()->back()->with('success','Category Permanently Deleted');
+
     }
 
 

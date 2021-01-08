@@ -2,7 +2,7 @@ const modal = document.querySelector('.modal');
 const newPostBtn = document.getElementById('new-post-btn-id');
 
 function addEvents(){
-    modal.addEventListener('click',handleModal);
+    document.querySelector('html').addEventListener('click',handleModal);
     newPostBtn.addEventListener('click',openModal);
 }
 
@@ -12,7 +12,8 @@ function openModal(){
 }
 
 function handleModal(e){
-    if(e.target.classList.contains('close-modal')){
+    let modal = e.target.closest('.modal');
+    if(modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))){
         modal.classList.add('hide');
     }
 }

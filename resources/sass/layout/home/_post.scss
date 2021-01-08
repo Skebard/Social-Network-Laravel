@@ -9,6 +9,7 @@
         display:flex;
         justify-content: space-between;
         align-items:center;
+
         .profile-info{
             .round-profile-img{
                 flex-direction:row;
@@ -23,6 +24,12 @@
                 }
 
             }
+        }
+        .post-options{
+            cursor:pointer;
+            height:46px;
+            display:flex;
+            align-items:center;
         }
     }
     &__slider{

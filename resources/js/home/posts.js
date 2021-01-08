@@ -163,7 +163,48 @@ function viewAllComments(e){
 }
 
 
+const postOptionsModal = document.querySelector('.modal-post-options');
+function viewPostOptions(e){
+    let options = e.target.closest('.post-options');
+    if(options){
+        postOptionsModal.classList.remove('hide');
+        console.log(options.dataset.owner);
+        console.log(options.dataset.post_id);
+
+        let postId = options.dataset.post_id;
+        if(options.dataset.owner){
+            
+            html = `
+        <li>
+            <a class='options-modal__alert' href="/posts/${postId}/delete">Delete Post</a>
+        </li>
+        <li>
+            <a href="#">Edit Post</a>
+        </li>
+        <li>
+            <a href="#">Archive Post</a>
+        </li>
+        <li>
+            <a href="">Cancel</a>
+        </li>`;
+        }else{
+            html = ` <li>
+            <a class='options-modal__alert' href="#">Report</a>
+        </li>
+        <li>
+            <a class='options-modal__alert' href="#">Unfollow</a>
+        </li>
+        <li>
+            <a href="">Cancel</a>
+        </li>`;
+        }
+        postOptionsModal.querySelector('.options-modal').innerHTML = html;
+    }
+}
+
+
 exports.postSlider = postSlider;
 exports.likeSaveEvent = likeSaveEvent;
 exports.loadPosts = loadPosts;
 exports.viewAllComments= viewAllComments;
+exports.viewPostOptions = viewPostOptions;

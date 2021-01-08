@@ -14,7 +14,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="post-options">
+                        <div class="post-options" data-owner="<?= $post->user_id===Auth::user()->id? 1:0 ?>" data-post_id = '{{$post->id}}'>
                             <svg aria-label="More options" class="_8-yf5 " fill="#262626" height="16" viewBox="0 0 48 48" width="16">
                                 <circle clip-rule="evenodd" cx="8" cy="24" fill-rule="evenodd" r="4.5"></circle>
                                 <circle clip-rule="evenodd" cx="24" cy="24" fill-rule="evenodd" r="4.5"></circle>
