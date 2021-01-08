@@ -76,7 +76,7 @@
     @yield('content')
     </main>
 
-
+@include('layouts.footer')
 </body>
 
 @yield('modals')

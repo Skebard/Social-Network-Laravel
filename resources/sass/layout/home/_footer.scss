@@ -1,0 +1,32 @@
+
+footer{
+    color:#8e8e8e;
+    font-size:12px;
+    ul{
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+        margin-bottom:12px;
+        li{
+            margin:0 8px;
+        }
+    }
+    .lang-copyright{
+        padding-top:12px;
+        .select-lang-container{
+            position:relative;
+        }
+        .select-lang{
+            background-color:$primary-bg-color;
+            border:none;
+            opacity:0;
+            position:absolute;
+            left:0;
+            top:0;
+            &__arrow{
+                margin-left: 6px;
+            }
+        }
+
+    }
+}

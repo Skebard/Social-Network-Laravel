@@ -29,7 +29,7 @@ class PostController extends Controller
     public function index()
     {
         //
-       
+
     }
 
 
@@ -41,46 +41,44 @@ class PostController extends Controller
     public function posts()
     {
 
-        if(isset($_GET['limit'],$_GET['offset'])){
+        if (isset($_GET['limit'], $_GET['offset'])) {
             $offset = intval($_GET['offset']);
             $limit = intval($_GET['limit']);
-            $posts = Post::getPosts($offset,$limit);
-
-        }else{
+            $posts = Post::getPosts($offset, $limit);
+        } else {
             $posts = Post::getPosts();
         }
 
-        foreach( $posts as $key => &$post){
+        foreach ($posts as $key => &$post) {
 
             //get post images
-            if($post->profile_photo_path==''){
+            if ($post->profile_photo_path == '') {
                 $post->profile_photo_path = 'images/users/defaultProfileImage.png';
             }
-            $images = PostImage::where('post_id',$post->id)->get();
+            $images = PostImage::where('post_id', $post->id)->get();
             $post->images = $images;
 
-            $post->userLike = LikedPost::where('post_id',$post->id)
-                                    ->where('user_id',Auth::user()->id)
-                                    ->get();
-            $post->saved = SavedPost::where('post_id',$post->id)
-                                        ->where('user_id',Auth::user()->id)
-                                        ->get();
+            $post->userLike = LikedPost::where('post_id', $post->id)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            $post->saved = SavedPost::where('post_id', $post->id)
+                ->where('user_id', Auth::user()->id)
+                ->get();
             $post->numComments = $post->comments;
-            $post->comments = PostComment::where('post_id',$post->id)->orderByDesc('published_at')->get();
-            foreach($post->comments as &$comment){
+            $post->comments = PostComment::where('post_id', $post->id)->orderByDesc('published_at')->get();
+            foreach ($post->comments as &$comment) {
                 $comment->username  = User::select('username')
-                ->where('id',$comment->user_id)
-                ->first()->username;
+                    ->where('id', $comment->user_id)
+                    ->first()->username;
             }
         }
 
         $status = 1;
-        if(count($posts)===0){
+        if (count($posts) === 0) {
             $status = 2;    //indicates that there are no more results
         }
-        $postsView = view('home.posts',compact('posts'));
-        return json_encode( (object) ['status' => $status,'data'=>strval($postsView),'count'=>count($posts)]);
-
+        $postsView = view('home.posts', compact('posts'));
+        return json_encode((object) ['status' => $status, 'data' => strval($postsView), 'count' => count($posts)]);
     }
 
     /**
@@ -91,6 +89,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('posts.create');
     }
 
     /**
@@ -103,43 +102,45 @@ class PostController extends Controller
     {
         //
         $images = $request->file('image');
-        if(file_exists('images/posts/slider2.jpg')){
+        if (file_exists('images/posts/slider2.jpg')) {
             echo 'exists';
         }
         echo $request->content;
 
         Post::insert([
-            'user_id'=>Auth::user()->id,
-            'content'=>$request->content,
-            'status'=>0,
-            'likes'=>0,
-            'comments'=>0,
-            'published_at'=>Carbon::now(),
+            'user_id' => Auth::user()->id,
+            'content' => $request->content,
+            'status' => 0,
+            'likes' => 0,
+            'comments' => 0,
+            'published_at' => Carbon::now(),
             'created_at' => Carbon::now(),
         ]);
-        $postId=DB::getPdo()->lastInsertId();
-        echo 'last ID' . $postId ."            /";
+        $postId = DB::getPdo()->lastInsertId();
 
+        $img_position = 1;
 
-        $img_position= 1;
-        foreach ($images as $image) {
-            echo 'ANOTHER IMAGE   ';
-            $name_gen = hexdec(uniqid());
-            $img_ext = strtolower($image->getClientOriginalExtension());
-            $img_name = $name_gen . '.' . $img_ext;
-            $up_location = 'images/posts/';
-            $img_location = $up_location . $img_name;
-            $image->move($up_location, $img_name);
+        if ($images) {
+            foreach ($images as $image) {
+                echo 'ANOTHER IMAGE   ';
+                $name_gen = hexdec(uniqid());
+                $img_ext = strtolower($image->getClientOriginalExtension());
+                $img_name = $name_gen . '.' . $img_ext;
+                $up_location = 'images/posts/';
+                $img_location = $up_location . $img_name;
+                $image->move($up_location, $img_name);
 
-        PostImage::insert([
-            'post_id'=>$postId,
-            'image'=>$img_location,
-            'position'=> $img_position++,
-            'created_at' => Carbon::now(),
-        ]);
+                PostImage::insert([
+                    'post_id' => $postId,
+                    'image' => $img_location,
+                    'position' => $img_position++,
+                    'created_at' => Carbon::now(),
+                ]);
+            }
         }
 
-        return Redirect()->back()->with('success','Post created successfully');
+
+        return Redirect()->back()->with('success', 'Post created successfully');
     }
 
     /**
@@ -182,64 +183,64 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($postId)
     {
-        //
-        echo 'DESTROYED'.$id;
-        try{
-            $post = Post::find(intval($id));
-            var_dump($post);
-            $post->delete();
-            
-            return  Redirect()->back()->with('success','Post deleted successfully');
-        }catch(QueryException $e){
-            //return  Redirect()->back()->with('error','Error ocurred, post has not been deleted');
+        try {
+            $deletedPost = Post::where('user_id', Auth::user()->id)
+                ->where('id', $postId)
+                ->delete();
+            if ($deletedPost > 0) {
+                return  Redirect()->back()->with('error', 'Post could not be deleted ');
+            } else {
+                return  Redirect()->back()->with('success', 'Post deleted successfully');
+            }
+        } catch (QueryException $e) {
+            return  Redirect()->back()->with('error', 'Error ocurred, post has not been deleted');
         }
     }
 
-    public function softDelete($id){
+    public function softDelete($id)
+    {
         //$delete = Category::find($id)->delete();
-        return Redirect()->back()->with('success','Category Soft Delete Successfully');
+        return Redirect()->back()->with('success', 'Category Soft Delete Successfully');
     }
 
-    public function restore($id){
+    public function restore($id)
+    {
         //$delete = Category::withTrashed()->find($id)->restore();
-        return Redirect()->back()->with('success','Category Restored Successfully');
-
+        return Redirect()->back()->with('success', 'Category Restored Successfully');
     }
 
-    public function pdelete($id){
+    public function pdelete($id)
+    {
         //$delete = Category::onlyTrashed()->find($id)->forceDelete();
-        return Redirect()->back()->with('success','Category Permanently Deleted');
-
+        return Redirect()->back()->with('success', 'Category Permanently Deleted');
     }
 
 
     public function savePost($postId)
     {
 
-        try{
+        try {
             SavedPost::insert([
-                'user_id'=>Auth::user()->id,
-                'post_id'=>$postId,
+                'user_id' => Auth::user()->id,
+                'post_id' => $postId,
             ]);
-            return  json_encode( (object) ['status' => 1]);
-        }catch(QueryException $e){
-            return  json_encode( (object) ['status' => 0]);
+            return  json_encode((object) ['status' => 1]);
+        } catch (QueryException $e) {
+            return  json_encode((object) ['status' => 0]);
         }
     }
 
     public function removeSavedPost($postId)
     {
-        try{
-            SavedPost::where('user_id',Auth::user()->id)
-            ->where('post_id',$postId)
-            ->delete();
-            return  json_encode( (object) ['status' => 1]);
-        }catch(QueryException $e){
-            return  json_encode( (object) ['status' => 0]);
+        try {
+            SavedPost::where('user_id', Auth::user()->id)
+                ->where('post_id', $postId)
+                ->delete();
+            return  json_encode((object) ['status' => 1]);
+        } catch (QueryException $e) {
+            return  json_encode((object) ['status' => 0]);
         }
-
     }
-
 }

@@ -28,6 +28,43 @@ ul {
   display: none;
 }
 
+footer {
+  color: #8e8e8e;
+  font-size: 12px;
+}
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+footer ul li {
+  margin: 0 8px;
+}
+
+footer .lang-copyright {
+  padding-top: 12px;
+}
+
+footer .lang-copyright .select-lang-container {
+  position: relative;
+}
+
+footer .lang-copyright .select-lang {
+  background-color: #fafafa;
+  border: none;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+footer .lang-copyright .select-lang__arrow {
+  margin-left: 6px;
+}
+
 header {
   position: -webkit-sticky;
   position: sticky;
@@ -81,6 +118,10 @@ header {
   height: 22px;
   font-size: 24px;
   color: black;
+}
+
+.posts-container {
+  margin-bottom: 24px;
 }
 
 .post__username {

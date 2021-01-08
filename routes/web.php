@@ -29,6 +29,7 @@ Route::get('/',[PostController::class,'home']);
 Route::get('/posts',[PostController::class,'posts']);
 Route::get('/posts/{postId}/delete',[PostController::class,'destroy'])->middleware('auth');
 Route::post('/posts',[PostController::class,'store']);
+Route::get('/post/{postId}/archive',[PostController::class,'archive']);
 
 
 //Save post
