@@ -266,6 +266,9 @@ function populateModal(postId) {
     //get description
     descriptionInput.value = data.content; //get post images
 
+    data.images = data.images.sort(function (a, b) {
+      return b.position - a.position;
+    });
     data.images.forEach(function (image) {
       var imageContainer = createImageInput(image.image);
       console.log(imageContainer);
@@ -397,7 +400,7 @@ function getFormData() {
     if (!image.querySelector('.last')) {
       //if there is no file (length 0)
       if (input.files.length > 0) {
-        formData.append('imagesFiles', input.files[0]);
+        formData.append('imagesFiles[]', input.files[0]);
         imagesData.push({
           type: 'file'
         });
@@ -410,6 +413,7 @@ function getFormData() {
     }
   });
   formData.append('images', JSON.stringify(imagesData));
+  formData.append('content', descriptionInput.value);
   return formData;
 }
 

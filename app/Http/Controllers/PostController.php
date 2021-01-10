@@ -120,8 +120,8 @@ class PostController extends Controller
             }
         }
 
-
-        return Redirect()->back()->with('success', 'Post created successfully');
+        dd($images);
+        //return Redirect()->back()->with('success', 'Post created successfully');
     }
 
     /**
@@ -154,10 +154,56 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $postId)
     {
-        //
-        echo 'Post id:' .$id;
+        Post::where('user_id',Auth::user()->id)
+                ->where('id',$postId)
+                ->update(['updated_at'=>Carbon::now(),
+                            'content'=>$request->content]);
+        $images = json_decode($request->images);
+        $srcImage = [];
+        $img_position = 1;
+        $filesPos = 0;
+        $imagesFiles = $request->file('imagesFiles');
+        $imagesFilesToInsert =[];
+        foreach($images as $image)
+        {
+            echo 'IMAGE POSITION: '.$img_position;
+            if($image->type === 'file'){
+                //store new images
+                $name_gen = hexdec(uniqid());
+                $img_ext = strtolower($imagesFiles[$filesPos]->getClientOriginalExtension());
+                $img_name = $name_gen . '.' . $img_ext;
+                $up_location = 'images/posts/';
+                $img_location = $up_location . $img_name;
+                $imagesFiles[$filesPos]->move($up_location,$img_name);
+                $filesPos++;
+
+                //we have to insert them after we update and delete the existing images
+                //or they will not be added since post_id and image combination are unique
+
+            }else{
+
+                $storedImage = substr($image->image , strpos($image->image,'images/posts'));
+                $srcImage[] = $storedImage;
+                $img_location = $storedImage;
+            }
+            $imagesFilesToInsert[] =[
+                'post_id'=> $postId,
+                'image' =>$img_location,
+                'position'=>$img_position,
+                'created_at' =>Carbon::now(),
+            ];
+            $img_position++;
+        }
+        //delete old images
+        PostImage::where('post_id',$postId)->delete();
+        foreach($imagesFilesToInsert as $image){
+            PostImage::insert($image);
+        }
+
+        var_dump($imagesFiles);
+        var_dump($srcImage);
     }
 
     /**
