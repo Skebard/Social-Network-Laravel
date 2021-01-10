@@ -38,6 +38,12 @@ class PostController extends Controller
         return view('home.index');
     }
 
+    public function singlePost($postId)
+    {
+        //echo "<h1>$postId</h1>";
+        //dd(Post::find($postId));
+        return json_encode(Post::getPost($postId));
+    }
     public function posts()
     {
 
@@ -48,31 +54,6 @@ class PostController extends Controller
         } else {
             $posts = Post::getPosts();
         }
-
-        foreach ($posts as $key => &$post) {
-
-            //get post images
-            if ($post->profile_photo_path == '') {
-                $post->profile_photo_path = 'images/users/defaultProfileImage.png';
-            }
-            $images = PostImage::where('post_id', $post->id)->get();
-            $post->images = $images;
-
-            $post->userLike = LikedPost::where('post_id', $post->id)
-                ->where('user_id', Auth::user()->id)
-                ->get();
-            $post->saved = SavedPost::where('post_id', $post->id)
-                ->where('user_id', Auth::user()->id)
-                ->get();
-            $post->numComments = $post->comments;
-            $post->comments = PostComment::where('post_id', $post->id)->orderByDesc('published_at')->get();
-            foreach ($post->comments as &$comment) {
-                $comment->username  = User::select('username')
-                    ->where('id', $comment->user_id)
-                    ->first()->username;
-            }
-        }
-
         $status = 1;
         if (count($posts) === 0) {
             $status = 2;    //indicates that there are no more results
@@ -89,7 +70,7 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('posts.create');
+       
     }
 
     /**
@@ -162,7 +143,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo 'hi';
+        return view('posts.edit');
     }
 
     /**
@@ -175,6 +157,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
+        echo 'Post id:' .$id;
     }
 
     /**
@@ -213,6 +196,7 @@ class PostController extends Controller
 
     public function pdelete($id)
     {
+        //! DELETE images from images/post
         //$delete = Category::onlyTrashed()->find($id)->forceDelete();
         return Redirect()->back()->with('success', 'Category Permanently Deleted');
     }

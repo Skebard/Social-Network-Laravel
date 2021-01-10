@@ -54,8 +54,7 @@ function handleImageInputs(e) {
             imagesContainer.append(newInput.container);
             newInput.input.addEventListener('change',handleImageInputs);
         }
-    } else {
-        console.log('NO');
+    } else { //if the user does not select an image remove the input unless is the last one
         if(inputContainer !== imagesContainer.lastElementChild){
             inputContainer.remove();
         }
@@ -79,4 +78,7 @@ function createImageInput() {
         input:inputImage
     };
 }
+
+
+
 exports.addEvents = addEvents;

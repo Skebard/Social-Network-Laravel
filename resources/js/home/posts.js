@@ -179,7 +179,7 @@ function viewPostOptions(e){
             <a class='options-modal__alert' href="/posts/${postId}/delete">Delete Post</a>
         </li>
         <li>
-            <a href="#">Edit Post</a>
+            <a class='edit-post-option' data-post_id="${postId}" href="#">Edit Post</a>
         </li>
         <li>
             <a href="#">Archive Post</a>

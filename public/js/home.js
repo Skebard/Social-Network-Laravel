@@ -102,6 +102,8 @@ var createPost = __webpack_require__(/*! ./home/createPost */ "./resources/js/ho
 
 var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.js");
 
+var editPost = __webpack_require__(/*! ./home/editPost */ "./resources/js/home/editPost.js");
+
 var body = document.querySelector('body');
 stories.slideStoriesEvents();
 createPost.addEvents();
@@ -109,6 +111,7 @@ body.addEventListener('click', posts.postSlider);
 body.addEventListener('click', posts.likeSaveEvent);
 body.addEventListener('click', posts.viewAllComments);
 body.addEventListener('click', posts.viewPostOptions);
+body.addEventListener('click', editPost.showEditForm);
 modal.addEvents();
 posts.loadPosts(); //Lazy load posts
 
@@ -185,8 +188,7 @@ function handleImageInputs(e) {
       newInput.input.addEventListener('change', handleImageInputs);
     }
   } else {
-    console.log('NO');
-
+    //if the user does not select an image remove the input unless is the last one
     if (inputContainer !== imagesContainer.lastElementChild) {
       inputContainer.remove();
     }
@@ -212,6 +214,206 @@ function createImageInput() {
 }
 
 exports.addEvents = addEvents;
+
+/***/ }),
+
+/***/ "./resources/js/home/editPost.js":
+/*!***************************************!*\
+  !*** ./resources/js/home/editPost.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\"  add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" active edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">";
+var imagesContainer = document.getElementById("edit-images-container-id");
+var POST_URL = '/posts/';
+var descriptionInput = document.getElementById('edit-content-id');
+var editPostForm = document.getElementById('edit-post-form-id');
+var firstInput = document.getElementById('edit-input-1-id');
+var editModal = document.getElementById('edit-modal-id');
+var currentPostId;
+
+function showEditForm(e) {
+  if (e.target.tagName =  true && e.target.classList.contains('edit-post-option')) {
+    var postId = e.target.dataset.post_id;
+    console.log(e.target.dataset.post_id);
+    editModal.classList.remove('hide');
+    populateModal(postId);
+  }
+}
+
+function populateModal(postId) {
+  currentPostId = postId;
+  imagesContainer.addEventListener('click', deleteImageInput);
+  firstInput.addEventListener('change', handleImageInputs);
+  fetch(POST_URL + postId).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    //get description
+    descriptionInput.value = data.content; //get post images
+
+    data.images.forEach(function (image) {
+      var imageContainer = createImageInput(image.image);
+      console.log(imageContainer);
+      imagesContainer.insertAdjacentElement('afterbegin', imageContainer.container);
+      imageContainer.input.addEventListener('change', handleImageInputs);
+    });
+  });
+}
+/**
+ * 
+ * @param {} e 
+ */
+
+
+function deleteImageInput(e) {
+  console.log(e.target);
+
+  if (e.target.classList.contains('fa-trash-alt')) {
+    e.target.parentElement.parentElement.remove();
+  }
+}
+
+function handleImageInputs(e) {
+  var input = e.currentTarget; //Check if a file has been selected
+
+  var inputContainer = input.parentElement;
+
+  if (input.files && input.files[0]) {
+    var imgDisplay = inputContainer.querySelector('.image-display');
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      imgDisplay.src = e.target.result;
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+    if (inputContainer === imagesContainer.lastElementChild) {
+      //show edit icon
+      inputContainer.querySelector('.add-image-btn').classList.remove('active');
+      inputContainer.querySelector('.edit-image-btn').classList.add('active');
+      var newInput = createImageInput();
+      imagesContainer.append(newInput.container);
+      newInput.input.addEventListener('change', handleImageInputs);
+    }
+  } else {
+    //if the user does not select an image remove the input unless is the last one
+    if (inputContainer !== imagesContainer.lastElementChild) {
+      inputContainer.remove();
+    }
+  }
+}
+/**
+ * Creates a new imageInput HTMLElement and returns it.
+ * @return {Object} Object whose properties are the html container of the input and the input itself
+ */
+
+
+function createImageInput() {
+  var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+  var inputContainer = document.createElement('div');
+  inputContainer.classList.add('input-container');
+  inputContainer.innerHTML = inputContainerContent;
+
+  if (url) {
+    inputContainer.querySelector('.image-display').src = url;
+    inputContainer.querySelector('.delete-image-btn.last').classList.remove('last');
+  } else {
+    //remove last class from the previous input
+    imagesContainer.querySelector('.delete-image-btn.last').classList.remove('last');
+  }
+
+  var inputImage = inputContainer.querySelector('.multi-images-form__image-input');
+  return {
+    container: inputContainer,
+    input: inputImage
+  };
+}
+
+editPostForm.addEventListener('submit', editPost);
+
+function editPost(e) {
+  e.preventDefault();
+  var formData = getFormData();
+  var postId = currentPostId;
+  token = editPostForm.querySelector('input[name=_token]');
+  fetch('posts/' + postId + '/update', {
+    method: 'post',
+    body: formData,
+    headers: {
+      'X-CSRF-TOKEN': token.value
+    }
+  }).then(function (resp) {
+    return resp.text();
+  }).then(function (data) {
+    return console.log(data);
+  });
+
+  var _iterator = _createForOfIteratorHelper(formData),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {// console.log(key);
+      // console.log(value);
+
+      var _step$value = _slicedToArray(_step.value, 2);
+
+      key = _step$value[0];
+      value = _step$value[1];
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+}
+/**
+ * Gets the data from the form and returns the images in the displayed order
+ * @return {Object} Ordered array of objects where each object represe
+ */
+
+
+function getFormData() {
+  var formData = new FormData();
+  var imagesData = [];
+  Array.from(imagesContainer.children).forEach(function (image, pos) {
+    var input = image.querySelector('input'); //the last input is always empty so it is not saved
+
+    if (!image.querySelector('.last')) {
+      //if there is no file (length 0)
+      if (input.files.length > 0) {
+        formData.append('imagesFiles', input.files[0]);
+        imagesData.push({
+          type: 'file'
+        });
+      } else {
+        imagesData.push({
+          type: 'src',
+          image: image.querySelector('.image-display').src
+        });
+      }
+    }
+  });
+  formData.append('images', JSON.stringify(imagesData));
+  return formData;
+}
+
+exports.showEditForm = showEditForm;
 
 /***/ }),
 
@@ -423,7 +625,7 @@ function viewPostOptions(e) {
     var postId = options.dataset.post_id;
 
     if (options.dataset.owner) {
-      html = "\n        <li>\n            <a class='options-modal__alert' href=\"/posts/".concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Edit Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Archive Post</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>");
+      html = "\n        <li>\n            <a class='options-modal__alert' href=\"/posts/".concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a class='edit-post-option' data-post_id=\"").concat(postId, "\" href=\"#\">Edit Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Archive Post</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>");
     } else {
       html = " <li>\n            <a class='options-modal__alert' href=\"#\">Report</a>\n        </li>\n        <li>\n            <a class='options-modal__alert' href=\"#\">Unfollow</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>";
     }

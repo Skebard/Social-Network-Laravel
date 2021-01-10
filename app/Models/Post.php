@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\PostImage;
 use Auth;
 
 
@@ -31,7 +32,15 @@ class Post extends Model
         "comments",
     ];
 
-    public static function getPosts(int $offset=self::POST_OFFSET, int $limit=self::POST_LIMIT){
+    public static function getPost($postId)
+    {
+        $post = Post::find($postId);
+        $post->images = PostImage::where('post_id',$postId)->get();
+        return $post;
+    }
+
+    public static function getPosts(int $offset=self::POST_OFFSET, int $limit=self::POST_LIMIT)
+    {
         //get self Id and friends' ids
         $sql_friends ='SELECT user_two_id FROM relationships WHERE user_one_id = '.Auth::user()->id;
         $sql_friends .= ' UNION SELECT user_one_id FROM relationships WHERE user_two_id = '.Auth::user()->id;
@@ -43,8 +52,31 @@ class Post extends Model
         $sql .= ' WHERE posts.user_id IN ( '.$sql_friends.' ) AND posts.deleted_at IS NULL ';
         $sql .= ' ORDER BY posts.published_at DESC';
         $sql .= ' LIMIT '.$limit.' OFFSET '.$offset;
-        $results = DB::select( DB::raw($sql), array());
-        return $results;
+        $posts = DB::select( DB::raw($sql), array());
+        foreach ($posts as $key => &$post) {
+
+            //get post images
+            if ($post->profile_photo_path == '') {
+                $post->profile_photo_path = 'images/users/defaultProfileImage.png';
+            }
+            $images = PostImage::where('post_id', $post->id)->get();
+            $post->images = $images;
+
+            $post->userLike = LikedPost::where('post_id', $post->id)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            $post->saved = SavedPost::where('post_id', $post->id)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            $post->numComments = $post->comments;
+            $post->comments = PostComment::where('post_id', $post->id)->orderByDesc('published_at')->get();
+            foreach ($post->comments as &$comment) {
+                $comment->username  = User::select('username')
+                    ->where('id', $comment->user_id)
+                    ->first()->username;
+            }
+        }
+        return $posts;
     }
     public static function addOneComment(int $postId){
         $sql = 'UPDATE posts SET comments = comments + 1 WHERE id ='.$postId;
