@@ -5,19 +5,30 @@ const inputContainerContent = `
     <img class="image-display" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="">
     <input  type="file" name='image[]' class="multi-images-form__image-input">`;
 
-    const imagesContainer = document.getElementById("edit-images-container-id");
+const imagesContainer = document.getElementById("edit-images-container-id");
 
 const POST_URL = '/posts/';
 const descriptionInput = document.getElementById('edit-content-id');
 const editPostForm = document.getElementById('edit-post-form-id');
 const firstInput = document.getElementById('edit-input-1-id');
 const editModal = document.getElementById('edit-modal-id');
+const optionsModal = document.getElementById('post-options-modal-id');
 
 let currentPostId;
 function showEditForm(e)
 {
     if(e.target.tagName='A' && e.target.classList.contains('edit-post-option'))
     {
+        optionsModal.classList.add('hide');
+        console.log(imagesContainer.children);
+        let numImages = imagesContainer.children.length;
+        Array.from(imagesContainer.children).forEach((div,index)=>{
+            if(index<numImages-1){
+                console.log('INDEX',index);
+                div.remove();
+            }
+
+        });
         let postId = e.target.dataset.post_id;
         console.log(e.target.dataset.post_id);
         editModal.classList.remove('hide');

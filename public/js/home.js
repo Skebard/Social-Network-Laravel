@@ -245,10 +245,20 @@ var descriptionInput = document.getElementById('edit-content-id');
 var editPostForm = document.getElementById('edit-post-form-id');
 var firstInput = document.getElementById('edit-input-1-id');
 var editModal = document.getElementById('edit-modal-id');
+var optionsModal = document.getElementById('post-options-modal-id');
 var currentPostId;
 
 function showEditForm(e) {
   if (e.target.tagName =  true && e.target.classList.contains('edit-post-option')) {
+    optionsModal.classList.add('hide');
+    console.log(imagesContainer.children);
+    var numImages = imagesContainer.children.length;
+    Array.from(imagesContainer.children).forEach(function (div, index) {
+      if (index < numImages - 1) {
+        console.log('INDEX', index);
+        div.remove();
+      }
+    });
     var postId = e.target.dataset.post_id;
     console.log(e.target.dataset.post_id);
     editModal.classList.remove('hide');
@@ -629,7 +639,7 @@ function viewPostOptions(e) {
     var postId = options.dataset.post_id;
 
     if (options.dataset.owner) {
-      html = "\n        <li>\n            <a class='options-modal__alert' href=\"/posts/".concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a class='edit-post-option' data-post_id=\"").concat(postId, "\" href=\"#\">Edit Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Archive Post</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>");
+      html = "\n        <li>\n            <a class='options-modal__alert' href=\"/posts/".concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a class='edit-post-option' data-post_id=\"").concat(postId, "\" >Edit Post</a>\n        </li>\n        <li>\n            <a href=\"#\">Archive Post</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>");
     } else {
       html = " <li>\n            <a class='options-modal__alert' href=\"#\">Report</a>\n        </li>\n        <li>\n            <a class='options-modal__alert' href=\"#\">Unfollow</a>\n        </li>\n        <li>\n            <a href=\"\">Cancel</a>\n        </li>";
     }

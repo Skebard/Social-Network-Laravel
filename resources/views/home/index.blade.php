@@ -257,7 +257,7 @@
 
 
 <!-- EDIT POST -->
-<div class=" modal " id='edit-modal-id'>
+<div class="hide modal " id='edit-modal-id'>
     <div class="modal-content">
         <button class="close-modal">
             Close modal
@@ -290,7 +290,7 @@
 <!-- end edit post modal -->
 
 <!-- POST OPTIONS MODAL -->
-<div class="hide modal modal-post-options ">
+<div class="hide modal modal-post-options " id='post-options-modal-id'>
     <div class="modal-content">
         <button class="close-modal">
             Close modal

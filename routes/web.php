@@ -35,6 +35,10 @@ Route::post('/posts/{postId}/update',[PostController::class,'update']);
 Route::get('/posts/{postId}',[PostController::class,'singlePost']);
 
 
+Route::get('/tests',function(){
+    return view('tests');
+});
+
 //Save post
 Route::get('/{postId}/save',[PostController::class,'savePost']);
 Route::get('/{postId}/save/remove',[PostController::class,'removeSavedPost']);
