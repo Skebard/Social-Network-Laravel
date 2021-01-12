@@ -102,4 +102,15 @@ class UserController extends Controller
         $page = 'saved';
         return view('profile.home',compact('posts','user','page'));
     }
+
+    public function archivedPosts($username)
+    {
+        $user = Auth::user();
+        if($username !== $user->username){
+            return 'error';
+        }
+        $page = 'archived';
+        $posts = Post::getDeletedPosts();
+        return view('profile.home',compact('posts','user','page'));
+    }
 }

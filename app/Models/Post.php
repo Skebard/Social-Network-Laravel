@@ -124,6 +124,16 @@ class Post extends Model
         return $posts;
     }
 
+    public static function getDeletedPosts()
+    {
+        $userId = Auth::user()->id;
+        $posts = Post::onlyTrashed()->where('user_id',$userId)->get();
+
+        foreach ($posts as $key => $post) {
+            self::getPostData($post);
+        }
+        return $posts;
+    }
     public static function getPostData(&$post)
     {
         $post->images = PostImage::where('post_id', $post->id)->get();

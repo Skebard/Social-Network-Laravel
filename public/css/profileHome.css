@@ -235,6 +235,10 @@ body main {
   color: black;
 }
 
+.profile-navigation ul > li.active a span {
+  color: black;
+}
+
 .posts-container .posts {
   display: flex;
   flex-wrap: wrap;

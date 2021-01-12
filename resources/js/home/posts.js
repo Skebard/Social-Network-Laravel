@@ -182,7 +182,7 @@ function viewPostOptions(e){
             <a class='edit-post-option' data-post_id="${postId}" >Edit Post</a>
         </li>
         <li>
-            <a href="#">Archive Post</a>
+            <a href="/posts/${postId}/archive">Archive Post</a>
         </li>
         <li>
             <a href="">Cancel</a>
