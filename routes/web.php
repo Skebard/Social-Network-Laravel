@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,11 @@ use App\Http\Controllers\LikesController;
 
 //Route::resource('/{postId}/postComments',PostCommentController::class);
 
+//Users
+//Route::get('/{username}',[UserController::class,'show']);
+Route::get('/{username}/saved',[UserController::class,'savedPosts'])->middleware('auth');
+// Route::get('/posts/saved',[UserController::class,'savedPosts']);
+
 
 //Posts
 Route::get('/',[PostController::class,'home']);
@@ -39,6 +45,10 @@ Route::get('/tests',function(){
     return view('tests');
 });
 
+
+
+
+
 //Save post
 Route::get('/{postId}/save',[PostController::class,'savePost']);
 Route::get('/{postId}/save/remove',[PostController::class,'removeSavedPost']);
@@ -53,10 +63,7 @@ Route::get('/{postId}/like',[LikesController::class,'likePost']);
 Route::get('/{postId}/like/remove',[LikesController::class,'removeLikePost']);
 
 
-//Profile
-Route::get('/{username}',function($id){
-    return view('profile.home');
-});
+
 
 Route::get('/homePage',function (){
     return view('homePage');

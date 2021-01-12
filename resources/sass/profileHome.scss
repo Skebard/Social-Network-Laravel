@@ -157,6 +157,7 @@ body main{
                 color: #8e8e8e;
   
                 .category{
+                    font-weight: bolder;
                     text-transform: uppercase;
                     @media screen and( max-width:$s-width){
                         display:none;
