@@ -304,6 +304,13 @@ body main {
   background-color: rgba(0, 0, 0, 0.35);
 }
 
+.posts-container .posts li .hover-info__bg .post-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
 .posts-container .posts li .hover-info__content {
   color: white;
   z-index: 10;
