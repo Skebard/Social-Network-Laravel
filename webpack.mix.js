@@ -21,4 +21,5 @@ mix.js('resources/js/app.js', 'public/js')
     .webpackConfig(require('./webpack.config'));
 
 mix.sass('resources/sass/login.scss', 'public/css')
-    .sass('resources/sass/home.scss', 'public/css');
+    .sass('resources/sass/home.scss', 'public/css')
+    .sass('resources/sass/profileHome.scss','public/css');

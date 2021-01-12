@@ -11,8 +11,8 @@
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/9547750bbd.js" crossorigin="anonymous"></script>
-    <!-- Scripts -->
-    <script defer src="{{asset('js/home.js')}}"></script>
+
+    @yield('links')
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/home.css')}}" class="">
 

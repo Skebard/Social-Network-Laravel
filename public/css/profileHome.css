@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.box {
+  border-radius: 1px;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+}
+
+.hide,
+.modal.hide {
+  display: none;
+}
+
+.profile-info {
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.profile-info__image {
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.profile-info__right-up {
+  flex-shrink: 0;
+  flex-grow: 1;
+  margin-left: 90px;
+}
+
+.profile-info__right-up .user-options {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info__right-up .user-options > * {
+  margin-right: 15px;
+}
+
+.profile-info__right-up .user-options .username {
+  font-weight: lighter;
+  font-size: 28px;
+}
+
+.profile-info__right-up .user-options .edit-btn {
+  font-weight: bolder;
+  font-size: 14px;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 5px 9px;
+}
+
+.profile-info__right-up > div {
+  margin-bottom: 20px;
+}
+
+.profile-info__right-up .info span {
+  margin-right: 20px;
+}
+
+.profile-info__right-bottom {
+  position: relative;
+  bottom: 60px;
+  width: 100%;
+  padding-left: 240px;
+}
+
+.profile-info__right-bottom .name {
+  font-size: 16px;
+}
+
+.profile-info__right-bottom .description {
+  font-size: 14px;
+}
+
+.profile-navigation {
+  position: relative;
+}
+
+.profile-navigation .top-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100%;
+  content: "";
+  background-color: #dbdbdb;
+  display: block;
+}
+
+.profile-navigation ul {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-navigation ul > li:not(:last-child) {
+  margin-right: 60px;
+}
+
+.profile-navigation ul > li {
+  padding: 20px 0;
+  z-index: 10;
+}
+
+.profile-navigation ul > li a {
+  font-size: 12px;
+  font-weight: bolder;
+}
+
+.profile-navigation ul > li a {
+  color: #8e8e8e;
+}
+
+.profile-navigation ul > li a .archive-icon {
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+.profile-navigation ul > li.active {
+  border-top: 1px solid black;
+}
+
+.profile-navigation ul > li.active a {
+  color: black;
+}
+

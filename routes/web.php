@@ -53,6 +53,11 @@ Route::get('/{postId}/like',[LikesController::class,'likePost']);
 Route::get('/{postId}/like/remove',[LikesController::class,'removeLikePost']);
 
 
+//Profile
+Route::get('/{username}',function($id){
+    return view('profile.home');
+});
+
 Route::get('/homePage',function (){
     return view('homePage');
 });
