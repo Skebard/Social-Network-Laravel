@@ -60,7 +60,7 @@ function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
  * @param {*} e 
  */
 function likeSaveEvent(e) {
-    
+
     let element = e.target;
     let parentElement = element.parentElement;
     let anchor;
@@ -78,32 +78,32 @@ function likeSaveEvent(e) {
             anchorGetAndToggle(anchor, 'dislike')
                 .then(
                     status => {
-                        if(status){
+                        if (status) {
                             let likes = anchor.parentElement.parentElement.parentElement.querySelector('.post__likes--number');
-                            likes.textContent = parseInt(likes.textContent)+1;
+                            likes.textContent = parseInt(likes.textContent) + 1;
                         }
                     }
-            );
+                );
             console.log('like');
-         
+
         } else if (classes.contains('dislike')) {
-            anchorGetAndToggle(anchor,'like')
-            .then(
-                status => {
-                    if(status){
-                        let likes = anchor.parentElement.parentElement.parentElement.querySelector('.post__likes--number');
-                        likes.textContent = parseInt(likes.textContent)-1;
+            anchorGetAndToggle(anchor, 'like')
+                .then(
+                    status => {
+                        if (status) {
+                            let likes = anchor.parentElement.parentElement.parentElement.querySelector('.post__likes--number');
+                            likes.textContent = parseInt(likes.textContent) - 1;
+                        }
                     }
-                }
-        );
+                );
 
         } else if (classes.contains('save')) {
             console.log('save');
-            anchorGetAndToggle(anchor,'unsave');
+            anchorGetAndToggle(anchor, 'unsave');
 
         } else if (classes.contains('unsave')) {
             console.log('unsave');
-            anchorGetAndToggle(anchor,'save');
+            anchorGetAndToggle(anchor, 'save');
 
         }
     }
@@ -116,8 +116,7 @@ function likeSaveEvent(e) {
  * @param {string} classToShow name of the class that belongs to the sibling anchor to be shown when the action
  *                              is successfully performed (status = 1)
  */
-function anchorGetAndToggle(anchor, classToShow)
-{
+function anchorGetAndToggle(anchor, classToShow) {
     return fetch(anchor.href)
         .then(resp => resp.json())
         .then(data => {
@@ -136,26 +135,25 @@ let offset = 0;
 /**
  * Fetches new posts and appends them at the end of the container.
  */
-function loadPosts()
-{
-    fetch('/posts?offset='+offset+'&limit='+POSTS_LIMIT)
-    .then(resp=>resp.json())
-    .then(data=>{
-        if(data.status===1){
-            document.querySelector('.posts-container .posts').innerHTML += data.data;
-        }
-    });
-    offset+=POSTS_LIMIT;
+function loadPosts() {
+    fetch('/posts?offset=' + offset + '&limit=' + POSTS_LIMIT)
+        .then(resp => resp.json())
+        .then(data => {
+            if (data.status === 1) {
+                document.querySelector('.posts-container .posts').innerHTML += data.data;
+            }
+        });
+    offset += POSTS_LIMIT;
 }
 
 /**
  * Shows the hidden comments and hides the comments counter
  * @param {*} e event
  */
-function viewAllComments(e){
-    if(e.target.classList.contains('post__comments--show-all')){
+function viewAllComments(e) {
+    if (e.target.classList.contains('post__comments--show-all')) {
         let hiddenComments = e.target.parentElement.querySelectorAll('.post__comments--list li.hide');
-        hiddenComments.forEach(comment=>{
+        hiddenComments.forEach(comment => {
             comment.classList.remove('hide');
         })
         e.target.classList.add('hide');
@@ -164,16 +162,17 @@ function viewAllComments(e){
 
 
 const postOptionsModal = document.querySelector('.modal-post-options');
-function viewPostOptions(e){
+
+function viewPostOptions(e) {
     let options = e.target.closest('.post-options');
-    if(options){
+    if (options) {
         postOptionsModal.classList.remove('hide');
         console.log(options.dataset.owner);
         console.log(options.dataset.post_id);
 
         let postId = options.dataset.post_id;
-        if(options.dataset.owner){
-            
+        if (options.dataset.owner==1) {
+
             html = `
         <li>
             <a class='options-modal__alert' href="/posts/${postId}/delete">Delete Post</a>
@@ -187,7 +186,7 @@ function viewPostOptions(e){
         <li>
             <a href="">Cancel</a>
         </li>`;
-        }else{
+        } else {
             html = ` <li>
             <a class='options-modal__alert' href="#">Report</a>
         </li>
@@ -206,5 +205,5 @@ function viewPostOptions(e){
 exports.postSlider = postSlider;
 exports.likeSaveEvent = likeSaveEvent;
 exports.loadPosts = loadPosts;
-exports.viewAllComments= viewAllComments;
+exports.viewAllComments = viewAllComments;
 exports.viewPostOptions = viewPostOptions;

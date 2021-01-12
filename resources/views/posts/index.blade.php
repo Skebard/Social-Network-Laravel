@@ -2,6 +2,17 @@
 @section('links')
 <script defer src="{{asset('js/posts.js')}}"></script>
 <link rel="stylesheet" href="{{asset('css/profileHome.css')}}">
+<style>
+    body main{
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+    }
+    body > main > li > div.post__header > div.profile-info{
+        margin:0;
+        padding:0;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -10,7 +21,7 @@
         <div class="profile-info">
             <div class='round-profile-img'>
                 <div class='profile-image-container'>
-                    <img src="{{asset($post->profile_photo_path)}}" alt="">
+                    <img src="{{asset($user->profile_photo_path)}}" alt="">
 
                 </div>
                 <p class='post__username'>

@@ -136,6 +136,9 @@ class PostController extends Controller
         Post::getPostData($post);
         $user = User::find($post->user_id);
         $relatedPosts = Post::getUserPosts($post->user_id);
+        if ($user->profile_photo_path == '') {
+            $user->profile_photo_path = 'images/users/defaultProfileImage.png';
+        }
         return view('posts.index',compact('post','user','relatedPosts'));
     }
 
