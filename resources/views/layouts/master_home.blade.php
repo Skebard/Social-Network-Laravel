@@ -28,6 +28,165 @@
             <!-- SEARCH -->
             <div class='search'>
                 <input type="text" placeholder='Search'>
+                <!-- SEARCH RESULTS -->
+                <div class="up-arrow"></div>
+                <div class="search-results box">
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <div class="profile-info">
+                            <div class='round-profile-img'>
+                                <div class='profile-image-container'>
+                                    <img src="http://localhost:8000/images/users/defaultProfileImage.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class='search-results__user-info'>
+                            <span class='search-username'>t.jorda97</span>
+                            <span class='search-name'>Toni Jorda</span>
+                        </span>
+                    </a>
+                </div>
+                <!-- end search results-->
             </div>
             <div class='user-actions'>
                 <a href="{{url('/')}}">
@@ -74,10 +233,10 @@
     @endif
     <main class="">
 
-    @yield('content')
+        @yield('content')
     </main>
 
-@include('layouts.footer')
+    @include('layouts.footer')
 </body>
 
 @yield('modals')

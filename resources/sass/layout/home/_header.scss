@@ -15,6 +15,7 @@ header{
     .search{
         display:flex;
         justify-content:center;
+        position:relative;
         input{
             outline:none;
             background-color:$primary-bg-color;
@@ -22,6 +23,61 @@ header{
             border: 1px solid #dbdbdb;
             font-size:14px;
             padding:3px 10px 3px 26px;
+        }
+        .up-arrow{
+            position:absolute;
+            bottom:0;
+            left:50%;
+            transform:translate(-50%,0);
+            height:20px;
+            width:20px;
+            z-index:100;
+            border:10px solid transparent;
+            border-bottom-color:white;
+        }
+        .search-results{
+            max-height:360px;
+            width:110%;
+            position:absolute;
+            bottom:0;
+            transform:translateY(100%);
+            display:flex;
+            flex-direction: column;
+            overflow:auto;
+
+            >a{
+                padding:10px;
+                display:flex;
+                align-items:center;
+            }
+            >a:hover{
+                background-color: $primary-bg-color;
+                width:100%;
+            }
+            &__user-info{
+                display:flex;
+                flex-direction:column;
+                .search-username{
+                    font-weight:bolder;
+                    font-size:14px;
+                }
+                .search-name{
+                    color: rgb(142,142,142);
+                    font-size:14px;
+                }
+            }
+            .profile-info{
+                margin:0;
+                padding:0;
+                .profile-image-container{
+                    height:38px;
+                    width:38px;
+                    img{
+                        width:34px;
+                        height:34px;
+                    }
+                }
+            }
         }
     }
     .user-actions{
