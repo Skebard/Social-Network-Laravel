@@ -3,31 +3,36 @@
 <script defer src="{{asset('js/posts.js')}}"></script>
 <link rel="stylesheet" href="{{asset('css/profileHome.css')}}">
 <style>
-    body main{
+    body main {
         /* display:flex;
         flex-direction:column;
         align-items: center; */
     }
-    body > main > li > div.post__header > div.profile-info{
-        margin:0;
-        padding:0;
+
+    body>main>li>div.post__header>div.profile-info {
+        margin: 0;
+        padding: 0;
     }
-    body > main > li > div.post__slider{
-        max-width:935px;
+
+    body>main>li>div.post__slider {
+        max-width: 935px;
     }
-    .separator{
+
+    .separator {
         width: 100%;
         height: 1px;
         background-color: #dbdbdb;
         margin: 40px 0;
     }
-    .more-posts-tag{
-        font-size:14px;
-        color:rgb(142, 142, 142);
-        font-weight:bolder;
+
+    .more-posts-tag {
+        font-size: 14px;
+        color: rgb(142, 142, 142);
+        font-weight: bolder;
     }
-    .more-posts-tag .username{
-        color:black;
+
+    .more-posts-tag .username {
+        color: black;
     }
 </style>
 @endsection
@@ -42,9 +47,9 @@
                     <img src="{{asset($user->profile_photo_path)}}" alt="">
 
                 </div>
-                <p class='post__username'>
+                <a href="{{url('/user/'.$user->username)}}" class='post__username'>
                     {{ $user->username }}
-                </p>
+                </a>
             </div>
         </div>
         <div class="post-options" data-owner="<?= $post->user_id === Auth::user()->id ? 1 : 0 ?>" data-post_id='{{$post->id}}'>
@@ -141,7 +146,7 @@
         <span class='post__likes--number'> {{$post->likes}}</span> likes
     </div>
     <div class="post__description">
-        <span class='post__username'>{{ $user->username}}</span>
+        <a  href="{{ url('/user/'.$user->username)}}" class='post__username'> {{ $user->username  }}</a>
         {{ $post->content }}
     </div>
     <div class="post__comments">
@@ -155,7 +160,9 @@
             @foreach($post->comments as $comment)
             @php($countComment++)
             <li class="<?= $countComment > 3 ? 'hide' : '' ?>">
-                <span class=' post__comments--username'>{{ $comment->username}}</span>
+                <a href="{{url('/user/'.$comment->username)}}" class='post__comments--username'>
+                    {{ $comment->username }}
+                </a>
                 {{ $comment->comment }}
             </li>
             @endforeach
@@ -174,12 +181,12 @@
     </div>
 
 </li>
-    <!-- end main post -->
+<!-- end main post -->
 
-    <div class="separator">
-    </div>
-    <p class='more-posts-tag'>More posts from <a href="{{url('/user/'.$user->username)}}">{{$user->username}}<a></p>
-   <!-- RELATED POSTS -->
+<div class="separator">
+</div>
+<p class='more-posts-tag'>More posts from <a href="{{url('/user/'.$user->username)}}">{{$user->username}}<a></p>
+<!-- RELATED POSTS -->
 <div class="related-posts">
     <div class="posts-container">
         <ul class="posts">
