@@ -16,13 +16,25 @@ header{
         display:flex;
         justify-content:center;
         position:relative;
+        &__input-container{
+            .small-search-icon{
+                font-size: 9px;
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translate(0,-50%);
+                color:rgb(142, 142, 142);
+            }
+        }
         input{
             outline:none;
             background-color:$primary-bg-color;
             max-width:215px;
             border: 1px solid #dbdbdb;
             font-size:14px;
-            padding:3px 10px 3px 26px;
+            padding:7px;
+            padding-left:25px;
+            width:215px;
         }
         .up-arrow{
             position:absolute;
