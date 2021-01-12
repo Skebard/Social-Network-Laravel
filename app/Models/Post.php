@@ -123,7 +123,11 @@ class Post extends Model
 
         $savedPosts = SavedPost::where('user_id', $userId)->get();
         foreach ($savedPosts as $savedPost) {
-            $posts[] = Post::find($savedPost->post_id);
+            //a user can save a post and later on the owner of the user can archive it
+            $foundPost = Post::find($savedPost->post_id);
+            if($foundPost){
+                $posts[] = $foundPost;
+            }
         }
         foreach ($posts as $key => $post) {
             self::getPostData($post);

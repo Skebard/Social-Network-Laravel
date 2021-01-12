@@ -4,18 +4,36 @@
 <link rel="stylesheet" href="{{asset('css/profileHome.css')}}">
 <style>
     body main{
-        display:flex;
+        /* display:flex;
         flex-direction:column;
-        align-items: center;
+        align-items: center; */
     }
     body > main > li > div.post__header > div.profile-info{
         margin:0;
         padding:0;
     }
+    body > main > li > div.post__slider{
+        max-width:935px;
+    }
+    .separator{
+        width: 100%;
+        height: 1px;
+        background-color: #dbdbdb;
+        margin: 40px 0;
+    }
+    .more-posts-tag{
+        font-size:14px;
+        color:rgb(142, 142, 142);
+        font-weight:bolder;
+    }
+    .more-posts-tag .username{
+        color:black;
+    }
 </style>
 @endsection
 
 @section('content')
+<!-- MAIN POST -->
 <li class='post box'>
     <div class="post__header">
         <div class="profile-info">
@@ -156,9 +174,13 @@
     </div>
 
 </li>
-<div class="related-posts">
+    <!-- end main post -->
 
-    <!-- POSTS -->
+    <div class="separator">
+    </div>
+    <p class='more-posts-tag'>More posts from <a href="{{url('/user/'.$user->username)}}">{{$user->username}}<a></p>
+   <!-- RELATED POSTS -->
+<div class="related-posts">
     <div class="posts-container">
         <ul class="posts">
             @foreach($relatedPosts as $post)
