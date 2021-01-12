@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\PostImage;
 use App\Models\SavedPost;
 use Auth;
-
+use stdClass;
 
 class Post extends Model
 {
@@ -36,10 +36,10 @@ class Post extends Model
     public static function getPost($postId)
     {
         $post = Post::find($postId);
-        if(!$post){
+        if (!$post) {
             return false;
         }
-            $post->images = PostImage::where('post_id', $postId)->get();
+        $post->images = PostImage::where('post_id', $postId)->get();
         return $post;
     }
 
@@ -83,6 +83,10 @@ class Post extends Model
         return $posts;
     }
 
+    /**
+     * Return the published posts belonging to the user.
+     * Note: the archived posts are not included
+     */
     public static function getUserPosts($userId)
     {
         $posts = Post::where('user_id', $userId)->orderByDesc('published_at')->get();
@@ -130,7 +134,7 @@ class Post extends Model
     public static function getDeletedPosts()
     {
         $userId = Auth::user()->id;
-        $posts = Post::onlyTrashed()->where('user_id',$userId)->get();
+        $posts = Post::onlyTrashed()->where('user_id', $userId)->get();
 
         foreach ($posts as $key => $post) {
             self::getPostData($post);
@@ -147,5 +151,10 @@ class Post extends Model
         $post->saved = SavedPost::where('post_id', $post->id)
             ->where('user_id', Auth::user()->id)
             ->get();
+        foreach ($post->comments as &$comment) {
+            $comment->username  = User::select('username')
+                ->where('id', $comment->user_id)
+                ->first()->username;
+        }
     }
 }

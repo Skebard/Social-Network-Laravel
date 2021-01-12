@@ -134,7 +134,9 @@ class PostController extends Controller
             return view('error');
         }
         Post::getPostData($post);
-        dd($post);
+        $user = User::find($post->user_id);
+        $relatedPosts = Post::getUserPosts($post->user_id);
+        return view('posts.index',compact('post','user','relatedPosts'));
     }
 
     /**

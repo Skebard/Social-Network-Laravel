@@ -262,67 +262,10 @@
 <!-- end create post modal -->
 
 
-<!-- EDIT POST -->
-<div class="hide modal " id='edit-modal-id'>
-    <div class="modal-content">
-        <button class="close-modal">
-            Close modal
-        </button>
 
-        <form id='edit-post-form-id' class='new-post-form multi-images-form' action="/posts" method='POST' enctype="multipart/form-data">
-            @csrf
-            <textarea id='edit-content-id' name="content" id="" cols="30" rows="10"></textarea>
-            <div class="images-container" id='edit-images-container-id'>
-                <div class="input-container">
-                    <div class=" last multi-images-form__btn delete-image-btn multi-images-form__btn"><i class="fas fa-trash-alt"></i></div>
-                    <button class=" active add-image-btn multi-images-form__btn"><i class="fas fa-plus"></i></button>
-                    <div class=" edit-image-btn  multi-images-form__btn"><i class="far fa-edit"></i></div>
-                    <img class='image-display' src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="">
-                    <input id='edit-input-1-id' type="file" name='image[]' class="multi-images-form__image-input">
-                </div>
+@include('layouts.modalEditPost')
+@include('layouts.modalPostOptions')
 
-            </div>
-            <!-- <input type='file' name='image[]' data-pos='1'> -->
 
-            @error('image')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-
-            <button type='submit'>Create</button>
-            <button>Cancel</button>
-        </form>
-    </div>
-</div>
-<!-- end edit post modal -->
-
-<!-- POST OPTIONS MODAL -->
-<div class="hide modal modal-post-options " id='post-options-modal-id'>
-    <div class="modal-content">
-        <button class="close-modal">
-            Close modal
-        </button>
-
-        <ul class='options-modal'>
-            <!-- <li>
-                <a class='options-modal__alert' href="#">Report</a>
-            </li>
-            <li>
-                <a class='options-modal__alert' href="#">Unfollow</a>
-            </li>
-            <li>
-                <a class='options-modal__alert' href="#">Delete Post</a>
-            </li>
-            <li>
-                <a href="#">Edit Post</a>
-            </li>
-            <li>
-                <a href="#">Archive Post</a>
-            </li>
-            <li>
-                <a href="">Cancel</a>
-            </li> -->
-        </ul>
-    </div>
-</div>
 
 @endsection

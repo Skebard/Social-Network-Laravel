@@ -5,5 +5,6 @@
     "/css/profileHome.css": "/css/profileHome.css",
     "/css/app.css": "/css/app.css",
     "/js/home.js": "/js/home.js",
-    "/js/login.js": "/js/login.js"
+    "/js/login.js": "/js/login.js",
+    "/js/posts.js": "/js/posts.js"
 }

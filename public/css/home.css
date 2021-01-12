@@ -17,6 +17,10 @@ ul {
   list-style-type: none;
 }
 
+li {
+  list-style: none;
+}
+
 .box {
   border-radius: 1px;
   background-color: white;

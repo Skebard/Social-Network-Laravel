@@ -2,17 +2,20 @@
 
 $m-width: 735px;
 $s-width: 350px;
-body main{
-    max-width:935px;
+
+body main {
+    max-width: 935px;
 }
+
 .profile-info {
-    margin-left:100px;
+    margin-left: 100px;
     padding-top: 30px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    @media screen and( max-width:$m-width){
-        margin-left:10px;
+
+    @media screen and(max-width:$m-width) {
+        margin-left: 10px;
     }
 
     &__image {
@@ -22,9 +25,10 @@ body main{
         height: 150px;
         width: 150px;
         object-fit: cover;
-        @media screen and( max-width:$m-width){
-            height:77px;
-            width:77px;
+
+        @media screen and(max-width:$m-width) {
+            height: 77px;
+            width: 77px;
         }
     }
 
@@ -32,14 +36,16 @@ body main{
         flex-shrink: 0;
         flex-grow: 1;
         margin-left: 90px;
-        @media screen and( max-width:$m-width){
-            width:100px;
-            margin-left:20px;
+
+        @media screen and(max-width:$m-width) {
+            width: 100px;
+            margin-left: 20px;
         }
+
         .user-options {
             display: flex;
             align-items: center;
-            flex-wrap:wrap;
+            flex-wrap: wrap;
 
             >* {
                 margin-right: 15px;
@@ -56,16 +62,19 @@ body main{
                 border: $soft-border;
                 border-radius: 4px;
                 padding: 5px 9px;
-                @media screen and( max-width:$m-width){
-                    display:none;
+
+                @media screen and(max-width:$m-width) {
+                    display: none;
                 }
             }
-            .edit-btn.m-width{
-                width:100%;
-                margin-top:20px;
-                display:none;
-                @media screen and( max-width:$m-width){
-                    display:block;
+
+            .edit-btn.m-width {
+                width: 100%;
+                margin-top: 20px;
+                display: none;
+
+                @media screen and(max-width:$m-width) {
+                    display: block;
                 }
             }
 
@@ -75,25 +84,28 @@ body main{
             margin-bottom: 20px;
         }
 
-        .info{
-            @media screen and( max-width:$m-width){
-                display:none;
+        .info {
+            @media screen and(max-width:$m-width) {
+                display: none;
             }
+
             span {
                 margin-right: 20px;
             }
         }
-       
+
     }
-    &__edit-m{
-        display:none;
+
+    &__edit-m {
+        display: none;
         font-weight: bolder;
         font-size: 14px;
         border: $soft-border;
         border-radius: 4px;
         padding: 5px 9px;
-        @media screen and( max-width:$m-width){
-            display:block;
+
+        @media screen and(max-width:$m-width) {
+            display: block;
         }
     }
 
@@ -102,18 +114,20 @@ body main{
         bottom: 60px;
         width: 100%;
         padding-left: 150px +90px;
-        @media screen and( max-width:$m-width){
-            margin-top:20px;
-            bottom:0;
-            padding-left:0;
+
+        @media screen and(max-width:$m-width) {
+            margin-top: 20px;
+            bottom: 0;
+            padding-left: 0;
         }
 
         .name {
             font-size: 16px;
-            @media screen and( max-width:$m-width){
-                font-size:14px;
+
+            @media screen and(max-width:$m-width) {
+                font-size: 14px;
+            }
         }
-    }
 
         .description {
             font-size: 14px;
@@ -155,19 +169,21 @@ body main{
                 font-size: 12px;
                 font-weight: bolder;
                 color: #8e8e8e;
-  
-                .category{
+
+                .category {
                     font-weight: bolder;
                     text-transform: uppercase;
-                    @media screen and( max-width:$s-width){
-                        display:none;
+
+                    @media screen and(max-width:$s-width) {
+                        display: none;
                     }
                 }
+
                 .archive-icon {
                     margin-right: 5px;
                     font-size: 15px;
                 }
-                
+
             }
 
         }
@@ -177,8 +193,9 @@ body main{
 
             a {
                 color: black;
-                span{
-                    color:black;
+
+                span {
+                    color: black;
                 }
             }
         }
@@ -186,75 +203,87 @@ body main{
 }
 
 .posts-container {
-    .posts{
-        display:flex;
-        flex-wrap:wrap;
+    .posts {
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-        li{
-            margin:10px;
-            position:relative;
-            img{
-                display:block;
-                width:25vw;
-                max-width:290px;
-                height:25vw;
-                max-height:290px;
-                min-height:80px;
-                min-width:80px;
+
+        li {
+            margin: 10px;
+            position: relative;
+
+            img {
+                display: block;
+                width: 25vw;
+                max-width: 290px;
+                height: 25vw;
+                max-height: 290px;
+                min-height: 80px;
+                min-width: 80px;
                 object-fit: cover;
             }
+
             .multi-images-icon {
-                position:absolute;
-                top:6px;
-                right:6px;
-                color:white;
+                position: absolute;
+                top: 6px;
+                right: 6px;
+                color: white;
                 transform-style: preserve-3d;
-                .fa-clone{
-                    transform:rotateY(180deg);
+
+                .fa-clone {
+                    transform: rotateY(180deg);
                 }
             }
-            &:hover .hover-info{
-                display:flex;
+
+            &:hover .hover-info {
+                display: flex;
 
             }
-            .hover-info{
-                display:none;
-                position:absolute;
-                top:0;
-                left:0;
-                width:100%;
-                height:100%;
- 
+
+            .hover-info {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+
                 justify-content: center;
-                align-items:center;
-                flex-wrap:wrap;
-                cursor:pointer;
-                &__bg{
-                    position:absolute;
-                    top:0;
-                    left:0;
-                    height:100%;
-                    width:100%;
-                    background-color: rgba(0,0,0,0.35);
+                align-items: center;
+                flex-wrap: wrap;
+                cursor: pointer;
+
+                &__bg {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    background-color: rgba(0, 0, 0, 0.35);
                 }
-                &__content{
-                    color:white;
-                    z-index:10;
-                    display:flex;
-                    align-items:center;
-                    >*{
-                        margin-right:5px;
+
+                &__content {
+                    color: white;
+                    z-index: 10;
+                    display: flex;
+                    align-items: center;
+
+                    >* {
+                        margin-right: 5px;
                     }
                 }
-                &__content.likes{
-                    margin-right:20px;
-                    @media screen and (max-width:550px){
-                        margin-right:0px;
+
+                &__content.likes {
+                    margin-right: 20px;
+
+                    @media screen and (max-width:550px) {
+                        margin-right: 0px;
                     }
                 }
-               span{
-                   flex-shrink: 0;
-               }
+
+                span {
+                    flex-shrink: 0;
+                }
 
             }
         }
