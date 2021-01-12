@@ -84,9 +84,8 @@ class PostController extends Controller
         //
         $images = $request->file('image');
         if (file_exists('images/posts/slider2.jpg')) {
-            echo 'exists';
+ 
         }
-        echo $request->content;
 
         Post::insert([
             'user_id' => Auth::user()->id,
@@ -120,8 +119,7 @@ class PostController extends Controller
             }
         }
 
-        dd($images);
-        //return Redirect()->back()->with('success', 'Post created successfully');
+        return Redirect()->back()->with('success', 'Post created successfully');
     }
 
     /**
@@ -206,13 +204,7 @@ class PostController extends Controller
         var_dump($srcImage);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($postId)
+    public function archive($postId)
     {
         try {
             $deletedPost = Post::where('user_id', Auth::user()->id)
@@ -228,16 +220,23 @@ class PostController extends Controller
         }
     }
 
-    public function softDelete($id)
+    public function destroy($postId)
     {
-        //$delete = Category::find($id)->delete();
-        return Redirect()->back()->with('success', 'Category Soft Delete Successfully');
+        Post::find($postId)->forceDelete();
+        return  Redirect()->back()->with('success', 'Post deleted successfully');
+
     }
+
 
     public function restore($id)
     {
         //$delete = Category::withTrashed()->find($id)->restore();
-        return Redirect()->back()->with('success', 'Category Restored Successfully');
+        $affected = Post::withTrashed()
+            ->where('user_id',Auth::user()->id)
+            ->find($id)
+            ->restore();
+        echo 'Affected'.$affected;
+        //return Redirect()->back()->with('success', 'Post Published Successfully');
     }
 
     public function pdelete($id)

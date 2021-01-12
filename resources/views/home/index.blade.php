@@ -1,4 +1,10 @@
 @extends('layouts.master_home')
+
+@section('links')
+    <!-- Scripts -->
+    <script defer src="{{asset('js/home.js')}}"></script>
+@endsection
+
 @section('content')
 
 <!-- STORIES -->
