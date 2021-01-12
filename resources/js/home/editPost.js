@@ -139,10 +139,6 @@ function editPost(e)
     })
     .then(resp=>resp.text())
     .then(data=>console.log(data));
-    for( [key,value] of formData){
-        // console.log(key);
-        // console.log(value);
-    }
 
 }
 

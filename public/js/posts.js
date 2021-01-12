@@ -117,6 +117,57 @@ exports.addEvents = addEvents;
 
 /***/ }),
 
+/***/ "./resources/js/home/postComments.js":
+/*!*******************************************!*\
+  !*** ./resources/js/home/postComments.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var currentUsername = document.getElementById('current-username-id').value;
+
+function postComment(e) {
+  console.log('COMMENT');
+
+  if (e.target.classList.contains('post-comment-btn')) {
+    e.preventDefault();
+    var commentForm = e.target.closest('.post-comment-form');
+    var formData = new FormData();
+    var postId = commentForm.querySelector('input[name=post_id]').value;
+    var comment = commentForm.querySelector('input[name=comment]').value;
+    formData.append('post_id', postId);
+    formData.append('comment', comment);
+    var token = commentForm.querySelector('input[name=_token]');
+    fetch('/' + postId + '/comment', {
+      method: 'post',
+      body: formData,
+      headers: {
+        'X-CSRF-TOKEN': token.value
+      }
+    }).then(function (resp) {
+      return resp.json();
+    }).then(function (data) {
+      console.log(data);
+
+      if (data.status === 1) {
+        var comments = commentForm.parentElement.parentElement.querySelector('.post__comments');
+        var newComment = document.createElement('li');
+        newComment.innerHTML = " <a href=\"/user/'.".concat(currentUsername, "\" class='post__comments--username'>\n                    ").concat(currentUsername, "</a>\n                    ").concat(comment);
+        comments.querySelector('.post__comments--list').append(newComment);
+        var numComments = comments.querySelector('.num-comments').textContent;
+
+        if (numComments) {
+          comments.querySelector('.num-comments').textContent = parseInt(numComments) + 1;
+        }
+      } else {}
+    });
+  }
+}
+
+exports.postComment = postComment;
+
+/***/ }),
+
 /***/ "./resources/js/home/posts.js":
 /*!************************************!*\
   !*** ./resources/js/home/posts.js ***!
@@ -324,7 +375,9 @@ var posts = __webpack_require__(/*! ./home/posts */ "./resources/js/home/posts.j
 
 
 var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.js"); // const editPost = require('./home/editPost');
-//* HTMLElements */
+
+
+var postComments = __webpack_require__(/*! ./home/postComments */ "./resources/js/home/postComments.js"); //* HTMLElements */
 
 
 var body = document.querySelector('body');
@@ -332,6 +385,7 @@ body.addEventListener('click', posts.postSlider);
 body.addEventListener('click', posts.likeSaveEvent);
 body.addEventListener('click', posts.viewAllComments);
 body.addEventListener('click', posts.viewPostOptions);
+body.addEventListener('click', postComments.postComment);
 modal.addEvents();
 
 /***/ }),

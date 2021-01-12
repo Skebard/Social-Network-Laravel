@@ -66,6 +66,7 @@
 
             </div>
         </div>
+        <input type="hidden" id='current-username-id' value="{{Auth::check()? Auth::user()->username :''}}">
 
     </header>
     @if(session('success'))

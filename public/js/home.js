@@ -104,6 +104,8 @@ var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.j
 
 var editPost = __webpack_require__(/*! ./home/editPost */ "./resources/js/home/editPost.js");
 
+var postComments = __webpack_require__(/*! ./home/postComments */ "./resources/js/home/postComments.js");
+
 var body = document.querySelector('body');
 stories.slideStoriesEvents();
 createPost.addEvents();
@@ -112,6 +114,7 @@ body.addEventListener('click', posts.likeSaveEvent);
 body.addEventListener('click', posts.viewAllComments);
 body.addEventListener('click', posts.viewPostOptions);
 body.addEventListener('click', editPost.showEditForm);
+body.addEventListener('click', postComments.postComment);
 modal.addEvents();
 posts.loadPosts(); //Lazy load posts
 
@@ -223,20 +226,6 @@ exports.addEvents = addEvents;
   \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\"  add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" active edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">";
 var imagesContainer = document.getElementById("edit-images-container-id");
@@ -376,24 +365,6 @@ function editPost(e) {
   }).then(function (data) {
     return console.log(data);
   });
-
-  var _iterator = _createForOfIteratorHelper(formData),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {// console.log(key);
-      // console.log(value);
-
-      var _step$value = _slicedToArray(_step.value, 2);
-
-      key = _step$value[0];
-      value = _step$value[1];
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
 }
 /**
  * Gets the data from the form and returns the images in the displayed order
@@ -459,6 +430,57 @@ function handleModal(e) {
 }
 
 exports.addEvents = addEvents;
+
+/***/ }),
+
+/***/ "./resources/js/home/postComments.js":
+/*!*******************************************!*\
+  !*** ./resources/js/home/postComments.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var currentUsername = document.getElementById('current-username-id').value;
+
+function postComment(e) {
+  console.log('COMMENT');
+
+  if (e.target.classList.contains('post-comment-btn')) {
+    e.preventDefault();
+    var commentForm = e.target.closest('.post-comment-form');
+    var formData = new FormData();
+    var postId = commentForm.querySelector('input[name=post_id]').value;
+    var comment = commentForm.querySelector('input[name=comment]').value;
+    formData.append('post_id', postId);
+    formData.append('comment', comment);
+    var token = commentForm.querySelector('input[name=_token]');
+    fetch('/' + postId + '/comment', {
+      method: 'post',
+      body: formData,
+      headers: {
+        'X-CSRF-TOKEN': token.value
+      }
+    }).then(function (resp) {
+      return resp.json();
+    }).then(function (data) {
+      console.log(data);
+
+      if (data.status === 1) {
+        var comments = commentForm.parentElement.parentElement.querySelector('.post__comments');
+        var newComment = document.createElement('li');
+        newComment.innerHTML = " <a href=\"/user/'.".concat(currentUsername, "\" class='post__comments--username'>\n                    ").concat(currentUsername, "</a>\n                    ").concat(comment);
+        comments.querySelector('.post__comments--list').append(newComment);
+        var numComments = comments.querySelector('.num-comments').textContent;
+
+        if (numComments) {
+          comments.querySelector('.num-comments').textContent = parseInt(numComments) + 1;
+        }
+      } else {}
+    });
+  }
+}
+
+exports.postComment = postComment;
 
 /***/ }),
 

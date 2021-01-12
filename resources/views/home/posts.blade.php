@@ -115,7 +115,7 @@
     </div>
     <div class="post__comments">
         @if(count($post->comments)>3)
-        <span class="post__comments--show-all">View all <span>{{ count($post->comments) }}</span> comments</span>
+        <span class="post__comments--show-all">View all <span class='num-comments'>{{ count($post->comments) }}</span> comments</span>
         @endif
         <ul class="post__comments--list">
             @php
@@ -136,11 +136,11 @@
         {{ strtoupper(Carbon\Carbon::parse($post->published_at)->diffforHumans()) }}
     </div>
     <div class="post__add-comment">
-        <form action="{{ url('/'.$post->id.'/comment')}}" method='POST'>
+        <form class='post-comment-form' action="{{ url('/'.$post->id.'/comment')}}" method='POST'>
             @csrf
             <input type='hidden' name='post_id' value=' {{$post->id}}'>
             <input name='comment' type="text" placeholder="Add a comment...">
-            <input type="submit" value="Post">
+            <input class='post-comment-btn' type="submit" value="Post">
         </form>
     </div>
 

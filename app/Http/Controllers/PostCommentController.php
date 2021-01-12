@@ -42,7 +42,7 @@ class PostCommentController extends Controller
 
         //!verify that the post belongs to the user or to a friend of the user
 
-            PostComment::insert([
+            $affectedRow = PostComment::insert([
                 'user_id'=>Auth::user()->id,
                 'post_id'=>$request->post_id,
                 'comment'=>$request->comment,
@@ -52,7 +52,11 @@ class PostCommentController extends Controller
 
         Post::addOneComment($request->post_id);
 
-        return Redirect()->back()->with('success','Comment added successfully');
+        if($affectedRow == 1){
+            return json_encode((object)['status'=>1]);
+        }
+        return json_encode((object)['status'=>0]);
+        //return Redirect()->back()->with('success','Comment added successfully');
 
     }
 
