@@ -7,7 +7,7 @@ const inputContainerContent = `
 
 const imagesContainer = document.getElementById("edit-images-container-id");
 
-const POST_URL = '/posts/';
+const POST_URL = '/api/posts/';
 const descriptionInput = document.getElementById('edit-content-id');
 const editPostForm = document.getElementById('edit-post-form-id');
 const firstInput = document.getElementById('edit-input-1-id');

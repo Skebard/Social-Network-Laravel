@@ -40,8 +40,6 @@ class PostController extends Controller
 
     public function singlePost($postId)
     {
-        //echo "<h1>$postId</h1>";
-        //dd(Post::find($postId));
         return json_encode(Post::getPost($postId));
     }
     public function posts()
@@ -131,6 +129,12 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        $post = Post::find($id);
+        if(!$post){
+            return view('error');
+        }
+        Post::getPostData($post);
+        dd($post);
     }
 
     /**

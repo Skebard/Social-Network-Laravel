@@ -36,7 +36,10 @@ class Post extends Model
     public static function getPost($postId)
     {
         $post = Post::find($postId);
-        $post->images = PostImage::where('post_id', $postId)->get();
+        if(!$post){
+            return false;
+        }
+            $post->images = PostImage::where('post_id', $postId)->get();
         return $post;
     }
 

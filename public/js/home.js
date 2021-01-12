@@ -240,7 +240,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\"  add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" active edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">";
 var imagesContainer = document.getElementById("edit-images-container-id");
-var POST_URL = '/posts/';
+var POST_URL = '/api/posts/';
 var descriptionInput = document.getElementById('edit-content-id');
 var editPostForm = document.getElementById('edit-post-form-id');
 var firstInput = document.getElementById('edit-input-1-id');
