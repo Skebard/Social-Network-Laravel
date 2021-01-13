@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RelationshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,16 +25,19 @@ use App\Http\Controllers\UserController;
 
 //Route::resource('/{postId}/postComments',PostCommentController::class);
 
-//Users
-
+//USERS
 Route::get('/user/{username}',[UserController::class,'show']);
 Route::get('/{username}/saved',[UserController::class,'savedPosts'])->middleware('auth');
 // Route::get('/posts/saved',[UserController::class,'savedPosts']);
 Route::get('/{username}/archived',[UserController::class,'archivedPosts'])->middleware('auth');
 Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
 
+//RELATIONSHIPS
+Route::get('/user/friend/add/{userId}',[RelationshipController::class,'sendFriendRequest']);
 
-//Posts
+
+
+//POSTS
 Route::get('/',[PostController::class,'home']);
 Route::get('/posts',[PostController::class,'posts']);
 Route::post('/posts',[PostController::class,'store']);

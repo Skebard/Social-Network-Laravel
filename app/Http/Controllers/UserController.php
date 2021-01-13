@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Relationship;
 use Auth;
 class UserController extends Controller
 {
@@ -54,7 +55,14 @@ class UserController extends Controller
         }
         $posts = Post::getUserPosts($user->id);
         $page='home';
-        return view('profile.home',compact('user','posts','page'));
+        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
+                                        ->where('user_two_id',$user->id);
+        $relationship =  Relationship::where('user_one_id',$user->id)
+                                        ->where('user_two_id',Auth::user()->id)
+                                        ->union($relationshipA)
+                                        ->first();
+
+        return view('profile.home',compact('user','posts','page','relationship'));
     }
 
     /**

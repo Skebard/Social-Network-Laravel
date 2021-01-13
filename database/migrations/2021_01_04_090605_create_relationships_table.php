@@ -18,7 +18,7 @@ class CreateRelationshipsTable extends Migration
             $table->foreign('user_one_id')->references('id')->on('users');
             $table->unsignedBigInteger('user_two_id');
             $table->foreign('user_two_id')->references('id')->on('users');
-            $table->unique('user_one_id','user_two_id');
+            $table->unique(['user_one_id','user_two_id']);
             $table->smallInteger('status');
             //status values:
             //0 Pending
