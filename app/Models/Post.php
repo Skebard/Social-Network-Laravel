@@ -46,8 +46,8 @@ class Post extends Model
     public static function getPosts(int $offset = self::POST_OFFSET, int $limit = self::POST_LIMIT)
     {
         //get self Id and friends' ids
-        $sql_friends = 'SELECT user_two_id FROM relationships WHERE user_one_id = ' . Auth::user()->id;
-        $sql_friends .= ' UNION SELECT user_one_id FROM relationships WHERE user_two_id = ' . Auth::user()->id;
+        $sql_friends = 'SELECT user_two_id FROM relationships WHERE status=1 AND user_one_id = ' . Auth::user()->id;
+        $sql_friends .= ' UNION SELECT user_one_id FROM relationships WHERE status=1 AND user_two_id = ' . Auth::user()->id;
         $sql_friends .= ' UNION SELECT ' . Auth::user()->id;
 
         $sql = ' SELECT posts.id,posts.user_id, posts.likes, posts.comments, posts.content, posts.published_at, users.username, users.profile_photo_path FROM posts ';
@@ -122,12 +122,19 @@ class Post extends Model
         $userId = Auth::user()->id;
 
         $savedPosts = SavedPost::where('user_id', $userId)->get();
+        //dd($savedPosts);
+        if(!$savedPosts){
+            return null;
+        }
         foreach ($savedPosts as $savedPost) {
             //a user can save a post and later on the owner of the user can archive it
             $foundPost = Post::find($savedPost->post_id);
             if($foundPost){
                 $posts[] = $foundPost;
             }
+        }
+        if(!isset($posts)){
+            return null;
         }
         foreach ($posts as $key => $post) {
             self::getPostData($post);

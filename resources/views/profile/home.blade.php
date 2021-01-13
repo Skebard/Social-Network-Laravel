@@ -29,6 +29,9 @@
             <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Add Friend</a>
             @elseif($relationship->status ===0 && $relationship->action_user_id==Auth::user()->id)
             <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Request sent</a>
+            @elseif($relationship->status ===0 && $relationship->action_user_id!==Auth::user()->id)
+            <a href="{{url('/user/friend/accept/'.$user->id)}}" class='edit-btn'> Accept request</a>
+            <a href="{{url('/user/friend/decline/'.$user->id)}}" class='edit-btn'> Decline request</a>
             @elseif($relationship->status === 1)
             <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'>Remove Friend</a>
             @elseif($relationship->status === 3 && $relationship->action_user_id===Auth::user()->id)
@@ -97,6 +100,7 @@
 <!-- POSTS -->
 <div class="posts-container">
     <ul class="posts">
+    @if($posts)
         @foreach($posts as $post)
         <li>
             <span class='multi-images-icon'><i class="fas fa-clone"></i></span>
@@ -129,6 +133,7 @@
             </div>
         </li>
         @endforeach
+    @endif
     </ul>
 </div>
 <!-- end posts  -->

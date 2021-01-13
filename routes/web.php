@@ -34,6 +34,9 @@ Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
 
 //RELATIONSHIPS
 Route::get('/user/friend/add/{userId}',[RelationshipController::class,'sendFriendRequest']);
+Route::get('/user/friend/accept/{userId}',[RelationshipController::class,'acceptRequest']);
+Route::get('/user/friend/decline/{userId}',[RelationshipController::class,'declineRequest']);
+Route::get('user/friend/remove/{userId}',[RelationshipController::class,'removeFriend']);
 
 
 
