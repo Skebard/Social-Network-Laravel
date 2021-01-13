@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Relationship extends Model
 {
@@ -21,4 +22,21 @@ class Relationship extends Model
     ];
 
 
+    public static function getFriends($userId)
+    {
+        $friendsA = Relationship::select('user_two_id')
+                                ->where('user_one_id',$userId)
+                                ->where('status',1);
+        $friends = Relationship::select('user_one_id')
+                                    ->where('user_two_id',$userId)
+                                    ->where('status',1)
+                                    ->union($friendsA)
+                                    ->get();
+        foreach($friends as $key=>&$friend){
+            $users[]= User::find($friend->user_one_id);
+        }
+
+        return $users??[];
+
+    }
 }

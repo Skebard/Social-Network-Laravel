@@ -68,7 +68,7 @@ class PostController extends Controller
     public function create()
     {
         //
-       
+
     }
 
     /**
@@ -82,7 +82,6 @@ class PostController extends Controller
         //
         $images = $request->file('image');
         if (file_exists('images/posts/slider2.jpg')) {
- 
         }
 
         Post::insert([
@@ -130,7 +129,7 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id);
-        if(!$post){
+        if (!$post) {
             return view('error');
         }
         Post::getPostData($post);
@@ -139,7 +138,7 @@ class PostController extends Controller
         if ($user->profile_photo_path == '') {
             $user->profile_photo_path = 'images/users/defaultProfileImage.png';
         }
-        return view('posts.index',compact('post','user','relatedPosts'));
+        return view('posts.index', compact('post', 'user', 'relatedPosts'));
     }
 
     /**
@@ -163,54 +162,52 @@ class PostController extends Controller
      */
     public function update(Request $request, $postId)
     {
-        Post::where('user_id',Auth::user()->id)
-                ->where('id',$postId)
-                ->update(['updated_at'=>Carbon::now(),
-                            'content'=>$request->content]);
+        Post::where('user_id', Auth::user()->id)
+            ->where('id', $postId)
+            ->update([
+                'updated_at' => Carbon::now(),
+                'content' => $request->content
+            ]);
         $images = json_decode($request->images);
         $srcImage = [];
         $img_position = 1;
         $filesPos = 0;
         $imagesFiles = $request->file('imagesFiles');
-        $imagesFilesToInsert =[];
-        foreach($images as $image)
-        {
-            echo 'IMAGE POSITION: '.$img_position;
-            if($image->type === 'file'){
+        $imagesFilesToInsert = [];
+        foreach ($images as $image) {
+            if ($image->type === 'file') {
                 //store new images
                 $name_gen = hexdec(uniqid());
                 $img_ext = strtolower($imagesFiles[$filesPos]->getClientOriginalExtension());
                 $img_name = $name_gen . '.' . $img_ext;
                 $up_location = 'images/posts/';
                 $img_location = $up_location . $img_name;
-                $imagesFiles[$filesPos]->move($up_location,$img_name);
+                $imagesFiles[$filesPos]->move($up_location, $img_name);
                 $filesPos++;
 
                 //we have to insert them after we update and delete the existing images
                 //or they will not be added since post_id and image combination are unique
 
-            }else{
+            } else {
 
-                $storedImage = substr($image->image , strpos($image->image,'images/posts'));
+                $storedImage = substr($image->image, strpos($image->image, 'images/posts'));
                 $srcImage[] = $storedImage;
                 $img_location = $storedImage;
             }
-            $imagesFilesToInsert[] =[
-                'post_id'=> $postId,
-                'image' =>$img_location,
-                'position'=>$img_position,
-                'created_at' =>Carbon::now(),
+            $imagesFilesToInsert[] = [
+                'post_id' => $postId,
+                'image' => $img_location,
+                'position' => $img_position,
+                'created_at' => Carbon::now(),
             ];
             $img_position++;
         }
         //delete old images
-        PostImage::where('post_id',$postId)->delete();
-        foreach($imagesFilesToInsert as $image){
+        PostImage::where('post_id', $postId)->delete();
+        foreach ($imagesFilesToInsert as $image) {
             PostImage::insert($image);
         }
-
-        var_dump($imagesFiles);
-        var_dump($srcImage);
+        return json_encode((object) ['status' => 1]);
     }
 
     public function archive($postId)
@@ -220,9 +217,9 @@ class PostController extends Controller
                 ->where('id', $postId)
                 ->delete();
             if ($deletedPost > 0) {
-                return  Redirect()->back()->with('error', 'Post could not be deleted ');
+                return  Redirect('/' . Auth::user()->username . '/archived')->with('success', 'Post archived successfully');
             } else {
-                return  Redirect()->back()->with('success', 'Post deleted successfully');
+                return  Redirect()->back()->with('error', 'Post could not be deleted ');
             }
         } catch (QueryException $e) {
             return  Redirect()->back()->with('error', 'Error ocurred, post has not been deleted');
@@ -233,19 +230,16 @@ class PostController extends Controller
     {
         Post::find($postId)->forceDelete();
         return  Redirect()->back()->with('success', 'Post deleted successfully');
-
     }
 
 
     public function restore($id)
     {
-        //$delete = Category::withTrashed()->find($id)->restore();
         $affected = Post::withTrashed()
-            ->where('user_id',Auth::user()->id)
+            ->where('user_id', Auth::user()->id)
             ->find($id)
             ->restore();
-        echo 'Affected'.$affected;
-        //return Redirect()->back()->with('success', 'Post Published Successfully');
+        return Redirect('/user/' . Auth::user()->username)->with('success', 'Post Published Successfully');
     }
 
     public function pdelete($id)

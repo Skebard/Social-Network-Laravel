@@ -24,4 +24,5 @@ mix.js('resources/js/app.js', 'public/js')
 
 mix.sass('resources/sass/login.scss', 'public/css')
     .sass('resources/sass/home.scss', 'public/css')
-    .sass('resources/sass/profileHome.scss','public/css');
+    .sass('resources/sass/profileHome.scss','public/css')
+    .sass('resources/sass/friends.scss','public/css');

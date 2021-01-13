@@ -1,4 +1,4 @@
-const modal = document.querySelector('.modal');
+const newPostModal = document.querySelector('.modal.create-post');
 const newPostBtn = document.getElementById('new-post-btn-id');
 
 function addEvents(){
@@ -8,11 +8,12 @@ function addEvents(){
 
 
 function openModal(){
-    modal.classList.remove('hide');
+    newPostModal.classList.remove('hide');
 }
 
 function handleModal(e){
     let modal = e.target.closest('.modal');
+    console.log(modal);
     if(modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))){
         modal.classList.add('hide');
     }

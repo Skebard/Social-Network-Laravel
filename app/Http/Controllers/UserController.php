@@ -61,6 +61,9 @@ class UserController extends Controller
                                         ->where('user_two_id',Auth::user()->id)
                                         ->union($relationshipA)
                                         ->first();
+        $user->friends = Relationship::where('user_one_id',$user->id)
+                                        ->orWhere('user_two_id',$user->id)
+                                        ->get();
 
         return view('profile.home',compact('user','posts','page','relationship'));
     }
@@ -108,7 +111,16 @@ class UserController extends Controller
         }
         $posts = Post::getSavedPosts();
         $page = 'saved';
-        return view('profile.home',compact('posts','user','page'));
+        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
+        ->where('user_two_id',$user->id);
+$relationship =  Relationship::where('user_one_id',$user->id)
+        ->where('user_two_id',Auth::user()->id)
+        ->union($relationshipA)
+        ->first();
+$user->friends = Relationship::where('user_one_id',$user->id)
+        ->orWhere('user_two_id',$user->id)
+        ->get();
+        return view('profile.home',compact('posts','user','page','relationship'));
     }
 
     public function archivedPosts($username)
@@ -119,7 +131,16 @@ class UserController extends Controller
         }
         $page = 'archived';
         $posts = Post::getDeletedPosts();
-        return view('profile.home',compact('posts','user','page'));
+        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
+        ->where('user_two_id',$user->id);
+$relationship =  Relationship::where('user_one_id',$user->id)
+        ->where('user_two_id',Auth::user()->id)
+        ->union($relationshipA)
+        ->first();
+$user->friends = Relationship::where('user_one_id',$user->id)
+        ->orWhere('user_two_id',$user->id)
+        ->get();
+        return view('profile.home',compact('posts','user','page','relationship'));
     }
 
     public function searchUsers($text)
@@ -131,5 +152,11 @@ class UserController extends Controller
                     ->union($a)
                     ->get();
         return json_encode((object)['status'=>1,'users'=>$users]);
+    }
+
+    public function showFriends($userId)
+    {
+        $friends = Relationship::getFriends($userId);
+        return view('relationships.friends',compact('friends'));
     }
 }

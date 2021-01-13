@@ -1,7 +1,6 @@
 @import 'base/global';
+@import 'components/profile-navigation';
 
-$m-width: 735px;
-$s-width: 350px;
 
 body main {
     max-width: 935px;
@@ -136,71 +135,6 @@ body main {
 
 }
 
-
-.profile-navigation {
-    margin: 0 10px;
-    position: relative;
-
-    .top-line {
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 1px;
-        width: 100%;
-        content: '';
-        background-color: #dbdbdb;
-        display: block;
-    }
-
-    ul {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-
-        >li:not(:last-child) {
-            margin-right: 60px;
-        }
-
-        >li {
-            padding: 20px 0;
-            z-index: 10;
-
-            a {
-                font-size: 12px;
-                font-weight: bolder;
-                color: #8e8e8e;
-
-                .category {
-                    font-weight: bolder;
-                    text-transform: uppercase;
-
-                    @media screen and(max-width:$s-width) {
-                        display: none;
-                    }
-                }
-
-                .archive-icon {
-                    margin-right: 5px;
-                    font-size: 15px;
-                }
-
-            }
-
-        }
-
-        >li.active {
-            border-top: 1px solid black;
-
-            a {
-                color: black;
-
-                span {
-                    color: black;
-                }
-            }
-        }
-    }
-}
 
 .posts-container {
     .posts {

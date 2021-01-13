@@ -54,9 +54,25 @@ class RelationshipController extends Controller
         return Redirect()->back()->with('success','Request declined');
     }
 
+    public function removeFriend($userId)
+    {
+        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
+        ->where('user_two_id',$userId)->delete();
+        $relationship =  Relationship::where('user_one_id',$userId)
+        ->where('user_two_id',Auth::user()->id)->delete();
+        return Redirect()->back()->with('success','Friend removed');
+    }
     public function blockUser($userId)
     {
 
-        
+        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
+        ->where('user_two_id',$userId);
+        $relationship =  Relationship::where('user_one_id',$userId)
+        ->where('user_two_id',Auth::user()->id)
+        ->union($relationshipA)
+        ->update(['status'=>3,
+                'action_user_id'=>Auth::user()->id]);
+        return Redirect()->back()->with('success','User blocked');
+
     }
 }

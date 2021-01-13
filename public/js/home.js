@@ -361,9 +361,12 @@ function editPost(e) {
       'X-CSRF-TOKEN': token.value
     }
   }).then(function (resp) {
-    return resp.text();
+    return resp.json();
   }).then(function (data) {
-    return console.log(data);
+    if (data.status == 1) {
+      //editModal.classList.add('hide');
+      location.reload();
+    }
   });
 }
 /**
@@ -409,7 +412,7 @@ exports.showEditForm = showEditForm;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var modal = document.querySelector('.modal');
+var newPostModal = document.querySelector('.modal.create-post');
 var newPostBtn = document.getElementById('new-post-btn-id');
 
 function addEvents() {
@@ -418,11 +421,12 @@ function addEvents() {
 }
 
 function openModal() {
-  modal.classList.remove('hide');
+  newPostModal.classList.remove('hide');
 }
 
 function handleModal(e) {
   var modal = e.target.closest('.modal');
+  console.log(modal);
 
   if (modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))) {
     modal.classList.add('hide');

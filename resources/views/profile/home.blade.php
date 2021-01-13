@@ -2,6 +2,7 @@
 
 @section('links')
 <link rel="stylesheet" href="{{asset('css/profileHome.css')}}">
+<link rel="stylesheet" href="{{asset('css/friends.css')}}">
 
 @endsection
 
@@ -33,7 +34,7 @@
             <a href="{{url('/user/friend/accept/'.$user->id)}}" class='edit-btn'> Accept request</a>
             <a href="{{url('/user/friend/decline/'.$user->id)}}" class='edit-btn'> Decline request</a>
             @elseif($relationship->status === 1)
-            <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'>Remove Friend</a>
+            <a href="{{url('/user/friend/remove/'.$user->id)}}" class='edit-btn'>Remove Friend</a>
             @elseif($relationship->status === 3 && $relationship->action_user_id===Auth::user()->id)
             <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'>Unblock</a>
             @endif
@@ -46,7 +47,8 @@
         </div>
 
         <div class="info">
-            <span><b>10</b> posts</span>
+            <span><b>{{count($posts)}}</b> posts</span>
+            <span><b>{{ count($user->friends)}}</b> friends</span>
             <span><b>123</b> followers</span>
             <span><b>321</b> following</span>
         </div>
@@ -137,4 +139,11 @@
     </ul>
 </div>
 <!-- end posts  -->
+@endsection
+
+
+@section('modals')
+@include('components.modalCreatePost')
+@include('components.modalFriends')
+@include('layouts.modalPostOptions')
 @endsection

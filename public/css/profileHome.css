@@ -32,6 +32,71 @@ li {
   display: none;
 }
 
+.profile-navigation {
+  margin: 0 10px;
+  position: relative;
+}
+
+.profile-navigation .top-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100%;
+  content: "";
+  background-color: #dbdbdb;
+  display: block;
+}
+
+.profile-navigation ul {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-navigation ul > li:not(:last-child) {
+  margin-right: 60px;
+}
+
+.profile-navigation ul > li {
+  padding: 20px 0;
+  z-index: 10;
+}
+
+.profile-navigation ul > li a {
+  font-size: 12px;
+  font-weight: bolder;
+  color: #8e8e8e;
+}
+
+.profile-navigation ul > li a .category {
+  font-weight: bolder;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 350px) {
+  .profile-navigation ul > li a .category {
+    display: none;
+  }
+}
+
+.profile-navigation ul > li a .archive-icon {
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+.profile-navigation ul > li.active {
+  border-top: 1px solid black;
+}
+
+.profile-navigation ul > li.active a {
+  color: black;
+}
+
+.profile-navigation ul > li.active a span {
+  color: black;
+}
+
 body main {
   max-width: 935px;
 }
@@ -176,71 +241,6 @@ body main {
 
 .profile-info__right-bottom .description {
   font-size: 14px;
-}
-
-.profile-navigation {
-  margin: 0 10px;
-  position: relative;
-}
-
-.profile-navigation .top-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 1px;
-  width: 100%;
-  content: "";
-  background-color: #dbdbdb;
-  display: block;
-}
-
-.profile-navigation ul {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.profile-navigation ul > li:not(:last-child) {
-  margin-right: 60px;
-}
-
-.profile-navigation ul > li {
-  padding: 20px 0;
-  z-index: 10;
-}
-
-.profile-navigation ul > li a {
-  font-size: 12px;
-  font-weight: bolder;
-  color: #8e8e8e;
-}
-
-.profile-navigation ul > li a .category {
-  font-weight: bolder;
-  text-transform: uppercase;
-}
-
-@media screen and (max-width: 350px) {
-  .profile-navigation ul > li a .category {
-    display: none;
-  }
-}
-
-.profile-navigation ul > li a .archive-icon {
-  margin-right: 5px;
-  font-size: 15px;
-}
-
-.profile-navigation ul > li.active {
-  border-top: 1px solid black;
-}
-
-.profile-navigation ul > li.active a {
-  color: black;
-}
-
-.profile-navigation ul > li.active a span {
-  color: black;
 }
 
 .posts-container .posts {

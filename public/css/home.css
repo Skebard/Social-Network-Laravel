@@ -81,7 +81,8 @@ header {
   z-index: 100;
 }
 
-.header-content {
+.header-content,
+.friends-results {
   width: 100%;
   max-width: 975px;
   display: flex;
@@ -90,13 +91,15 @@ header {
   height: 55px;
 }
 
-.header-content .search {
+.header-content .search,
+.friends-results .search {
   display: flex;
   justify-content: center;
   position: relative;
 }
 
-.header-content .search__input-container .small-search-icon {
+.header-content .search__input-container .small-search-icon,
+.friends-results .search__input-container .small-search-icon {
   font-size: 9px;
   position: absolute;
   left: 10px;
@@ -105,7 +108,8 @@ header {
   color: #8e8e8e;
 }
 
-.header-content .search input {
+.header-content .search input,
+.friends-results .search input {
   outline: none;
   background-color: #fafafa;
   max-width: 215px;
@@ -116,7 +120,8 @@ header {
   width: 215px;
 }
 
-.header-content .search .up-arrow {
+.header-content .search .up-arrow,
+.friends-results .search .up-arrow {
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -128,7 +133,8 @@ header {
   border-bottom-color: white;
 }
 
-.header-content .search .search-results {
+.header-content .search .search-results,
+.friends-results .search .search-results {
   max-height: 360px;
   width: 110%;
   position: absolute;
@@ -139,56 +145,67 @@ header {
   overflow: auto;
 }
 
-.header-content .search .search-results > a {
+.header-content .search .search-results > a,
+.friends-results .search .search-results > a {
   padding: 10px;
   display: flex;
   align-items: center;
 }
 
-.header-content .search .search-results > a:hover {
+.header-content .search .search-results > a:hover,
+.friends-results .search .search-results > a:hover {
   background-color: #fafafa;
   width: 100%;
 }
 
-.header-content .search .search-results__user-info {
+.header-content .search .search-results__user-info,
+.friends-results .search .search-results__user-info {
   display: flex;
   flex-direction: column;
 }
 
-.header-content .search .search-results__user-info .search-username {
+.header-content .search .search-results__user-info .search-username,
+.friends-results .search .search-results__user-info .search-username {
   font-weight: bolder;
   font-size: 14px;
 }
 
-.header-content .search .search-results__user-info .search-name {
+.header-content .search .search-results__user-info .search-name,
+.friends-results .search .search-results__user-info .search-name {
   color: #8e8e8e;
   font-size: 14px;
 }
 
-.header-content .search .search-results .profile-info {
+.header-content .search .search-results .profile-info,
+.friends-results .search .search-results .profile-info {
   margin: 0;
   padding: 0;
 }
 
-.header-content .search .search-results .profile-info .profile-image-container {
+.header-content .search .search-results .profile-info .profile-image-container,
+.friends-results .search .search-results .profile-info .profile-image-container {
   height: 38px;
   width: 38px;
 }
 
-.header-content .search .search-results .profile-info .profile-image-container img {
+.header-content .search .search-results .profile-info .profile-image-container img,
+.friends-results .search .search-results .profile-info .profile-image-container img {
   width: 34px;
   height: 34px;
 }
 
-.header-content .search .search-results.hide {
+.header-content .search .search-results.hide,
+.friends-results .search .search-results.hide {
   display: none;
 }
 
-.header-content .user-actions a {
+.header-content .user-actions a,
+.friends-results .user-actions a {
   margin: 0 8px;
 }
 
-.header-content .user-actions a img {
+.header-content .user-actions a img,
+.friends-results .user-actions a img {
   height: 24px;
   width: 24px;
   -o-object-fit: cover;
@@ -197,7 +214,9 @@ header {
 }
 
 .header-content .user-actions a .fa-bell,
-.header-content .user-actions a .fa-plus-square {
+.header-content .user-actions a .fa-plus-square,
+.friends-results .user-actions a .fa-bell,
+.friends-results .user-actions a .fa-plus-square {
   width: 22px;
   height: 22px;
   font-size: 24px;

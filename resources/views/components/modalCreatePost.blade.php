@@ -1,10 +1,3 @@
-@extends('layouts.master_home')
-
-@section('content')
-@endsection('content')
-
-@section('modals')
-
 <!-- CREATE POST -->
 <div class="hide modal create-post">
     <div class="modal-content">
@@ -36,5 +29,4 @@
         </form>
     </div>
 </div>
-
-@endsection('modals')
+<!-- end create post modal -->

@@ -1,0 +1,39 @@
+@import 'base/global';
+body .friends-modal{
+    >li{
+        justify-content: space-between;
+        padding:5px;
+        cursor:default;
+    }
+    >li >a{
+        justify-content:flex-start;
+        width:auto;
+    }
+    li .edit-btn{
+        font-weight: bolder;
+        font-size: 14px;
+        border: $soft-border;
+        border-radius: 4px;
+        padding: 5px 9px;
+        min-height: auto;
+        white-space:nowrap;
+        width: auto;
+    }
+    .profile-info{
+        margin:0;
+        padding:0;
+
+    }
+    &__user-info{
+        display:flex;
+        flex-direction:column;
+        .search-username{
+            font-weight:bolder;
+            font-size:14px;
+        }
+        .search-name{
+            color: rgb(142,142,142);
+            font-size:14px;
+        }
+    }
+}
