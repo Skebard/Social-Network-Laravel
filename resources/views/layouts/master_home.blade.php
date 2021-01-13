@@ -40,8 +40,8 @@
                 </span>
                 </div>
                 <!-- SEARCH RESULTS -->
-                <div class="up-arrow"></div>
-                <div class="search-results box">
+                <div id='up-arrow-id' class="up-arrow"></div>
+                <div id='search-results-id' class="search-results box">
                     <a href="#">
                         <div class="profile-info">
                             <div class='round-profile-img'>

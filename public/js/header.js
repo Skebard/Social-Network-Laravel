@@ -94,25 +94,49 @@
 /***/ (function(module, exports) {
 
 var DEBOUNCE_TIME_MS = 1000;
+var searchInput = document.getElementById('search-input-id');
+var upArrow = document.getElementById('up-arrow-id');
+var resultsContainer = document.getElementById('search-results-id');
 
-function manageSearch(input) {
+function manageSearch() {
+  resultsContainer.classList.add('hide');
+  upArrow.classList.add('hide');
   var debounceTimeout;
-  input.addEventListener('keydown', function (e) {
+  searchInput.addEventListener('keydown', function (e) {
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(function () {
-      searchUsers(input.value);
+      searchUsers(searchInput.value);
     }, 1000);
 
     if (e.key === 'Enter') {
       clearTimeout(debounceTimeout);
-      searchUsers(input.value);
+      searchUsers(searchInput.value);
     }
   });
 }
 
 function searchUsers(text) {
-  console.log(text);
+  console.log(text); //send text to server and print
+
+  fetch('/user/search/' + text).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    if (data.status == 1) {
+      console.log(data.users);
+      var html = '';
+      data.users.forEach(function (user) {
+        var profilePhoto = user.profile_photo_path ? user.profile_photo_path : user.profile_photo_url; //console.log(profilePhoto);
+
+        html += "<a href=\"/user/".concat(user.username, "\">\n                <div class=\"profile-info\">\n                    <div class='round-profile-img'>\n                        <div class='profile-image-container'>\n                            <img src=\"").concat(profilePhoto, "\" alt=\"\">\n                        </div>\n                    </div>\n                </div>\n                <span class='search-results__user-info'>\n                    <span class='search-username'>").concat(user.username, "</span>\n                    <span class='search-name'>").concat(user.name + user.last_name, "</span>\n                </span>\n            </a>");
+      });
+      resultsContainer.innerHTML = html;
+    }
+  });
+  resultsContainer.classList.remove('hide');
+  upArrow.classList.remove('hide');
 }
+
+function showResults(data) {}
 
 exports.manageSearch = manageSearch;
 
@@ -127,8 +151,7 @@ exports.manageSearch = manageSearch;
 
 var search = __webpack_require__(/*! ./components/search */ "./resources/js/components/search.js");
 
-var searchInput = document.getElementById('search-input-id');
-search.manageSearch(searchInput);
+search.manageSearch();
 
 /***/ }),
 

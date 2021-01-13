@@ -113,4 +113,15 @@ class UserController extends Controller
         $posts = Post::getDeletedPosts();
         return view('profile.home',compact('posts','user','page'));
     }
+
+    public function searchUsers($text)
+    {
+            $a = User::where('name','LIKE','%' . $text . '%');
+            $b = User::where('last_name','LIKE','%' . $text . '%');
+            $users = User::where('username', 'LIKE', '%' . $text . '%')
+                    ->union($b)
+                    ->union($a)
+                    ->get();
+        return json_encode((object)['status'=>1,'users'=>$users]);
+    }
 }

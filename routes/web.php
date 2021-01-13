@@ -30,6 +30,7 @@ Route::get('/user/{username}',[UserController::class,'show']);
 Route::get('/{username}/saved',[UserController::class,'savedPosts'])->middleware('auth');
 // Route::get('/posts/saved',[UserController::class,'savedPosts']);
 Route::get('/{username}/archived',[UserController::class,'archivedPosts'])->middleware('auth');
+Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
 
 
 //Posts

@@ -180,6 +180,10 @@ header {
   height: 34px;
 }
 
+.header-content .search .search-results.hide {
+  display: none;
+}
+
 .header-content .user-actions a {
   margin: 0 8px;
 }
