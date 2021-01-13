@@ -98,8 +98,6 @@ var stories = __webpack_require__(/*! ./home/stories */ "./resources/js/home/sto
 
 var posts = __webpack_require__(/*! ./home/posts */ "./resources/js/home/posts.js");
 
-var createPost = __webpack_require__(/*! ./home/createPost */ "./resources/js/home/createPost.js");
-
 var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.js");
 
 var editPost = __webpack_require__(/*! ./home/editPost */ "./resources/js/home/editPost.js");
@@ -108,7 +106,6 @@ var postComments = __webpack_require__(/*! ./home/postComments */ "./resources/j
 
 var body = document.querySelector('body');
 stories.slideStoriesEvents();
-createPost.addEvents();
 body.addEventListener('click', posts.postSlider);
 body.addEventListener('click', posts.likeSaveEvent);
 body.addEventListener('click', posts.viewAllComments);
@@ -131,92 +128,6 @@ $(window).scroll(function () {
     }
   }
 });
-
-/***/ }),
-
-/***/ "./resources/js/home/createPost.js":
-/*!*****************************************!*\
-  !*** ./resources/js/home/createPost.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-//Container will al input containers
-var imagesContainer = document.getElementById("images-container-id"); //template to create new inputs
-
-var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\" active add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">"; //Initial image input
-
-var firstInput = document.getElementById('input-1-id');
-
-function addEvents() {
-  firstInput.addEventListener('change', handleImageInputs);
-  imagesContainer.addEventListener('click', deleteImageInput);
-}
-/**
- * 
- * @param {} e 
- */
-
-
-function deleteImageInput(e) {
-  console.log(e.target);
-
-  if (e.target.classList.contains('fa-trash-alt')) {
-    e.target.parentElement.parentElement.remove();
-  }
-}
-
-function handleImageInputs(e) {
-  var input = e.currentTarget; //Check if a file has been selected
-
-  var inputContainer = input.parentElement;
-
-  if (input.files && input.files[0]) {
-    console.log('YES');
-    var imgDisplay = inputContainer.querySelector('.image-display');
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-      imgDisplay.src = e.target.result;
-    };
-
-    reader.readAsDataURL(input.files[0]);
-
-    if (inputContainer === imagesContainer.lastElementChild) {
-      //show edit icon
-      inputContainer.querySelector('.add-image-btn').classList.remove('active');
-      inputContainer.querySelector('.edit-image-btn').classList.add('active');
-      var newInput = createImageInput();
-      imagesContainer.append(newInput.container);
-      newInput.input.addEventListener('change', handleImageInputs);
-    }
-  } else {
-    //if the user does not select an image remove the input unless is the last one
-    if (inputContainer !== imagesContainer.lastElementChild) {
-      inputContainer.remove();
-    }
-  }
-}
-/**
- * Creates a new imageInput HTMLElement and returns it.
- * @return {Object} Object whose properties are the html container of the input and the input itself
- */
-
-
-function createImageInput() {
-  //remove last class from the previous input
-  imagesContainer.querySelector('.delete-image-btn.last').classList.remove('last');
-  var inputContainer = document.createElement('div');
-  inputContainer.classList.add('input-container');
-  inputContainer.innerHTML = inputContainerContent;
-  var inputImage = inputContainer.querySelector('.multi-images-form__image-input');
-  return {
-    container: inputContainer,
-    input: inputImage
-  };
-}
-
-exports.addEvents = addEvents;
 
 /***/ }),
 

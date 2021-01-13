@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Relationship;
 use Auth;
+
 class UserController extends Controller
 {
     /**
@@ -49,23 +50,25 @@ class UserController extends Controller
     public function show($username)
     {
         //
-        $user = User::where('username',$username)->first();
-        if(!$user){
+        $user = User::where('username', $username)->first();
+        if (!$user) {
             return 'end';
         }
         $posts = Post::getUserPosts($user->id);
-        $page='home';
-        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
-                                        ->where('user_two_id',$user->id);
-        $relationship =  Relationship::where('user_one_id',$user->id)
-                                        ->where('user_two_id',Auth::user()->id)
-                                        ->union($relationshipA)
-                                        ->first();
-        $user->friends = Relationship::where('user_one_id',$user->id)
-                                        ->orWhere('user_two_id',$user->id)
-                                        ->get();
+        $page = 'home';
+        $relationshipA = Relationship::where('user_one_id', Auth::user()->id)
+            ->where('user_two_id', $user->id);
+        $relationship =  Relationship::where('user_one_id', $user->id)
+            ->where('user_two_id', Auth::user()->id)
+            ->union($relationshipA)
+            ->first();
+        $user->friends = Relationship::where('user_one_id', $user->id)
+        ->Where('status',1)
+            ->orWhere('user_two_id', $user->id)
+            ->Where('status',1)
+            ->get();
 
-        return view('profile.home',compact('user','posts','page','relationship'));
+        return view('profile.home', compact('user', 'posts', 'page', 'relationship'));
     }
 
     /**
@@ -106,57 +109,57 @@ class UserController extends Controller
     public function savedPosts($username)
     {
         $user = Auth::user();
-        if($username !== $user->username){
+        if ($username !== $user->username) {
             return 'error';
         }
         $posts = Post::getSavedPosts();
         $page = 'saved';
-        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
-        ->where('user_two_id',$user->id);
-$relationship =  Relationship::where('user_one_id',$user->id)
-        ->where('user_two_id',Auth::user()->id)
-        ->union($relationshipA)
-        ->first();
-$user->friends = Relationship::where('user_one_id',$user->id)
-        ->orWhere('user_two_id',$user->id)
-        ->get();
-        return view('profile.home',compact('posts','user','page','relationship'));
+        $relationshipA = Relationship::where('user_one_id', Auth::user()->id)
+            ->where('user_two_id', $user->id);
+        $relationship =  Relationship::where('user_one_id', $user->id)
+            ->where('user_two_id', Auth::user()->id)
+            ->union($relationshipA)
+            ->first();
+        $user->friends = Relationship::where('user_one_id', $user->id)
+            ->orWhere('user_two_id', $user->id)
+            ->get();
+        return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
     public function archivedPosts($username)
     {
         $user = Auth::user();
-        if($username !== $user->username){
+        if ($username !== $user->username) {
             return 'error';
         }
         $page = 'archived';
         $posts = Post::getDeletedPosts();
-        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
-        ->where('user_two_id',$user->id);
-$relationship =  Relationship::where('user_one_id',$user->id)
-        ->where('user_two_id',Auth::user()->id)
-        ->union($relationshipA)
-        ->first();
-$user->friends = Relationship::where('user_one_id',$user->id)
-        ->orWhere('user_two_id',$user->id)
-        ->get();
-        return view('profile.home',compact('posts','user','page','relationship'));
+        $relationshipA = Relationship::where('user_one_id', Auth::user()->id)
+            ->where('user_two_id', $user->id);
+        $relationship =  Relationship::where('user_one_id', $user->id)
+            ->where('user_two_id', Auth::user()->id)
+            ->union($relationshipA)
+            ->first();
+        $user->friends = Relationship::where('user_one_id', $user->id)
+            ->orWhere('user_two_id', $user->id)
+            ->get();
+        return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
     public function searchUsers($text)
     {
-            $a = User::where('name','LIKE','%' . $text . '%');
-            $b = User::where('last_name','LIKE','%' . $text . '%');
-            $users = User::where('username', 'LIKE', '%' . $text . '%')
-                    ->union($b)
-                    ->union($a)
-                    ->get();
-        return json_encode((object)['status'=>1,'users'=>$users]);
+        $a = User::where('name', 'LIKE', '%' . $text . '%');
+        $b = User::where('last_name', 'LIKE', '%' . $text . '%');
+        $users = User::where('username', 'LIKE', '%' . $text . '%')
+            ->union($b)
+            ->union($a)
+            ->get();
+        return json_encode((object)['status' => 1, 'users' => $users]);
     }
 
     public function showFriends($userId)
     {
         $friends = Relationship::getFriends($userId);
-        return view('relationships.friends',compact('friends'));
+        return json_encode($friends);
     }
 }

@@ -3,12 +3,15 @@
 @section('links')
 <link rel="stylesheet" href="{{asset('css/profileHome.css')}}">
 <link rel="stylesheet" href="{{asset('css/friends.css')}}">
+<script src="{{asset('js/friends.js')}}" defer></script>
 
 @endsection
 
 
 
 @section('content')
+<!-- PROFILE INPUTS WITH DATA -->
+<input id='profile-userId-id' type="hidden" value='{{$user->id}}'>
 <div class="profile-info">
     <div class="profile-info__left">
         <a href="#">
@@ -48,7 +51,7 @@
 
         <div class="info">
             <span><b>{{count($posts)}}</b> posts</span>
-            <span><b>{{ count($user->friends)}}</b> friends</span>
+            <span id='friends-btn-id'><b>{{ count($user->friends)}}</b> friends</span>
             <span><b>123</b> followers</span>
             <span><b>321</b> following</span>
         </div>

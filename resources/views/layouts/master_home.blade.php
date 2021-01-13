@@ -99,7 +99,7 @@
             </div>
         </div>
         <input type="hidden" id='current-username-id' value="{{Auth::check()? Auth::user()->username :''}}">
-
+        <input type='hidden' id='current-userId-id' value="{{Auth::check()? Auth::user()->id :''}}">
     </header>
     @if(session('success'))
     <div>{{session('success')}}</div>
