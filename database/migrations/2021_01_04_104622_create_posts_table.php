@@ -21,8 +21,8 @@ class CreatePostsTable extends Migration
             $table->smallInteger('status');
             $table->dateTime('published_at')->nullable();
             $table->timestamps();
-            $table->unsignedBigInteger('likes'); //total number of likes
-            $table->unsignedBigInteger('comments'); //total number of comments
+            $table->unsignedBigInteger('likes')->default(0); //total number of likes
+            $table->unsignedBigInteger('comments')->default(0); //total number of comments
             //both likes anc comments could be calculated but adding this fields in this table reduces work from the database
             $table->SoftDeletes();
         });

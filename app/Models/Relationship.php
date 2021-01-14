@@ -59,7 +59,8 @@ class Relationship extends Model
             ->where('user_two_id', $userTwoId);
         return Relationship::where('user_one_id', $userTwoId)
             ->where('user_two_id', $userOneId)
-            ->union($relationshipA);
+            ->union($relationshipA)
+            ->get();
     }
 
     public static function updateRelationship(int $userOneId, int $userTwoId, array $data)

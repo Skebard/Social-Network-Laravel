@@ -53,7 +53,7 @@
         </div>
 
         <div class="info">
-            <span><b>{{count($posts)}}</b> posts</span>
+            <span><b>{{$user->numPosts}}</b> posts</span>
             <span id='friends-btn-id' class='clickable'><b>{{ count($user->friends)}}</b> friends</span>
             <!-- <span><b>123</b> followers</span>
             <span><b>321</b> following</span> -->

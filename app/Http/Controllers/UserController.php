@@ -63,7 +63,7 @@ class UserController extends Controller
             ->union($relationshipA)
             ->first();
         $user->friends = Relationship::getFriendsRelationships($user->id);
-
+        $user->numPosts = $posts->count();
         return view('profile.home', compact('user', 'posts', 'page', 'relationship'));
     }
 
@@ -117,7 +117,9 @@ class UserController extends Controller
             ->union($relationshipA)
             ->first();
             $user->friends = Relationship::getFriendsRelationships($user->id);
-
+        $user->numPosts = Post::where('user_id',$user->id)
+                                ->get()
+                                ->count();
         return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
@@ -136,7 +138,9 @@ class UserController extends Controller
             ->union($relationshipA)
             ->first();
             $user->friends = Relationship::getFriendsRelationships($user->id);
-
+            $user->numPosts = Post::where('user_id',$user->id)
+            ->get()
+            ->count();
         return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
