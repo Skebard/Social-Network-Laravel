@@ -30,7 +30,7 @@
             <a href='#' class='edit-btn m-width'>Edit Profile</a>
         @else
             @if(!$relationship || $relationship->status === 2)
-            <a class='add-friend friend-action edit-btn' href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Add Friend</a>
+            <a class='add-friend add-friend-btn friend-action edit-btn' href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Add Friend</a>
             @elseif($relationship->status ===0 && $relationship->action_user_id==Auth::user()->id)
             <a class='remove-request friend-action edit-btn' href="{{url('/user/friend/remove/'.$user->id)}}" class='edit-btn'> Request sent</a>
             @elseif($relationship->status ===0 && $relationship->action_user_id!==Auth::user()->id)

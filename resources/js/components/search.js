@@ -6,7 +6,20 @@ const resultsContainer = document.getElementById('search-results-id');
 function manageSearch() {
     resultsContainer.classList.add('hide');
     upArrow.classList.add('hide');
+    document.querySelector('body').addEventListener('click',(e)=>{
+        if(!e.target.closest('.search')){
+            upArrow.classList.add('hide');
+            resultsContainer.classList.add('hide');
+        }
+    });
     var debounceTimeout;
+
+    searchInput.addEventListener('focus',()=>{
+        if(resultsContainer.children.length>0){
+            resultsContainer.classList.remove('hide');
+            upArrow.classList.remove('hide');
+        }
+    });
     searchInput.addEventListener('keydown', (e) => {
         clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(() => {
@@ -25,7 +38,7 @@ function searchUsers(text) {
     fetch('/user/search/' + text)
         .then(resp => resp.json())
         .then(data => {
-            if (data.status == 1) {
+            if (data.status == 1 && data.users.length>0) {
                 console.log(data.users);
                 let html = '';
                 data.users.forEach(user => {
@@ -47,16 +60,16 @@ function searchUsers(text) {
 
                 });
                 resultsContainer.innerHTML = html;
+                resultsContainer.classList.remove('hide');
+                upArrow.classList.remove('hide');
             }
 
+        })
+        .catch(e=>{
         });
-    resultsContainer.classList.remove('hide');
-    upArrow.classList.remove('hide');
-}
-
-function showResults(data) {
 
 }
+
 
 
 exports.manageSearch = manageSearch;

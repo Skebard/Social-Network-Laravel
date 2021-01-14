@@ -101,7 +101,19 @@ var resultsContainer = document.getElementById('search-results-id');
 function manageSearch() {
   resultsContainer.classList.add('hide');
   upArrow.classList.add('hide');
+  document.querySelector('body').addEventListener('click', function (e) {
+    if (!e.target.closest('.search')) {
+      upArrow.classList.add('hide');
+      resultsContainer.classList.add('hide');
+    }
+  });
   var debounceTimeout;
+  searchInput.addEventListener('focus', function () {
+    if (resultsContainer.children.length > 0) {
+      resultsContainer.classList.remove('hide');
+      upArrow.classList.remove('hide');
+    }
+  });
   searchInput.addEventListener('keydown', function (e) {
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(function () {
@@ -121,7 +133,7 @@ function searchUsers(text) {
   fetch('/user/search/' + text).then(function (resp) {
     return resp.json();
   }).then(function (data) {
-    if (data.status == 1) {
+    if (data.status == 1 && data.users.length > 0) {
       console.log(data.users);
       var html = '';
       data.users.forEach(function (user) {
@@ -130,13 +142,11 @@ function searchUsers(text) {
         html += "<a href=\"/user/".concat(user.username, "\">\n                <div class=\"profile-info\">\n                    <div class='round-profile-img'>\n                        <div class='profile-image-container'>\n                            <img src=\"").concat(profilePhoto, "\" alt=\"\">\n                        </div>\n                    </div>\n                </div>\n                <span class='search-results__user-info'>\n                    <span class='search-username'>").concat(user.username, "</span>\n                    <span class='search-name'>").concat(user.name + user.last_name, "</span>\n                </span>\n            </a>");
       });
       resultsContainer.innerHTML = html;
+      resultsContainer.classList.remove('hide');
+      upArrow.classList.remove('hide');
     }
-  });
-  resultsContainer.classList.remove('hide');
-  upArrow.classList.remove('hide');
+  })["catch"](function (e) {});
 }
-
-function showResults(data) {}
 
 exports.manageSearch = manageSearch;
 

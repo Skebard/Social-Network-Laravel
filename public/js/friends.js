@@ -121,17 +121,17 @@ function handleFriendAction(e) {
           newHTMLlink = "<a class='remove-friend friend-action edit-btn' href=\"/user/friend/remove/".concat(userId, "\" class='edit-btn'>Remove Friend</a>");
           notification = 'New friend added';
         } else if (classes.contains('decline-request')) {
-          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
           notification = 'Request declined';
         } else if (classes.contains('remove-friend')) {
-          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
           notification = 'Friend removed';
         } else if (classes.contains('unblock-user')) {
           notification = 'User unblocked';
-          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
         } else if (classes.contains('remove-request')) {
           notification = 'Friend request removed';
-          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
         }
 
         e.target.insertAdjacentHTML('afterend', newHTMLlink);
