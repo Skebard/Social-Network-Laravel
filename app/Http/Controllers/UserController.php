@@ -62,11 +62,7 @@ class UserController extends Controller
             ->where('user_two_id', Auth::user()->id)
             ->union($relationshipA)
             ->first();
-        $user->friends = Relationship::where('user_one_id', $user->id)
-        ->Where('status',1)
-            ->orWhere('user_two_id', $user->id)
-            ->Where('status',1)
-            ->get();
+        $user->friends = Relationship::getFriendsRelationships($user->id);
 
         return view('profile.home', compact('user', 'posts', 'page', 'relationship'));
     }
@@ -120,9 +116,8 @@ class UserController extends Controller
             ->where('user_two_id', Auth::user()->id)
             ->union($relationshipA)
             ->first();
-        $user->friends = Relationship::where('user_one_id', $user->id)
-            ->orWhere('user_two_id', $user->id)
-            ->get();
+            $user->friends = Relationship::getFriendsRelationships($user->id);
+
         return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
@@ -140,9 +135,8 @@ class UserController extends Controller
             ->where('user_two_id', Auth::user()->id)
             ->union($relationshipA)
             ->first();
-        $user->friends = Relationship::where('user_one_id', $user->id)
-            ->orWhere('user_two_id', $user->id)
-            ->get();
+            $user->friends = Relationship::getFriendsRelationships($user->id);
+
         return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
@@ -159,7 +153,8 @@ class UserController extends Controller
 
     public function showFriends($userId)
     {
-        $friends = Relationship::getFriends($userId);
-        return json_encode($friends);
+        $profileFriends = Relationship::getFriends($userId);
+        $loggedUserRelationships = Relationship::getRelationships(Auth::user()->id);
+        return json_encode(['profileFriends'=>$profileFriends,'loggedUserRelationships'=>$loggedUserRelationships]);
     }
 }

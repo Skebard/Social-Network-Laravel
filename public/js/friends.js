@@ -113,10 +113,56 @@ function getFriends() {
   });
 }
 
-function populateFriends(friends) {
+function populateFriends(data) {
+  console.log(data);
+  var friends = data.profileFriends;
   var html = '';
   friends.forEach(function (friend) {
-    html += "\n        <li>\n                        <a href=\"#\">\n                            <div class=\"profile-info\">\n                                <div class='round-profile-img'>\n                                    <div class='profile-image-container'>\n                                        <img src=\"".concat(friend.profile_photo_url, "\" alt=\"\">\n        \n                                    </div>\n                                </div>\n                            </div>\n                            <span class='friends-modal__user-info'>\n                                <span class='search-username'>").concat(friend.username, "</span>\n                                <span class='search-name'>").concat(friend.name, "</span>\n                            </span>\n                            <a href='#' class='edit-btn m-width'>Remove Friend</a>\n                        </a>\n                    </li>\n        ");
+    html += "\n        <li>\n                        <a href=\"/user/".concat(friend.username, "\">\n                            <div class=\"profile-info\">\n                                <div class='round-profile-img'>\n                                    <div class='profile-image-container'>\n                                        <img src=\"").concat(friend.profile_photo_url, "\" alt=\"\">\n                                    </div>\n                                </div>\n                            </div>\n                            <span class='friends-modal__user-info'>\n                                <span class='search-username'>").concat(friend.username, "</span>\n                                <span class='search-name'>").concat(friend.name, "</span>\n                            </span>\n                        </a>\n                            ");
+    var rel = data.loggedUserRelationships.filter(function (relationship) {
+      if (friend.id == CURRENT_USER_ID) {
+        return false;
+      } else if (relationship.user_one_id === friend.id || relationship.user_two_id === friend.id) {
+        return true;
+      }
+
+      return false;
+    });
+    console.log(rel);
+
+    if (rel[0]) {
+      switch (rel[0].status) {
+        case 0:
+          if (rel[0].user_action_id === friend.id) {
+            html += "<a href='/user/friend/accept/".concat(friend.id, "' class='edit-btn m-width'>Accept Request</a>");
+          } else {
+            html += "<a href='/user/friend/cancelRequest/".concat(friend.id, "' class='edit-btn m-width'>Request Sent</a>");
+          }
+
+          break;
+
+        case 1:
+          html += "<a href='/user/friend/remove/".concat(friend.id, "' class='edit-btn m-width'>Remove Friend</a>");
+          break;
+
+        case 2:
+          html += "<a href='/user/friend/add/".concat(friend.id, "' class='edit-btn m-width'>Add Friend</a>");
+          break;
+
+        case 3:
+          if (rel[0].user_action_id !== friend.id) {
+            html += "<a href='/user/friend/unblock/".concat(friend.id, "' class='edit-btn m-width'>Unblock</a>");
+          }
+
+          break;
+      }
+    } else {
+      // the friend it is the same user that is looking the profile
+      html += " ";
+    } //  <a href='/user/friend/remove/' class='edit-btn m-width'>Remove Friend</a>
+
+
+    html += "\n                    </li>\n        ";
   });
   friendsContainer.innerHTML = html;
 }

@@ -62,6 +62,7 @@ class RelationshipController extends Controller
         ->where('user_two_id',Auth::user()->id)->delete();
         return Redirect()->back()->with('success','Friend removed');
     }
+
     public function blockUser($userId)
     {
 

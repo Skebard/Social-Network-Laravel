@@ -38,6 +38,7 @@ Route::get('/user/friend/add/{userId}',[RelationshipController::class,'sendFrien
 Route::get('/user/friend/accept/{userId}',[RelationshipController::class,'acceptRequest']);
 Route::get('/user/friend/decline/{userId}',[RelationshipController::class,'declineRequest']);
 Route::get('user/friend/remove/{userId}',[RelationshipController::class,'removeFriend']);
+Route::get('user/friend/cancelRequest/{userId}',[RelationshipController::class,'cancelRequest']);
 
 
 //POSTS

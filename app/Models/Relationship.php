@@ -35,8 +35,21 @@ class Relationship extends Model
         foreach($friends as $key=>&$friend){
             $users[]= User::find($friend->user_one_id);
         }
-
         return $users??[];
-
+    }
+    public static function getFriendsRelationships(int $userId)
+    {
+        return Relationship::where('user_one_id', $userId)
+        ->where('status',1)
+        ->orWhere('user_two_id', $userId)
+        ->where('status',1)
+        ->get();
+    }
+    public static function getRelationships(int $userId)
+    {
+        $relA = Relationship::where('user_one_id',$userId);
+        return Relationship::where('user_two_id',$userId)
+                    ->union($relA)
+                    ->get();
     }
 }
