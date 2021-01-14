@@ -32,6 +32,10 @@ li {
   display: none;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .profile-navigation {
   margin: 0 10px;
   position: relative;

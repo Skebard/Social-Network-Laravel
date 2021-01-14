@@ -1,5 +1,5 @@
 <!--FRIENDS MODAL -->
-<div class=" modal modal-post-options " id='friends-modal-id'>
+<div class="hide modal modal-post-options " id='friends-modal-id'>
     <div class="modal-content">
         <button class="close-modal">
             Close modal

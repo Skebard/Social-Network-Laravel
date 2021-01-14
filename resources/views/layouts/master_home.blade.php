@@ -12,6 +12,10 @@
     <!-- SCRIPTS -->
     <script src="{{asset('js/header.js')}}" defer></script>
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/9547750bbd.js" crossorigin="anonymous"></script>
 
@@ -22,6 +26,7 @@
 </head>
 
 <body>
+
     <header class="box">
         <div class="header-content">
             <!-- LOGO -->
@@ -102,7 +107,13 @@
         <input type='hidden' id='current-userId-id' value="{{Auth::check()? Auth::user()->id :''}}">
     </header>
     @if(session('success'))
-    <div>{{session('success')}}</div>
+    <script defer>
+        toastr.success("{{session('success')}}");
+    </script>
+    @elseif(session('error'))
+    <script defer>
+        toastr.error("{{session('error')}}");
+    </script>
     @endif
     <main class="">
 

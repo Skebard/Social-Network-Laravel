@@ -230,6 +230,7 @@
 </div>
 @endsection
 @section('modals')
+@include('components.modalCreatePost')
 @include('layouts.modalEditPost')
 @include('layouts.modalPostOptions')
 @endsection

@@ -30,16 +30,17 @@
             <a href='#' class='edit-btn m-width'>Edit Profile</a>
         @else
             @if(!$relationship || $relationship->status === 2)
-            <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Add Friend</a>
+            <a class='add-friend friend-action edit-btn' href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Add Friend</a>
             @elseif($relationship->status ===0 && $relationship->action_user_id==Auth::user()->id)
-            <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'> Request sent</a>
+            <a class='remove-request friend-action edit-btn' href="{{url('/user/friend/remove/'.$user->id)}}" class='edit-btn'> Request sent</a>
             @elseif($relationship->status ===0 && $relationship->action_user_id!==Auth::user()->id)
-            <a href="{{url('/user/friend/accept/'.$user->id)}}" class='edit-btn'> Accept request</a>
-            <a href="{{url('/user/friend/decline/'.$user->id)}}" class='edit-btn'> Decline request</a>
+            <a class='accept-request friend-action edit-btn' href="{{url('/user/friend/accept/'.$user->id)}}" class='edit-btn'> Accept request</a>
+            @elseif($relationship->status ===0 && $relationship->action_user_id===Auth::user()->id)
+            <a class='decline-request friend-action edit-btn' href="{{url('/user/friend/decline/'.$user->id)}}" class='edit-btn'> Decline request</a>
             @elseif($relationship->status === 1)
-            <a href="{{url('/user/friend/remove/'.$user->id)}}" class='edit-btn'>Remove Friend</a>
+            <a class='remove-friend friend-action edit-btn' href="{{url('/user/friend/remove/'.$user->id)}}" class='edit-btn'>Remove Friend</a>
             @elseif($relationship->status === 3 && $relationship->action_user_id===Auth::user()->id)
-            <a href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'>Unblock</a>
+            <a class='unblock-user friend-action edit-btn' href="{{url('/user/friend/add/'.$user->id)}}" class='edit-btn'>Unblock</a>
             @endif
             <svg aria-label="More options" class="_8-yf5 " fill="#262626" height="16" viewBox="0 0 48 48" width="16">
                 <circle clip-rule="evenodd" cx="8" cy="24" fill-rule="evenodd" r="4.5"></circle>
@@ -50,10 +51,10 @@
         </div>
 
         <div class="info">
-            <span><b>{{count($posts)}}</b> posts</span>
-            <span id='friends-btn-id'><b>{{ count($user->friends)}}</b> friends</span>
-            <span><b>123</b> followers</span>
-            <span><b>321</b> following</span>
+            <span ><b>{{count($posts)}}</b> posts</span>
+            <span id='friends-btn-id' class='clickable'><b>{{ count($user->friends)}}</b> friends</span>
+            <!-- <span><b>123</b> followers</span>
+            <span><b>321</b> following</span> -->
         </div>
     </div>
 

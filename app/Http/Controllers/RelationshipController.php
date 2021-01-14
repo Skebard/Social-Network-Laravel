@@ -25,9 +25,11 @@ class RelationshipController extends Controller
             'action_user_id'=>Auth::user()->id,
             ]);
         }catch(QueryException $e){
-            return  Redirect()->back()->with('error', 'Request could not be sent');
+            return json_encode(['status'=>0]);
+            //return  Redirect()->back()->with('error', 'Request could not be sent');
         }
-        return Redirect()->back()->with('success','Request has been sent');
+        //return Redirect()->back()->with('success','Request has been sent');
+        return json_encode(['status'=>1]);
     }
 
     public function acceptRequest($userId)
@@ -39,7 +41,8 @@ class RelationshipController extends Controller
         ->union($relationshipA)
         ->update(['status'=>1,
                 'action_user_id'=>Auth::user()->id]);
-        return Redirect()->back()->with('success','Friend added');
+        return json_encode(['status'=>1,'modified'=>$relationship]);
+
     }
 
     public function declineRequest($userId)
@@ -60,7 +63,7 @@ class RelationshipController extends Controller
         ->where('user_two_id',$userId)->delete();
         $relationship =  Relationship::where('user_one_id',$userId)
         ->where('user_two_id',Auth::user()->id)->delete();
-        return Redirect()->back()->with('success','Friend removed');
+        return json_encode(['status'=>1]);
     }
 
     public function blockUser($userId)
@@ -73,7 +76,7 @@ class RelationshipController extends Controller
         ->union($relationshipA)
         ->update(['status'=>3,
                 'action_user_id'=>Auth::user()->id]);
-        return Redirect()->back()->with('success','User blocked');
+        return json_encode(['status'=>1]);
 
     }
 }

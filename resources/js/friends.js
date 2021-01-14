@@ -4,24 +4,22 @@ const body = document.querySelector('body');
 const friendsModal = document.getElementById('friends-modal-id');
 const friendsContainer = document.getElementById('friends-container-id');
 
+const utils = require('./utils');
+const relationship = require('./components/relationships');
+
+body.addEventListener("click",relationship.handleFriendAction);
 body.addEventListener("click", showFriends);
 
 function showFriends(e) {
     if (e.target.closest('#friends-btn-id')) {
-        getFriends()
-            .then(populateFriends);
-        friendsModal.classList.remove('hide');
+        utils.handleRequest('/user/' + PROFILE_USER_ID + '/friends',populateFriends);
     }
 
 }
 
-function getFriends() {
-    return fetch('/user/' + PROFILE_USER_ID + '/friends')
-        .then(resp => resp.json());
-}
 
 function populateFriends(data) {
-    console.log(data);
+
     let friends = data.profileFriends;
     let html = '';
     friends.forEach(friend => {
@@ -49,7 +47,6 @@ function populateFriends(data) {
             }
             return false;
         });
-        console.log(rel);
         if (rel[0]) {
             switch (rel[0].status) {
                 case 0:
@@ -74,11 +71,8 @@ function populateFriends(data) {
         } else { // the friend it is the same user that is looking the profile
             html += ` `;
         }
-        //  <a href='/user/friend/remove/' class='edit-btn m-width'>Remove Friend</a>
-        html += `
-                    </li>
-        `;
+        html += `</li>`;
     });
     friendsContainer.innerHTML = html;
-
+    friendsModal.classList.remove('hide');
 }

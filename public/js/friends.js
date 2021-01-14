@@ -86,35 +86,99 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/components/relationships.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/relationships.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var utils = __webpack_require__(/*! ../utils */ "./resources/js/utils.js");
+
+var body = document.querySelector('body');
+var PROFILE_USER_ID = document.getElementById('profile-userId-id').value;
+
+function handleFriendAction(e) {
+  var friendBtn = e.target.closest('.friend-action');
+
+  if (friendBtn) {
+    e.preventDefault();
+    var container = e.target.parentElement;
+    var classes = e.target.classList;
+    var newHTMLlink;
+    var notification; //send request
+    //if request succeeds show new link
+
+    var userId = PROFILE_USER_ID;
+    utils.handleRequest(friendBtn.href, function (data) {
+      console.log(data);
+
+      if (data.status === 1) {
+        if (classes.contains('add-friend')) {
+          newHTMLlink = "<a class='remove-request friend-action edit-btn' href=\"/user/friend/remove/".concat(userId, "\" class='edit-btn'> Request sent</a>");
+          notification = 'Friend request sent successfully';
+        } else if (classes.contains('accept-request')) {
+          newHTMLlink = "<a class='remove-friend friend-action edit-btn' href=\"/user/friend/remove/".concat(userId, "\" class='edit-btn'>Remove Friend</a>");
+          notification = 'New friend added';
+        } else if (classes.contains('decline-request')) {
+          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          notification = 'Request declined';
+        } else if (classes.contains('remove-friend')) {
+          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          notification = 'Friend removed';
+        } else if (classes.contains('unblock-user')) {
+          notification = 'User unblocked';
+          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+        } else if (classes.contains('remove-request')) {
+          notification = 'Friend request removed';
+          newHTMLlink = "<a class='add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+        }
+
+        e.target.insertAdjacentHTML('afterend', newHTMLlink);
+        e.target.remove();
+        toastr.success(notification);
+      }
+    });
+  }
+}
+
+function hideShow(container, classToShow, classToHide) {
+  console.log(container);
+  container.querySelector('.' + classToShow).classList.remove('hide');
+  container.querySelector('.' + classToHide).classList.add('hide');
+}
+
+exports.handleFriendAction = handleFriendAction;
+
+/***/ }),
+
 /***/ "./resources/js/friends.js":
 /*!*********************************!*\
   !*** ./resources/js/friends.js ***!
   \*********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 var CURRENT_USER_ID = document.getElementById('current-userId-id').value;
 var PROFILE_USER_ID = document.getElementById('profile-userId-id').value;
 var body = document.querySelector('body');
 var friendsModal = document.getElementById('friends-modal-id');
 var friendsContainer = document.getElementById('friends-container-id');
+
+var utils = __webpack_require__(/*! ./utils */ "./resources/js/utils.js");
+
+var relationship = __webpack_require__(/*! ./components/relationships */ "./resources/js/components/relationships.js");
+
+body.addEventListener("click", relationship.handleFriendAction);
 body.addEventListener("click", showFriends);
 
 function showFriends(e) {
   if (e.target.closest('#friends-btn-id')) {
-    getFriends().then(populateFriends);
-    friendsModal.classList.remove('hide');
+    utils.handleRequest('/user/' + PROFILE_USER_ID + '/friends', populateFriends);
   }
 }
 
-function getFriends() {
-  return fetch('/user/' + PROFILE_USER_ID + '/friends').then(function (resp) {
-    return resp.json();
-  });
-}
-
 function populateFriends(data) {
-  console.log(data);
   var friends = data.profileFriends;
   var html = '';
   friends.forEach(function (friend) {
@@ -128,7 +192,6 @@ function populateFriends(data) {
 
       return false;
     });
-    console.log(rel);
 
     if (rel[0]) {
       switch (rel[0].status) {
@@ -159,13 +222,51 @@ function populateFriends(data) {
     } else {
       // the friend it is the same user that is looking the profile
       html += " ";
-    } //  <a href='/user/friend/remove/' class='edit-btn m-width'>Remove Friend</a>
+    }
 
-
-    html += "\n                    </li>\n        ";
+    html += "</li>";
   });
   friendsContainer.innerHTML = html;
+  friendsModal.classList.remove('hide');
 }
+
+/***/ }),
+
+/***/ "./resources/js/utils.js":
+/*!*******************************!*\
+  !*** ./resources/js/utils.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function defaultResult(data) {
+  console.log('Result');
+  console.log(data);
+}
+
+function defaultError(error) {
+  console.log('Error');
+  console.log(error);
+}
+
+function defaultFinal(data) {}
+
+function handleRequest(url) {
+  var result = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultResult;
+  var error = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultError;
+
+  var _final = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultFinal;
+
+  fetch(url).then(function (resp) {
+    if (!resp.ok) {
+      throw Error(resp.statusText);
+    }
+
+    return resp.json();
+  }).then(result)["catch"](error)["finally"](_final);
+}
+
+exports.handleRequest = handleRequest;
 
 /***/ }),
 

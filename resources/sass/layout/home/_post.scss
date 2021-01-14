@@ -52,7 +52,7 @@
             scroll-snap-type: x mandatory;
             touch-action:auto;
             display:flex;
-            overflow:auto;
+            overflow:hidden;
         >li{
             flex-shrink: 0;
             width:100%;

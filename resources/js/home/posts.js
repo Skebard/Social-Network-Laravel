@@ -69,7 +69,7 @@ function likeSaveEvent(e) {
     } else if (element.tagName === 'svg') {
         anchor = parentElement;
     }
-    if (anchor) {
+    if (anchor && !anchor.classList.contains('post-link')) {
         e.preventDefault();
         let classes = anchor.classList;
 
@@ -184,17 +184,14 @@ function viewPostOptions(e) {
             <a href="/posts/${postId}/archive">Archive Post</a>
         </li>
         <li>
-            <a href="">Cancel</a>
+            <a class="close-modal">Cancel</a>
         </li>`;
         } else {
             html = ` <li>
             <a class='options-modal__alert' href="#">Report</a>
         </li>
         <li>
-            <a class='options-modal__alert' href="#">Unfollow</a>
-        </li>
-        <li>
-            <a href="">Cancel</a>
+            <a class="close-modal">Cancel</a>
         </li>`;
         }
         postOptionsModal.querySelector('.options-modal').innerHTML = html;
