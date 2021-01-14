@@ -113,6 +113,10 @@ body main {
   flex-wrap: wrap;
 }
 
+.profile-info .block-user-icon {
+  font-size: 23px;
+}
+
 @media screen and (max-width: 735px) {
   .profile-info {
     margin-left: 10px;
@@ -152,6 +156,7 @@ body main {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .profile-info__right-up .user-options > * {
@@ -174,6 +179,29 @@ body main {
 @media screen and (max-width: 735px) {
   .profile-info__right-up .user-options .edit-btn {
     display: none;
+  }
+}
+
+.profile-info__right-up .user-options .icon-options {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info__right-up .user-options .icon-options .block-user-icon {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 735px) {
+  .profile-info__right-up .user-options .icon-options {
+    position: absolute;
+    bottom: -10px;
+    transform: translate(0, 100%);
+  }
+}
+
+@media screen and (max-width: 735px) {
+  .profile-info__right-up .user-options .edit-btn.friend-action {
+    display: block;
   }
 }
 

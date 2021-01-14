@@ -13,6 +13,9 @@ body main {
     justify-content: space-between;
     flex-wrap: wrap;
 
+    .block-user-icon{
+        font-size:23px;
+    }
     @media screen and(max-width:$m-width) {
         margin-left: 10px;
     }
@@ -45,7 +48,7 @@ body main {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-
+            position:relative;
             >* {
                 margin-right: 15px;
             }
@@ -64,6 +67,23 @@ body main {
 
                 @media screen and(max-width:$m-width) {
                     display: none;
+                }
+            }
+            .icon-options{
+                display:flex;
+                align-items:center;
+                .block-user-icon{
+                    margin-left:10px;
+                }
+                @media screen and(max-width:$m-width) {
+                    position:absolute;
+                    bottom:-10px;
+                    transform:translate(0,100%);
+                }
+            }
+            .edit-btn.friend-action{
+                @media screen and(max-width:$m-width) {
+                    display: block;
                 }
             }
             .add-friend-btn{

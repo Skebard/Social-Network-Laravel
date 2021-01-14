@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class RelationshipController extends Controller
 {
@@ -68,14 +69,13 @@ class RelationshipController extends Controller
 
     public function blockUser($userId)
     {
-
-        $relationshipA = Relationship::where('user_one_id',Auth::user()->id)
-        ->where('user_two_id',$userId);
-        $relationship =  Relationship::where('user_one_id',$userId)
-        ->where('user_two_id',Auth::user()->id)
-        ->union($relationshipA)
-        ->update(['status'=>3,
-                'action_user_id'=>Auth::user()->id]);
+        $newData = ['status'=>3,'action_user_id'=>Auth::user()->id];
+        if(!Relationship::updateRelationship($userId,Auth::user()->id,$newData)){
+            Relationship::insert(['user_one_id'=>Auth::user()->id,
+                                    'user_two_id'=>$userId,
+                                    'status'=>3,
+                                    'action_user_id'=>Auth::user()->id]);
+        }
         return json_encode(['status'=>1]);
 
     }

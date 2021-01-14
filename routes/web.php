@@ -40,6 +40,8 @@ Route::get('/user/friend/decline/{userId}',[RelationshipController::class,'decli
 Route::get('/user/friend/remove/{userId}',[RelationshipController::class,'removeFriend']);
 //we can use the same function as for removing a  friend
 Route::get('/user/friend/cancelRequest/{userId}',[RelationshipController::class,'removeFriend']);
+Route::get('/user/block/{userId}',[RelationshipController::class,'blockUser']);
+Route::get('/user/unblock/{userId}',[RelationshipController::class,'removeFriend']);
 
 
 //POSTS

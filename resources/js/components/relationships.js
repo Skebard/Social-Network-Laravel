@@ -7,6 +7,7 @@ const PROFILE_USER_ID = document.getElementById('profile-userId-id').value;
 function handleFriendAction(e)
 {
     let friendBtn = e.target.closest('.friend-action');
+    checkBlockUserBtn(e);
     if(friendBtn){
         e.preventDefault();
         let container = e.target.parentElement;
@@ -32,6 +33,7 @@ function handleFriendAction(e)
                     newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
                     notification = 'Friend removed';
                 }else if( classes.contains('unblock-user')){
+                    e.target.closest('.icon-options').querySelector('.block-user-icon').classList.remove('hide');
                     notification = 'User unblocked';
                     newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
                 }else if( classes.contains('remove-request')){
@@ -46,12 +48,27 @@ function handleFriendAction(e)
     }
 }
 
-function hideShow(container,classToShow,classToHide)
+function checkBlockUserBtn(e)
 {
-    console.log(container)
-    container.querySelector('.'+classToShow).classList.remove('hide');
-    container.querySelector('.'+classToHide).classList.add('hide');
+    let blockBtn = e.target.closest('.block-user-icon');
+    if(blockBtn){
+        e.preventDefault();
+        utils.handleRequest(blockBtn.href,(data)=>{
+            if(data.status===1)
+            {
+                blockBtn.classList.add('hide');
+                let oldLink = e.target.closest('.icon-options').querySelector('.friend-action');
+                let newHTMLlink = `<a class='unblock-user friend-action edit-btn' href="/user/unblock/${PROFILE_USER_ID}" class='edit-btn'>Unblock</a>`;
+                oldLink.insertAdjacentHTML('afterend',newHTMLlink);
+                oldLink.remove();
+                toastr.success('User blocked');
+            }else{
+                toastr.info('Error ocurred');
+            }
+        })
+    }
 }
+
 
 exports.handleFriendAction = handleFriendAction;
 

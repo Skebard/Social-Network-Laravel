@@ -100,6 +100,7 @@ var PROFILE_USER_ID = document.getElementById('profile-userId-id').value;
 
 function handleFriendAction(e) {
   var friendBtn = e.target.closest('.friend-action');
+  checkBlockUserBtn(e);
 
   if (friendBtn) {
     e.preventDefault();
@@ -127,6 +128,7 @@ function handleFriendAction(e) {
           newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
           notification = 'Friend removed';
         } else if (classes.contains('unblock-user')) {
+          e.target.closest('.icon-options').querySelector('.block-user-icon').classList.remove('hide');
           notification = 'User unblocked';
           newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
         } else if (classes.contains('remove-request')) {
@@ -142,10 +144,24 @@ function handleFriendAction(e) {
   }
 }
 
-function hideShow(container, classToShow, classToHide) {
-  console.log(container);
-  container.querySelector('.' + classToShow).classList.remove('hide');
-  container.querySelector('.' + classToHide).classList.add('hide');
+function checkBlockUserBtn(e) {
+  var blockBtn = e.target.closest('.block-user-icon');
+
+  if (blockBtn) {
+    e.preventDefault();
+    utils.handleRequest(blockBtn.href, function (data) {
+      if (data.status === 1) {
+        blockBtn.classList.add('hide');
+        var oldLink = e.target.closest('.icon-options').querySelector('.friend-action');
+        var newHTMLlink = "<a class='unblock-user friend-action edit-btn' href=\"/user/unblock/".concat(PROFILE_USER_ID, "\" class='edit-btn'>Unblock</a>");
+        oldLink.insertAdjacentHTML('afterend', newHTMLlink);
+        oldLink.remove();
+        toastr.success('User blocked');
+      } else {
+        toastr.info('Error ocurred');
+      }
+    });
+  }
 }
 
 exports.handleFriendAction = handleFriendAction;
