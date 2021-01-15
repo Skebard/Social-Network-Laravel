@@ -86,6 +86,30 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/components/profileDropdown.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/profileDropdown.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var profileMenu = document.querySelector('.user-pages-links');
+var upArrow = document.getElementById('up-arrow-profile-menu-id');
+
+function openCloseProfileMenu(e) {
+  if (e.target.closest('.profile-icon')) {
+    profileMenu.classList.remove('hide');
+    upArrow.classList.remove('hide');
+  } else {
+    profileMenu.classList.add('hide');
+    upArrow.classList.add('hide');
+  }
+}
+
+exports.openCloseProfileMenu = openCloseProfileMenu;
+
+/***/ }),
+
 /***/ "./resources/js/components/search.js":
 /*!*******************************************!*\
   !*** ./resources/js/components/search.js ***!
@@ -165,6 +189,10 @@ var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.j
 
 var createPost = __webpack_require__(/*! ./home/createPost */ "./resources/js/home/createPost.js");
 
+var profileDropdown = __webpack_require__(/*! ./components/profileDropdown */ "./resources/js/components/profileDropdown.js");
+
+var body = document.querySelector('body');
+body.addEventListener('click', profileDropdown.openCloseProfileMenu);
 createPost.addEvents();
 search.manageSearch();
 modal.addEvents();

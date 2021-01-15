@@ -1,0 +1,204 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  list-style: none;
+}
+
+.box {
+  border-radius: 1px;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+}
+
+.hide,
+.modal.hide {
+  display: none;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.account-privacy-form > * {
+  margin-left: 70px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 735px) {
+  .account-privacy-form > * {
+    margin-left: 0;
+  }
+}
+
+.account-privacy-form .checkbox-container {
+  display: flex;
+}
+
+.account-privacy-form .checkbox-container span {
+  margin-left: 10px;
+  font-weight: bolder;
+}
+
+.edit-profile-form,
+.account-privacy-form {
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0;
+}
+
+.edit-profile-form *,
+.account-privacy-form * {
+  font-size: 16px;
+}
+
+.edit-profile-form .profile-image-change,
+.account-privacy-form .profile-image-change {
+  justify-content: flex-start;
+  margin-bottom: 0;
+}
+
+.edit-profile-form .profile-image-change .round-profile-img > .image-profile-input,
+.account-privacy-form .profile-image-change .round-profile-img > .image-profile-input {
+  border-radius: 50%;
+}
+
+.edit-profile-form .profile-image-change .image-profile-input,
+.account-privacy-form .profile-image-change .image-profile-input {
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  height: 100%;
+  font-size: 0;
+  width: 100%;
+  opacity: 0;
+  margin: 0;
+}
+
+.edit-profile-form .profile-image-change .profile-image-right,
+.account-privacy-form .profile-image-change .profile-image-right {
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 30px;
+  align-items: flex-start;
+}
+
+.edit-profile-form .profile-image-change .profile-image-right .change-image-btn-container,
+.account-privacy-form .profile-image-change .profile-image-right .change-image-btn-container {
+  position: relative;
+}
+
+.edit-profile-form .profile-image-change .profile-image-right .username,
+.account-privacy-form .profile-image-change .profile-image-right .username {
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.edit-profile-form .profile-image-change .profile-image-right .profile-image-change-btn,
+.account-privacy-form .profile-image-change .profile-image-right .profile-image-change-btn {
+  font-size: 14px;
+  color: #0095f6;
+}
+
+.edit-profile-form .profile-image-change .profile-image-container::after,
+.account-privacy-form .profile-image-change .profile-image-container::after {
+  background-color: white;
+  background: none;
+}
+
+.edit-profile-form .profile-image-change .profile-image-container img,
+.account-privacy-form .profile-image-change .profile-image-container img {
+  border: 1px solid #dbdbdb;
+}
+
+.edit-profile-form label,
+.account-privacy-form label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+@media screen and (max-width: 735px) {
+  .edit-profile-form label,
+  .account-privacy-form label {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .edit-profile-form label .span,
+  .account-privacy-form label .span {
+    justify-content: flex-start;
+  }
+}
+
+.edit-profile-form label > span,
+.account-privacy-form label > span {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: bolder;
+}
+
+@media screen and (max-width: 735px) {
+  .edit-profile-form label > span,
+  .account-privacy-form label > span {
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+}
+
+.edit-profile-form label > span.confirm-password,
+.account-privacy-form label > span.confirm-password {
+  flex-direction: column;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+
+.edit-profile-form label > span.confirm-password span,
+.account-privacy-form label > span.confirm-password span {
+  text-align: right;
+}
+
+@media screen and (max-width: 735px) {
+  .edit-profile-form label > span.confirm-password,
+  .account-privacy-form label > span.confirm-password {
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+}
+
+.edit-profile-form label input,
+.account-privacy-form label input {
+  border: 1px solid #dbdbdb;
+  flex-grow: 1;
+  margin-left: 30px;
+  padding: 8px 12px;
+}
+
+@media screen and (max-width: 735px) {
+  .edit-profile-form label input,
+  .account-privacy-form label input {
+    margin-left: 0;
+    margin-bottom: 15px;
+  }
+}
+

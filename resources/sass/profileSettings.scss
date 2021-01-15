@@ -1,0 +1,130 @@
+@import 'base/global';
+
+
+
+.account-privacy-form{
+    >*{
+        margin-left:70px;
+        margin-bottom:10px;
+        @media screen and(max-width:$m-width) {
+            margin-left:0;
+        }
+    }
+
+    .checkbox-container{
+        display: flex;
+        span{
+            margin-left:10px;
+            font-weight:bolder;
+        }
+    }
+}
+
+
+.edit-profile-form,.account-privacy-form {
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0;
+
+    * {
+        font-size: 16px;
+    }
+    .profile-image-change{
+        justify-content: flex-start;
+        margin-bottom: 0;
+        .round-profile-img > .image-profile-input{
+             border-radius:50%;
+        }
+        .image-profile-input{
+            position: absolute;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            height: 100%;
+            font-size:0;
+            width: 100%;
+            opacity: 0;
+            margin:0;
+
+        }
+        .profile-image-right{
+            flex-direction: column;
+            justify-content: center;
+            margin-left:30px;
+            align-items: flex-start;
+            .change-image-btn-container{
+                position: relative;
+            }
+            .username{
+                font-size:20px;
+                font-weight: lighter;
+            }
+            .profile-image-change-btn{
+                font-size:14px;
+                color:#0095f6;
+            }
+        }
+        .profile-image-container{
+            &::after{
+                background-color:white;
+                background: none;
+            }
+            img{
+                border: $soft-border;
+            }
+
+        }
+    }
+
+    label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+
+        @media screen and(max-width:$m-width) {
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .span {
+                justify-content: flex-start;
+            }
+        }
+
+        >span {
+            width: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-weight: bolder;
+
+            @media screen and(max-width:$m-width) {
+                justify-content: flex-start;
+                margin-bottom:10px;
+            }
+            &.confirm-password{
+                flex-direction: column;
+                align-items:flex-end;
+                white-space:nowrap;
+                span{
+                    text-align:right;
+                }
+                @media screen and(max-width:$m-width) {
+                    flex-direction: row;
+                    margin-bottom:10px;
+                }
+            }
+        }
+
+        input {
+            border: $soft-border;
+            flex-grow: 1;
+            margin-left: 30px;
+            padding: 8px 12px;
+            @media screen and(max-width:$m-width) {
+               margin-left:0;
+               margin-bottom:15px;
+            }
+        }
+    }
+}

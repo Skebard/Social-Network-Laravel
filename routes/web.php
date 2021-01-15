@@ -33,6 +33,10 @@ Route::get('/{username}/archived',[UserController::class,'archivedPosts'])->midd
 Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
 Route::get('/user/{userId}/friends',[UserController::class,'showFriends']);
 
+//ACCOUNT
+Route::get('/accounts/edit',[UserController::class,'edit']);
+Route::get('/accounts/password',[UserController::class,'editPassword']);
+
 //RELATIONSHIPS
 Route::get('/user/friend/add/{userId}',[RelationshipController::class,'sendFriendRequest']);
 Route::get('/user/friend/accept/{userId}',[RelationshipController::class,'acceptRequest']);
@@ -42,6 +46,8 @@ Route::get('/user/friend/remove/{userId}',[RelationshipController::class,'remove
 Route::get('/user/friend/cancelRequest/{userId}',[RelationshipController::class,'removeFriend']);
 Route::get('/user/block/{userId}',[RelationshipController::class,'blockUser']);
 Route::get('/user/unblock/{userId}',[RelationshipController::class,'removeFriend']);
+
+
 
 
 //POSTS
