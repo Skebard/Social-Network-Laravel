@@ -203,13 +203,22 @@ header {
   display: none;
 }
 
+.header-content .user-actions,
+.friends-results .user-actions {
+  display: flex;
+}
+
 .header-content .user-actions a,
-.friends-results .user-actions a {
+.header-content .user-actions .profile-icon,
+.friends-results .user-actions a,
+.friends-results .user-actions .profile-icon {
   margin: 0 8px;
 }
 
 .header-content .user-actions a img,
-.friends-results .user-actions a img {
+.header-content .user-actions .profile-icon img,
+.friends-results .user-actions a img,
+.friends-results .user-actions .profile-icon img {
   height: 24px;
   width: 24px;
   -o-object-fit: cover;
@@ -219,12 +228,78 @@ header {
 
 .header-content .user-actions a .fa-bell,
 .header-content .user-actions a .fa-plus-square,
+.header-content .user-actions .profile-icon .fa-bell,
+.header-content .user-actions .profile-icon .fa-plus-square,
 .friends-results .user-actions a .fa-bell,
-.friends-results .user-actions a .fa-plus-square {
+.friends-results .user-actions a .fa-plus-square,
+.friends-results .user-actions .profile-icon .fa-bell,
+.friends-results .user-actions .profile-icon .fa-plus-square {
   width: 22px;
   height: 22px;
   font-size: 24px;
   color: black;
+}
+
+.header-content .user-actions .up-arrow,
+.friends-results .user-actions .up-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  height: 20px;
+  width: 20px;
+  z-index: 100;
+  border: 10px solid transparent;
+  border-bottom-color: white;
+}
+
+.header-content .user-actions .profile-icon,
+.friends-results .user-actions .profile-icon {
+  position: relative;
+}
+
+.header-content .user-actions .profile-icon .user-pages-links,
+.friends-results .user-actions .profile-icon .user-pages-links {
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  transform: translate(0, 100%);
+  background-color: white;
+  box-shadow: 0 0 10px black;
+}
+
+.header-content .user-actions .profile-icon span a,
+.friends-results .user-actions .profile-icon span a {
+  padding: 8px 48px 8px 16px;
+  margin: 0;
+  display: flex;
+}
+
+.header-content .user-actions .profile-icon span a:hover,
+.friends-results .user-actions .profile-icon span a:hover {
+  background-color: #fafafa;
+}
+
+.header-content .user-actions .profile-icon span a svg,
+.friends-results .user-actions .profile-icon span a svg {
+  margin-right: 5px;
+}
+
+.header-content .user-actions .profile-icon form input,
+.friends-results .user-actions .profile-icon form input {
+  outline: none;
+  padding: 8px 48px 8px 16px;
+  border: none;
+  background-color: white;
+  width: 100%;
+  font-size: 16px;
+  border-top: 1px solid #dbdbdb;
+  cursor: pointer;
+}
+
+.header-content .user-actions .profile-icon form input:hover,
+.friends-results .user-actions .profile-icon form input:hover {
+  background-color: #fafafa;
 }
 
 .posts-container {
