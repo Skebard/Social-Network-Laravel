@@ -36,6 +36,16 @@ li {
   cursor: pointer;
 }
 
+.action-btn {
+  color: white;
+  background-color: #0095f6;
+  font-weight: bolder;
+  font-size: 14px;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 5px 9px;
+}
+
 .account-privacy-form > * {
   margin-left: 70px;
   margin-bottom: 10px;
@@ -62,6 +72,42 @@ li {
   display: flex;
   flex-direction: column;
   margin: 30px 0;
+}
+
+.edit-profile-form .error-message,
+.account-privacy-form .error-message {
+  justify-content: flex-start;
+}
+
+.edit-profile-form .error-message .invalid-feedback,
+.account-privacy-form .error-message .invalid-feedback {
+  margin-left: 30px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.edit-profile-form .error-message .invalid-feedback .message,
+.account-privacy-form .error-message .invalid-feedback .message {
+  color: red;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.edit-profile-form .action-btn,
+.account-privacy-form .action-btn {
+  margin-left: 180px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+@media screen and (max-width: 735px) {
+  .edit-profile-form .action-btn,
+  .account-privacy-form .action-btn {
+    margin-left: 0;
+  }
 }
 
 .edit-profile-form *,

@@ -67,17 +67,18 @@
 <!-- end profile image form -->
 
 <!-- ACCOUNT PRIVACY -->
-<form class='account-privacy-form box ' action="">
+<form class='account-privacy-form box ' action="{{route('user-password.update')}}" method='POST'>
+    @method('PUT')
     @csrf
     <h3> Account Privacy</h3>
     <span class='checkbox-container'>
-    <input type="checkbox">
+        <input type="checkbox">
         <span>Private account</span>
     </span>
-    
+
     <p>
-    When your account is private, only your friends can see your posts and stories.
-</p>
+        When your account is private, only your friends can see your posts and stories.
+    </p>
 </form>
 
 <!-- end account privacy -->
@@ -117,32 +118,64 @@
 </form>
 <!--  end main profile data  -->
 @elseif( Request::is('accounts/password'))
-<form class='box edit-profile-form' action="#" method='POST'>
+<form class='box edit-profile-form' action="{{route('user-password.update')}}" method='POST'>
     @csrf
+    @method('PUT')
+
 
     <label for="old-password-id">
         <span>
             Old Password
         </span>
-        <input id='old-password-id' type="password" placeholder='Old Password'>
+        <input name="current_password" id='old-password-id' type="password" placeholder='Old Password' required>
     </label>
+    @error('current_password', 'updatePassword')
+    <label class='error-message' for="">
+        <span>
 
+        </span>
+        <span class="invalid-feedback" role="alert">
+            <strong class='message'> {{ $message }} </strong>
+        </span>
+    </label>
+    @enderror
     <label for="new-password-id">
         <span>
             New Password
         </span>
-        <input id='new-password-id' type="password" placeholder='New Password'>
+        <input name="password" id='new-password-id' type="password" placeholder='New Password' required>
     </label>
+    @error('password', 'updatePassword')
+    <label class='error-message' for="">
+        <span>
+
+        </span>
+        <span class="invalid-feedback" role="alert">
+            <strong class='message'> {{ $message }} </strong>
+        </span>
+    </label>
+
+    @enderror
+
+
+
 
     <label for="confirm-password-id">
         <span class='confirm-password'>
             <span>Confirm New</span>
             <span> &nbsp; Password</span>
         </span>
-        <input id='confirm-password-id' type="password" placeholder='Confirm New Password' value=''>
+        <input name="password_confirmation" id='confirm-password-id' type="password" placeholder='Confirm New Password' value='' required>
     </label>
-
+    <input class='action-btn' type="submit" value='Update Password'>
 </form>
+
+@if (session('status') == "password-updated")
+<script>
+    toastr.success('Password updated successfully');
+</script>
+@endif
+
 @endif
 @endsection
 

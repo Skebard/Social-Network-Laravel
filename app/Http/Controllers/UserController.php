@@ -86,6 +86,27 @@ class UserController extends Controller
         return view ('account.index');
     }
 
+    public function updatePassword(Request $request)
+    {
+        if(isset($_POST['current_password'],$_POST['new_password'],$_POST['confirm_new_password'])){
+            if(password_verify($request->current_password,Auth::user()->password)){
+                if($request->new_password===$request->confirm_new_password){
+                    User::find(Auth::user()->id)
+                        ->update(['password'=>password_hash($request->new_password,PASSWORD_BCRYPT)]);
+                        $user = Auth::user();
+                        $user->password = password_hash($request->new_password,PASSWORD_BCRYPT);
+                    Auth::login($user);
+        $request->session()->put([
+            'password_hash' => $user->password,
+        ]);
+                    return Redirect()->back()->with('success','Password Updated');
+                }
+            }
+        }else{
+            echo 'something went wrong';
+        }
+ 
+    }
     /**
      * Update the specified resource in storage.
      *

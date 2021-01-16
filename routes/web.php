@@ -36,6 +36,7 @@ Route::get('/user/{userId}/friends',[UserController::class,'showFriends']);
 //ACCOUNT
 Route::get('/accounts/edit',[UserController::class,'edit']);
 Route::get('/accounts/password',[UserController::class,'editPassword']);
+Route::put('/accounts/password/update',[UserController::class,'updatePassword'])->name('password.update');
 
 //RELATIONSHIPS
 Route::get('/user/friend/add/{userId}',[RelationshipController::class,'sendFriendRequest']);
