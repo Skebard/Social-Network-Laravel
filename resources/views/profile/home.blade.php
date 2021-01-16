@@ -112,7 +112,9 @@
         @if($posts)
         @foreach($posts as $post)
         <li>
+        @if(count($post->images)>1)
             <span class='multi-images-icon'><i class="fas fa-clone"></i></span>
+            @endif
             @if(count($post->images)>0)
             <img src="{{ asset($post->images[0]->image)}}" alt="">
             @else

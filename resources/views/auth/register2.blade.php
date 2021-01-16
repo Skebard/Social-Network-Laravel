@@ -35,7 +35,7 @@
 
                     </div>
                 </div>
-                <form method="POST" action="{{ route('register') }}" class="login-form ">
+                <form method="POST" action="{{ url('/register') }}" class="login-form ">
                     @csrf
                     <label class='input-container'>
                         <span class="upper-placeholder">Email</span>
@@ -76,7 +76,7 @@
             </div>
 
 
-            <div class="sign-up box">Don't have an account? <a class='sign-up__btn' href="{{route('register')}}">Sign up</a> </div>
+            <div class="sign-up box">Don't have an account? <a class='sign-up__btn' href="{{url('/register')}}">Sign up</a> </div>
             <div class="apps">
                 <p class='apps__text'>Get the app</p>
                 <img src="{{ asset('images/login/appStore.png')}}" alt="">

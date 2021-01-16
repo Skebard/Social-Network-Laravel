@@ -26,7 +26,7 @@ use App\Http\Controllers\RelationshipController;
 //Route::resource('/{postId}/postComments',PostCommentController::class);
 
 //TESTS
-Route::get('/register2',function(){
+Route::get('/register',function(){
     return view('auth.register2');
 });
 
