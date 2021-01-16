@@ -46,6 +46,10 @@ li {
   padding: 5px 9px;
 }
 
+main {
+  width: 100%;
+}
+
 .account-privacy-form > * {
   margin-left: 70px;
   margin-bottom: 10px;
