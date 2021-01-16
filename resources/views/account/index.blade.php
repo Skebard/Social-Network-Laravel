@@ -84,50 +84,61 @@
 <!-- end account privacy -->
 
 <!-- MAIN PROFILE DATA -->
-<form class='box edit-profile-form' action="#" method='POST'>
+<form class='box edit-profile-form' action="{{route('user-profile-information.update')}}" method='POST'>
     @csrf
+    @method('PUT')
 
     <label for="name-id">
         <span>
             Name
         </span>
-        <input id='name-id' type="text" placeholder='Name' value='{{Auth::user()->name}}'>
+        <input name='name' id='name-id' type="text" placeholder='Name' value='{{Auth::user()->name}}'>
     </label>
 
     <label for="username-id">
         <span>
             Username
         </span>
-        <input id='username-id' type="text" placeholder='Username' value='{{Auth::user()->username}}'>
+        <input name='username' id='username-id' type="text" placeholder='Username' value='{{Auth::user()->username}}'>
     </label>
 
     <label for="bio-id">
         <span>
             Bio
         </span>
-        <input id='bio-id' type="text" placeholder='Bio' value=''>
+        <input name='description' id='bio-id' type="text" placeholder='Bio' value='{{Auth::user()->description}}'>
     </label>
 
     <label for="email-id">
         <span>
             Email
         </span>
-        <input id='email-id' type="text" placeholder='Email' value='{{Auth::user()->email}}'>
+        <input name='email' id='email-id' type="text" placeholder='Email' value='{{Auth::user()->email}}'>
     </label>
+    <input class='action-btn' type="submit" value='Save'>
 
 </form>
+
+@if (session('status') == "profile-information-updated")
+<script>
+    toastr.success('Profile information updated');
+</script>
+@endif
 <!--  end main profile data  -->
+
 @elseif( Request::is('accounts/password'))
-<form class='box edit-profile-form' action="{{route('user-password.update')}}" method='POST'>
+
+<!-- UPDATE PASSWORD FORM -->
+<form autocomplete="off" class='box edit-profile-form' action="{{route('user-password.update')}}" method='POST'>
     @csrf
     @method('PUT')
 
-
+    
     <label for="old-password-id">
         <span>
             Old Password
         </span>
-        <input name="current_password" id='old-password-id' type="password" placeholder='Old Password' required>
+        <input autocomplete="off" name="current_password" id='old-password-id' type="password" placeholder='Old Password' required>
     </label>
     @error('current_password', 'updatePassword')
     <label class='error-message' for="">
@@ -176,7 +187,11 @@
 </script>
 @endif
 
+
+
 @endif
+
+
 @endsection
 
 
