@@ -1,9 +1,15 @@
 @import 'base/global';
 @import 'components/profile-navigation';
 
+body{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
 
 body main {
     max-width: 935px;
+    flex-grow:1;
 }
 
 .profile-info {
@@ -159,6 +165,16 @@ body main {
 
 }
 
+.private-account-message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom:30px;
+    p{
+        font-size:14px;
+    }
+}
 
 .posts-container {
     .posts {

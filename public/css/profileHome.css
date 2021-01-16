@@ -101,8 +101,15 @@ li {
   color: black;
 }
 
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 body main {
   max-width: 935px;
+  flex-grow: 1;
 }
 
 .profile-info {
@@ -277,6 +284,18 @@ body main {
 }
 
 .profile-info__right-bottom .description {
+  font-size: 14px;
+}
+
+.private-account-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.private-account-message p {
   font-size: 14px;
 }
 

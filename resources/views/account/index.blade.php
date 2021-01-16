@@ -49,9 +49,9 @@
     <label class='profile-image-change'>
         <span>
             <li class="round-profile-img">
-                <input class='clickable image-profile-input' type="file" style="">
+                <input id='change-image-input-image-id' class='clickable image-profile-input' type="file" style="">
                 <div class="profile-image-container">
-                    <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500" alt="">
+                    <img id='profile-image-display-id' src="{{ $user->profile_photo_path?asset($user->profile_photo_path):$user->profile_photo_url }}" alt="">
 
                 </div>
             </li>
@@ -60,7 +60,7 @@
             <span class='username'>{{Auth::user()->username}}</span>
             <span class='change-image-btn-container'>
                 <a class='profile-image-change-btn'>Change profile photo</a>
-                <input class='clickable image-profile-input' type="file" style="">
+                <input id='change-image-input-id' class='clickable image-profile-input' type="file" style="">
             </span>
         </span>
         <!-- <input id='name-id' type="text" placeholder='Name' value='{{Auth::user()->name}}'> -->

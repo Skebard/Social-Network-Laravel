@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Relationship;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -95,6 +96,38 @@ class UserController extends Controller
         $user->privacy =$request->private;
         $user->save();
         return json_encode(['status'=>1]);
+    }
+    public function updateProfilePhoto(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'profile_photo' => 'required|image',
+        ]);
+        if ($validator->fails()) {
+            echo 'FAILED';
+            die();
+        }
+        // $validateData = $request->validate(
+        //     [
+        //         'profile_photo' => 'required|image',
+        //     ]
+        // );
+        $user = User::find(Auth::user()->id);
+        $image = $request->file('profile_photo');
+        if(!$image){
+            return 'aeafasdfasdf';
+        }
+        $name_gen = hexdec(uniqid());
+        $img_ext = strtolower($image->getClientOriginalExtension());
+        $img_name = $name_gen . '.' . $img_ext;
+        $up_location = 'images/users/';
+        $img_location = $up_location . $img_name;
+        $image->move($up_location, $img_name);
+        $user->profile_photo_path = $img_location;
+        $user->save();
+        $user->touch();
+        
+        echo 'done';
     }
     /**
      * Update the specified resource in storage.
