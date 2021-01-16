@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="{{asset('css/profileSettings.css')}}">
 <link rel="stylesheet" href="{{asset('css/profileHome.css')}}">
 
+@if(Request::is('accounts/edit'))
+<script src="{{asset('js/editProfile.js')}}" defer></script>
+@endif
 @endsection
 
 @section("content")
@@ -68,15 +71,14 @@
 
 <!-- ACCOUNT PRIVACY -->
 <form class='account-privacy-form box ' action="{{route('user-password.update')}}" method='POST'>
-    @method('PUT')
     @csrf
     <h3> Account Privacy</h3>
     <span class='checkbox-container'>
-        <input type="checkbox">
-        <span>Private account</span>
+        <input id='privacy-checkbox-id' type="checkbox" {{ AUth::user()->privacy===1?'checked':'' }}>
+        <span  class='checkbox-main-text'>Private account</span>
     </span>
 
-    <p>
+    <p class='privacy-description'>
         When your account is private, only your friends can see your posts and stories.
     </p>
 </form>

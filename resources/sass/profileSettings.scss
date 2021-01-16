@@ -12,12 +12,20 @@
         }
     }
 
+    .privacy-description{
+        color:rgb(142, 142, 142);
+        font-size:14px;
+    }
     .checkbox-container{
         display: flex;
         span{
             margin-left:10px;
             font-weight:bolder;
         }
+        .checkbox-main-text{
+            font-size:14px;
+        }
+
     }
 }
 
