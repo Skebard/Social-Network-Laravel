@@ -25,6 +25,12 @@ use App\Http\Controllers\RelationshipController;
 
 //Route::resource('/{postId}/postComments',PostCommentController::class);
 
+//TESTS
+Route::get('/register2',function(){
+    return view('auth.register2');
+});
+
+
 //USERS
 Route::get('/user/{username}',[UserController::class,'show']);
 Route::get('/{username}/saved',[UserController::class,'savedPosts'])->middleware('auth');

@@ -1,5 +1,6 @@
 @import 'base/global';
 @import 'layout/home/footer';
+@import 'components/actionBtn';
 
 body {
     height:100%;
@@ -35,6 +36,30 @@ body {
 }
 
 .form-container {
+
+    .register{
+        .app-name{
+            margin-bottom:20px;
+        }
+        .register-text{
+            text-align: center;
+            color:#8e8e8e;
+            font-size:17px;
+        }
+        .action-btn{
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            margin-top:20px;
+            .fa-facebook-square{
+                font-size:20px;
+                margin-right:8px;
+            }
+        }
+
+    }
+
 
     .error-message{
         color:red;
