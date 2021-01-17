@@ -195,7 +195,7 @@ class UserController extends Controller
         return view('profile.home', compact('posts', 'user', 'page', 'relationship'));
     }
 
-    public function searchUsers($text)
+    public function searchUsers(string $text)
     {
         $a = User::where('name', 'LIKE', '%' . $text . '%');
         $b = User::where('last_name', 'LIKE', '%' . $text . '%');
@@ -212,4 +212,6 @@ class UserController extends Controller
         $loggedUserRelationships = Relationship::getRelationships(Auth::user()->id);
         return json_encode(['profileFriends'=>$profileFriends,'loggedUserRelationships'=>$loggedUserRelationships]);
     }
+
+
 }

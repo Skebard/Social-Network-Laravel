@@ -28,7 +28,7 @@ use App\Http\Controllers\RelationshipController;
 //TESTS
 Route::get('/register',function(){
     return view('auth.register2');
-});
+})->name('register');
 
 
 //USERS

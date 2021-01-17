@@ -450,6 +450,10 @@ header {
   cursor: pointer;
 }
 
+.post__comments .username-tag {
+  color: #00376b;
+}
+
 .post__publishing-date {
   font-size: 10px;
   color: #8e8e8e;

@@ -163,7 +163,7 @@
                 <a href="{{url('/user/'.$comment->username)}}" class='post__comments--username'>
                     {{ $comment->username }}
                 </a>
-                {{ $comment->comment }}
+                <?=  html_entity_decode(insertUsersLinks($comment->comment,'username-tag')) ?>
             </li>
             @endforeach
         </ul>
