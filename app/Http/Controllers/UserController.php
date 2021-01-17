@@ -213,5 +213,23 @@ class UserController extends Controller
         return json_encode(['profileFriends'=>$profileFriends,'loggedUserRelationships'=>$loggedUserRelationships]);
     }
 
+    public function searchUsersFriends(string $text)
+    {
+        $friends = Relationship::getFriendsRelationships(Auth::user()->id);
+        $friends = $friends->all();
+        $friendsId = array_map(fn ($friend)=>$friend->user_one_id===Auth::user()->id ?$friend->user_two_id:$friend->user_one_id,$friends);
+
+        $a = User::where('name', 'LIKE', '%' . $text . '%')
+                    ->whereIn('id',$friendsId);
+        $b = User::where('last_name', 'LIKE', '%' . $text . '%')
+                    ->whereIn('id',$friendsId);
+        $users = User::where('username', 'LIKE', '%' . $text . '%')
+                    ->whereIn('id',$friendsId)
+                    ->union($b)
+                    ->union($a)
+                    ->get();
+        return json_encode(['status'=>1,'users'=>$users]);
+    }
+
 
 }

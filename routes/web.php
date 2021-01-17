@@ -37,6 +37,7 @@ Route::get('/{username}/saved',[UserController::class,'savedPosts'])->middleware
 // Route::get('/posts/saved',[UserController::class,'savedPosts']);
 Route::get('/{username}/archived',[UserController::class,'archivedPosts'])->middleware('auth');
 Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
+Route::get('/user/friends/search/{text}',[UserController::class,'searchUsersFriends']);
 Route::get('/user/{userId}/friends',[UserController::class,'showFriends']);
 
 //ACCOUNT
