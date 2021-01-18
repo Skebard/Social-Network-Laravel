@@ -112,6 +112,8 @@ body.addEventListener('click', posts.viewAllComments);
 body.addEventListener('click', posts.viewPostOptions);
 body.addEventListener('click', editPost.showEditForm);
 body.addEventListener('click', postComments.postComment);
+body.addEventListener('keydown', postComments.recommendUserTag);
+body.addEventListener('click', postComments.insertTagUser);
 modal.addEvents();
 posts.loadPosts(); //Lazy load posts
 
@@ -151,16 +153,13 @@ var currentPostId;
 function showEditForm(e) {
   if (e.target.tagName =  true && e.target.classList.contains('edit-post-option')) {
     optionsModal.classList.add('hide');
-    console.log(imagesContainer.children);
     var numImages = imagesContainer.children.length;
     Array.from(imagesContainer.children).forEach(function (div, index) {
       if (index < numImages - 1) {
-        console.log('INDEX', index);
         div.remove();
       }
     });
     var postId = e.target.dataset.post_id;
-    console.log(e.target.dataset.post_id);
     editModal.classList.remove('hide');
     populateModal(postId);
   }
@@ -181,7 +180,6 @@ function populateModal(postId) {
     });
     data.images.forEach(function (image) {
       var imageContainer = createImageInput(image.image);
-      console.log(imageContainer);
       imagesContainer.insertAdjacentElement('afterbegin', imageContainer.container);
       imageContainer.input.addEventListener('change', handleImageInputs);
     });
@@ -194,8 +192,6 @@ function populateModal(postId) {
 
 
 function deleteImageInput(e) {
-  console.log(e.target);
-
   if (e.target.classList.contains('fa-trash-alt')) {
     e.target.parentElement.parentElement.remove();
   }
@@ -337,7 +333,6 @@ function openModal() {
 
 function handleModal(e) {
   var modal = e.target.closest('.modal');
-  console.log(modal);
 
   if (modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))) {
     modal.classList.add('hide');
@@ -356,10 +351,12 @@ exports.addEvents = addEvents;
 /***/ (function(module, exports) {
 
 var currentUsername = document.getElementById('current-username-id').value;
+/** 
+ * 
+ * @param {Event} e 
+ */
 
 function postComment(e) {
-  console.log('COMMENT');
-
   if (e.target.classList.contains('post-comment-btn')) {
     e.preventDefault();
     var commentForm = e.target.closest('.post-comment-form');
@@ -378,24 +375,157 @@ function postComment(e) {
     }).then(function (resp) {
       return resp.json();
     }).then(function (data) {
-      console.log(data);
-
       if (data.status === 1) {
         var comments = commentForm.parentElement.parentElement.querySelector('.post__comments');
         var newComment = document.createElement('li');
+        var commentWords = comment.split(' ');
+        commentWords = commentWords.map(function (word) {
+          if (word.includes('@')) {
+            var taggedUser = word.substr(1);
+            return "<a class=\"username-tag\" href=\"/user/".concat(taggedUser, "\">").concat(word, "</a>");
+          }
+
+          return word;
+        });
+        comment = commentWords.join(' ');
         newComment.innerHTML = " <a href=\"/user/'.".concat(currentUsername, "\" class='post__comments--username'>\n                    ").concat(currentUsername, "</a>\n                    ").concat(comment);
         comments.querySelector('.post__comments--list').append(newComment);
-        var numComments = comments.querySelector('.num-comments').textContent;
+        var numComments = comments.querySelector('.num-comments');
 
         if (numComments) {
-          comments.querySelector('.num-comments').textContent = parseInt(numComments) + 1;
+          comments.querySelector('.num-comments').textContent = parseInt(numComments.textContent) + 1;
         }
+
+        currentInput.value = '';
+        toastr.success('Post commented');
       } else {}
     });
   }
 }
 
+var currentTagUser;
+var taggingUser = false;
+var regex = /^[ A-Za-z0-9()[\]+-/%]*$/;
+var currentInput;
+var displayedUsers;
+
+function recommendUserTag(e) {
+  if (e.target.tagName === 'INPUT' && e.target.name === 'comment') {
+    currentInput = e.target;
+
+    if (taggingUser) {
+      if (e.key === '@') {
+        currentTagUser = '';
+        searchUser(currentTagUser);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        taggingUser = false;
+
+        if (displayedUsers) {
+          displayedUsers.remove();
+          displayedUsers = undefined;
+        }
+      } else if (e.key.length === 1 && regex.test(e.key)) {
+        currentTagUser += e.key; //search user
+
+        searchUser(currentTagUser);
+      } else if (e.key === 'Backspace') {
+        if (currentTagUser.length === 0) {
+          //we have deleted the @
+          taggingUser = false;
+
+          if (displayedUsers) {
+            displayedUsers.remove();
+            displayedUsers = undefined;
+          }
+
+          return false;
+        }
+
+        currentTagUser = currentTagUser.substr(0, currentTagUser.length - 1); //serach user 
+
+        searchUser(currentTagUser);
+      } else {
+        taggingUser = false;
+      }
+    } else {
+      if (e.key === '@') {
+        currentTagUser = '';
+        taggingUser = true;
+      } else if (e.key === 'Backspace') {
+        //check if we are back to a @adf...
+        var currentText = currentInput.value; // we must exclude the deleted char by the backspace
+
+        if (currentText.length > 0) {
+          currentText = currentText.substr(0, currentText.length - 1);
+        }
+
+        var words = currentText.split(' ');
+        var lastWord = words[words.length - 1];
+
+        if (lastWord.includes('@')) {
+          currentTagUser = lastWord.replace('@', '');
+          searchUser(currentTagUser);
+          taggingUser = true;
+        }
+      }
+    }
+  }
+}
+
+var SEARCH_USERS_URL = '/user/friends/search/';
+
+function searchUser(text) {
+  if (text.length === 0) {
+    return false;
+  }
+
+  fetch(SEARCH_USERS_URL + text).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    showPossibleTagUsers(data.users);
+  });
+}
+
+function showPossibleTagUsers(users) {
+  var form = currentInput.closest('.post-comment-form');
+  var existentContainer = form.querySelector('.container-tag-users');
+
+  if (existentContainer) {
+    existentContainer.remove();
+  }
+
+  if (users.length === 0) {
+    return false;
+  }
+
+  var container = document.createElement('ul');
+  container.classList.add('container-tag-users');
+  container.classList.add('box');
+  users.forEach(function (user) {
+    container.innerHTML += "<div class=\"round-profile-img user-to-tag\" >\n                    <div class=\"profile-image-container\">\n                        <img src=\"/".concat(user.profile_photo_path, "\" alt=\"\">\n    \n                    </div>\n                    <a href=\"http://localhost:8000/user/Tija\" class=\"post__username\">\n                        ").concat(user.username, "\n                    </a>\n                </div>");
+  });
+  displayedUsers = container;
+  form.append(container);
+}
+
+function insertTagUser(e) {
+  var tagContainer = e.target.closest('.user-to-tag');
+
+  if (tagContainer) {
+    e.preventDefault();
+    var username = tagContainer.querySelector('.post__username').innerText;
+    var words = currentInput.value.split(' ');
+    words[words.length - 1] = '@' + username;
+    currentInput.value = words.join(' ');
+    displayedUsers.remove();
+    displayedUsers = undefined;
+    currentInput.focus();
+  }
+}
+
 exports.postComment = postComment;
+exports.recommendUserTag = recommendUserTag;
+exports.insertTagUser = insertTagUser;
 
 /***/ }),
 
@@ -452,10 +582,8 @@ function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
   if (imagesSlider.scrollWidth - imagesSlider.scrollLeft > imagesSlider.offsetWidth) {
     imagesSlider.scrollLeft += imagesSlider.offsetWidth;
     var activeImageInd = sliderIndicator.querySelector('.active');
-    console.log(activeImageInd.nextElementSibling);
     activeImageInd.nextElementSibling.classList.add('active');
     activeImageInd.classList.remove('active');
-    console.log(imagesSlider.scrollLeft);
 
     if (imagesSlider.scrollWidth - imagesSlider.scrollLeft - imagesSlider.offsetWidth <= imagesSlider.offsetWidth) {
       nextBtn.classList.add('hide');
@@ -492,7 +620,6 @@ function likeSaveEvent(e) {
           likes.textContent = parseInt(likes.textContent) + 1;
         }
       });
-      console.log('like');
     } else if (classes.contains('dislike')) {
       anchorGetAndToggle(anchor, 'like').then(function (status) {
         if (status) {
@@ -501,10 +628,8 @@ function likeSaveEvent(e) {
         }
       });
     } else if (classes.contains('save')) {
-      console.log('save');
       anchorGetAndToggle(anchor, 'unsave');
     } else if (classes.contains('unsave')) {
-      console.log('unsave');
       anchorGetAndToggle(anchor, 'save');
     }
   }
@@ -521,8 +646,6 @@ function anchorGetAndToggle(anchor, classToShow) {
   return fetch(anchor.href).then(function (resp) {
     return resp.json();
   }).then(function (data) {
-    console.log(data);
-
     if (data.status == 1) {
       anchor.classList.add('hide');
       anchor.parentElement.querySelector('.' + classToShow).classList.remove('hide');
@@ -571,8 +694,6 @@ function viewPostOptions(e) {
 
   if (options) {
     postOptionsModal.classList.remove('hide');
-    console.log(options.dataset.owner);
-    console.log(options.dataset.post_id);
     var postId = options.dataset.post_id;
 
     if (options.dataset.owner == 1) {

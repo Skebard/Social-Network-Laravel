@@ -468,6 +468,7 @@ header {
   margin: 16px 8px;
   font-size: 14px;
   display: flex;
+  position: relative;
 }
 
 .post__add-comment form input {
@@ -485,6 +486,26 @@ header {
   font-weight: bolder;
   color: #0095f6;
   cursor: pointer;
+}
+
+.post__add-comment form .container-tag-users {
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, 100%);
+}
+
+.post__add-comment form .container-tag-users .round-profile-img {
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.post__add-comment form .container-tag-users .round-profile-img:hover {
+  background-color: #fafafa;
 }
 
 .stories {

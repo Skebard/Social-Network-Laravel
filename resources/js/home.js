@@ -18,6 +18,10 @@ body.addEventListener('click',posts.viewAllComments);
 body.addEventListener('click',posts.viewPostOptions);
 body.addEventListener('click',editPost.showEditForm);
 body.addEventListener('click',postComments.postComment);
+body.addEventListener('keydown',postComments.recommendUserTag);
+body.addEventListener('click',postComments.insertTagUser);
+
+
 
 modal.addEvents();
 

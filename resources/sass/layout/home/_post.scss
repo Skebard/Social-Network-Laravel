@@ -140,6 +140,7 @@
             margin:16px 8px;
             font-size:14px;
             display:flex;
+            position: relative;
             input{
                 font-size:14px;
                 border:none;
@@ -147,14 +148,30 @@
                 background-color:transparent;
             }
             input[type=text]{
-                
                 flex-grow:1;
-               
             }
             input[type=submit]{
                 font-weight:bolder;
                 color:#0095f6;
                 cursor:pointer;
+            }
+
+            .container-tag-users{
+                width: 100%;
+                z-index:100;
+                position: absolute;
+                bottom: 0;
+                transform: translate(0, 100%);
+                .round-profile-img{
+                    padding: 5px 10px;
+                    cursor: pointer;
+                    width: 100%;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    &:hover{
+                        background-color:$primary-bg-color;
+                    }
+                }
             }
         }
     }

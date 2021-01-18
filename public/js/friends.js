@@ -112,8 +112,6 @@ function handleFriendAction(e) {
 
     var userId = PROFILE_USER_ID;
     utils.handleRequest(friendBtn.href, function (data) {
-      console.log(data);
-
       if (data.status === 1) {
         if (classes.contains('add-friend')) {
           newHTMLlink = "<a class='remove-request friend-action edit-btn' href=\"/user/friend/remove/".concat(userId, "\" class='edit-btn'> Request sent</a>");

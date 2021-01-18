@@ -42,10 +42,8 @@ function nextImage(imagesSlider, nextBtn, prevBtn, sliderIndicator) {
     if (imagesSlider.scrollWidth - imagesSlider.scrollLeft > imagesSlider.offsetWidth) {
         imagesSlider.scrollLeft += imagesSlider.offsetWidth;
         let activeImageInd = sliderIndicator.querySelector('.active');
-        console.log(activeImageInd.nextElementSibling)
         activeImageInd.nextElementSibling.classList.add('active');
         activeImageInd.classList.remove('active');
-        console.log(imagesSlider.scrollLeft);
         if (imagesSlider.scrollWidth - imagesSlider.scrollLeft - imagesSlider.offsetWidth <= imagesSlider.offsetWidth) {
             nextBtn.classList.add('hide');
         }
@@ -84,7 +82,6 @@ function likeSaveEvent(e) {
                         }
                     }
                 );
-            console.log('like');
 
         } else if (classes.contains('dislike')) {
             anchorGetAndToggle(anchor, 'like')
@@ -98,11 +95,9 @@ function likeSaveEvent(e) {
                 );
 
         } else if (classes.contains('save')) {
-            console.log('save');
             anchorGetAndToggle(anchor, 'unsave');
 
         } else if (classes.contains('unsave')) {
-            console.log('unsave');
             anchorGetAndToggle(anchor, 'save');
 
         }
@@ -120,7 +115,6 @@ function anchorGetAndToggle(anchor, classToShow) {
     return fetch(anchor.href)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data);
             if (data.status == 1) {
                 anchor.classList.add('hide');
                 anchor.parentElement.querySelector('.' + classToShow).classList.remove('hide');
@@ -167,8 +161,7 @@ function viewPostOptions(e) {
     let options = e.target.closest('.post-options');
     if (options) {
         postOptionsModal.classList.remove('hide');
-        console.log(options.dataset.owner);
-        console.log(options.dataset.post_id);
+
 
         let postId = options.dataset.post_id;
         if (options.dataset.owner==1) {

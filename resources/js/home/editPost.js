@@ -19,17 +19,14 @@ let currentPostId;
 function showEditForm(e) {
     if (e.target.tagName = 'A' && e.target.classList.contains('edit-post-option')) {
         optionsModal.classList.add('hide');
-        console.log(imagesContainer.children);
         let numImages = imagesContainer.children.length;
         Array.from(imagesContainer.children).forEach((div, index) => {
             if (index < numImages - 1) {
-                console.log('INDEX', index);
                 div.remove();
             }
 
         });
         let postId = e.target.dataset.post_id;
-        console.log(e.target.dataset.post_id);
         editModal.classList.remove('hide');
         populateModal(postId);
     }
@@ -48,7 +45,6 @@ function populateModal(postId) {
             data.images = data.images.sort((a, b) => b.position - a.position);
             data.images.forEach(image => {
                 let imageContainer = createImageInput(image.image);
-                console.log(imageContainer);
                 imagesContainer.insertAdjacentElement('afterbegin', imageContainer.container);
                 imageContainer.input.addEventListener('change', handleImageInputs);
             });
@@ -62,7 +58,6 @@ function populateModal(postId) {
  * @param {} e 
  */
 function deleteImageInput(e) {
-    console.log(e.target);
     if (e.target.classList.contains('fa-trash-alt')) {
         e.target.parentElement.parentElement.remove();
     }

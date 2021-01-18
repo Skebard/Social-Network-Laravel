@@ -306,7 +306,6 @@ function openModal() {
 
 function handleModal(e) {
   var modal = e.target.closest('.modal');
-  console.log(modal);
 
   if (modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))) {
     modal.classList.add('hide');
