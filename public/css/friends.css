@@ -13,6 +13,10 @@ body {
   background-color: #fafafa;
 }
 
+body.hide-overflow {
+  overflow: hidden;
+}
+
 ul {
   list-style-type: none;
 }

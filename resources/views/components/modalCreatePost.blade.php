@@ -1,13 +1,13 @@
 <!-- CREATE POST -->
 <div class="hide modal create-post">
     <div class="modal-content">
-        <button class="close-modal">
+        <!-- <button class="close-modal">
             Close modal
-        </button>
+        </button> -->
 
         <form id='new-post-form-id' class='new-post-form multi-images-form' action="/posts" method='POST' enctype="multipart/form-data">
             @csrf
-            <textarea name="content" id="" cols="30" rows="10"></textarea>
+            <textarea name="content" id="" cols="30" rows="10" placeholder='Post description' required></textarea>
             <div class="images-container" id='images-container-id'>
                 <div class="input-container">
                     <div class=" last multi-images-form__btn delete-image-btn multi-images-form__btn"><i class="fas fa-trash-alt"></i></div>
@@ -24,8 +24,8 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
 
-            <button type='submit'>Create</button>
-            <button>Cancel</button>
+            <button class='action-btn left-btn' type='submit'>Create</button>
+            <button class='close-modal right-btn' >Cancel</button>
         </form>
     </div>
 </div>

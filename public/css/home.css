@@ -13,6 +13,10 @@ body {
   background-color: #fafafa;
 }
 
+body.hide-overflow {
+  overflow: hidden;
+}
+
 ul {
   list-style-type: none;
 }
@@ -489,7 +493,7 @@ header {
       scroll-snap-type: x mandatory;
   touch-action: auto;
   display: flex;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .post__slider--images::-webkit-scrollbar {
@@ -748,11 +752,57 @@ header {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.modal.create-post,
+.modal.edit-post {
+  align-items: flex-start;
+}
+
+.modal.create-post .modal-content,
+.modal.edit-post .modal-content {
+  width: 100%;
+}
+
+.modal.create-post .modal-content form,
+.modal.edit-post .modal-content form {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.modal.create-post .modal-content form textarea,
+.modal.edit-post .modal-content form textarea {
+  width: 100%;
+  font-size: 16px;
+}
+
+.modal .modal-content {
+  max-width: 975px;
+  max-height: 90%;
+  overflow: auto;
+}
+
+.modal .modal-content form .left-btn,
+.modal .modal-content form .right-btn {
+  position: absolute;
+  bottom: 0;
+  font-size: 18px;
+  padding: 14px;
+}
+
+.modal .modal-content form .left-btn {
+  left: 0;
+  width: 50%;
+}
+
+.modal .modal-content form .right-btn {
+  right: 0;
+  width: 50%;
+}
+
 .multi-images-form .images-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 612px;
+  max-width: 975px;
 }
 
 .multi-images-form .input-container {
@@ -881,6 +931,16 @@ header {
 
 a {
   color: black;
+}
+
+.action-btn {
+  color: white;
+  background-color: #0095f6;
+  font-weight: bolder;
+  font-size: 14px;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 5px 9px;
 }
 
 body {

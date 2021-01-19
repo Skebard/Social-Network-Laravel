@@ -14,6 +14,7 @@ function openModal(){
 function handleModal(e){
     let modal = e.target.closest('.modal');
     if(modal && (e.target.classList.contains('close-modal') || !e.target.closest('.modal-content'))){
+        e.preventDefault();
         modal.classList.add('hide');
     }
 }

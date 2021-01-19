@@ -9,6 +9,9 @@ html{
 }
 body{
     background-color: $primary-bg-color;
+    &.hide-overflow{
+        overflow: hidden;
+    }
 }
 ul{
     list-style-type:none;

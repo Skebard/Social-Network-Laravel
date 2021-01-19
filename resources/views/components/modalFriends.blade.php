@@ -1,9 +1,9 @@
 <!--FRIENDS MODAL -->
 <div class="hide modal modal-post-options " id='friends-modal-id'>
     <div class="modal-content">
-        <button class="close-modal">
+        <!-- <button class="close-modal">
             Close modal
-        </button>
+        </button> -->
 
         <ul id='friends-container-id' class='options-modal friends-modal'>
             <!-- <li>

@@ -1,9 +1,9 @@
 <!-- POST OPTIONS MODAL -->
 <div class="hide modal modal-post-options " id='post-options-modal-id'>
     <div class="modal-content">
-        <button class="close-modal">
+        <!-- <button class="close-modal">
             Close modal
-        </button>
+        </button> -->
 
         <ul class='options-modal'>
             <!-- <li>

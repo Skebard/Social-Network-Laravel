@@ -9,7 +9,43 @@
     justify-content: center;
     align-items:center;
     background-color:rgba(0,0,0,0.7);
-    .modal-content{
-    
+    &.create-post,&.edit-post{
+        align-items:flex-start;
+        .modal-content{
+            width:100%;
+            form{
+                margin-top:10px;
+                width:100%;
+                textarea{
+                    width:100%;
+                    font-size:16px;
+                }
+            }
+        }
     }
+
+    .modal-content{
+        max-width:975px;
+        max-height: 90%;
+        overflow: auto;
+        form{
+
+            .left-btn,.right-btn{
+                position: absolute;
+                bottom:0;
+                font-size:18px;
+                padding:14px;
+            }
+            .left-btn{
+                left:0;
+                width:50%;
+            }
+            .right-btn{
+                right:0;
+                width:50%;
+            }
+        }
+    }
+
+
 }

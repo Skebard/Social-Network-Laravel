@@ -1,14 +1,14 @@
 
 <!-- EDIT POST -->
-<div class="hide modal " id='edit-modal-id'>
+<div class="hide modal edit-post " id='edit-modal-id'>
     <div class="modal-content">
-        <button class="close-modal">
+        <!-- <button class="close-modal">
             Close modal
-        </button>
+        </button> -->
 
         <form id='edit-post-form-id' class='new-post-form multi-images-form' action="/posts" method='POST' enctype="multipart/form-data">
             @csrf
-            <textarea id='edit-content-id' name="content" id="" cols="30" rows="10"></textarea>
+            <textarea id='edit-content-id' name="content" id="" cols="30" rows="10" required></textarea>
             <div class="images-container" id='edit-images-container-id'>
                 <div class="input-container">
                     <div class=" last multi-images-form__btn delete-image-btn multi-images-form__btn"><i class="fas fa-trash-alt"></i></div>
@@ -25,8 +25,8 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
 
-            <button type='submit'>Create</button>
-            <button>Cancel</button>
+            <button class='left-btn action-btn' type='submit'>Save</button>
+            <button class='right-btn close-modal'>Cancel</button>
         </form>
     </div>
 </div>
