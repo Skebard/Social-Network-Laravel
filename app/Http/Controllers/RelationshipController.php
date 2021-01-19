@@ -33,7 +33,7 @@ class RelationshipController extends Controller
             //return  Redirect()->back()->with('error', 'Request could not be sent');
         }
         //return Redirect()->back()->with('success','Request has been sent');
-        NotificationsModel::deleteUserNotification($userId,Auth::user()->id);
+        NotificationsModel::deleteUserNotification($userId, Auth::user()->id);
         $user = Auth::user();
         $user->actionRelationship = 0; //request received
         User::find($userId)->notify(new RequestSentNotification($user));
@@ -51,11 +51,12 @@ class RelationshipController extends Controller
                 'status' => 1,
                 'action_user_id' => Auth::user()->id
             ]);
-        NotificationsModel::deleteUserNotification(Auth::user()->id,$userId);
+        NotificationsModel::deleteUserNotification(Auth::user()->id, $userId);
+        NotificationsModel::deleteUserNotification($userId,Auth::user()->id);
         $user = Auth::user();
         $user->actionRelationship = 1; //request accepted
         User::find($userId)->notify(new RequestSentNotification($user));
-        return json_encode(['status' => 1, 'modified' => $relationship]);
+        return json_encode(['status' => 1, 'modified' => $relationship,'accetpt'=>true]);
     }
 
     public function declineRequest($userId)
@@ -70,11 +71,11 @@ class RelationshipController extends Controller
                 'action_user_id' => Auth::user()->id
             ]);
         $notifications = Auth::user()->notifications();
-        foreach($notifications as $notification){
-            if(json_decode($notification['data'])->id === $userId){
+        foreach ($notifications as $notification) {
+            if (json_decode($notification['data'])->id === $userId) {
                 $notifications
-                ->where('id',$notification['id'])
-                ->delete();
+                    ->where('id', $notification['id'])
+                    ->delete();
             }
         }
 
@@ -87,8 +88,8 @@ class RelationshipController extends Controller
             ->where('user_two_id', $userId)->delete();
         $relationship =  Relationship::where('user_one_id', $userId)
             ->where('user_two_id', Auth::user()->id)->delete();
-        NotificationsModel::deleteUserNotification($userId,Auth::user()->id);
-        return json_encode(['status' => 1,'userId'=>$userId]);
+        NotificationsModel::deleteUserNotification($userId, Auth::user()->id);
+        return json_encode(['status' => 1, 'userId' => $userId]);
     }
 
     public function blockUser($userId)

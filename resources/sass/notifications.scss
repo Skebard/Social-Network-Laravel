@@ -9,6 +9,14 @@ body{
 body main {
     max-width: 935px;
     flex-grow:1;
+    width:100%;
+}
+.edit-btn {
+    font-weight: bolder;
+    font-size: 14px;
+    border: $soft-border;
+    border-radius: 4px;
+    padding: 5px 9px;
 }
 .notifications {
     .round-profile-img {
@@ -29,5 +37,7 @@ body main {
         .notification-message{
             font-size:14px;
         }
+
+
     }
 }

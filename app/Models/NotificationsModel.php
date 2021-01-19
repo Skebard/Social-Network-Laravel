@@ -14,7 +14,7 @@ class NotificationsModel extends Model
         $user = User::find($notifiable_id);
         $notifications = $user->notifications;
         foreach($notifications as $notification){
-            if($notification['data']['user']['id'] === $userId){
+            if(($notification['data']['user']['id'] == $userId) && ($notification['notifiable_id']==$notifiable_id)){
                 $user->notifications()
                 ->where('id',$notification['id'])
                 ->delete();
