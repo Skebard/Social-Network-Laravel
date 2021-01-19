@@ -100,6 +100,7 @@ header {
   display: flex;
   justify-content: center;
   position: relative;
+  margin-left: 5px;
 }
 
 .header-content .search__input-container .small-search-icon,
@@ -124,6 +125,13 @@ header {
   width: 215px;
 }
 
+@media screen and (max-width: 550px) {
+  .header-content .search input,
+  .friends-results .search input {
+    width: 100%;
+  }
+}
+
 .header-content .search .up-arrow,
 .friends-results .search .up-arrow {
   position: absolute;
@@ -141,6 +149,7 @@ header {
 .friends-results .search .search-results {
   max-height: 360px;
   width: 110%;
+  min-width: 200px;
   position: absolute;
   bottom: 0;
   transform: translateY(100%);
@@ -208,11 +217,131 @@ header {
   display: flex;
 }
 
+.header-content .user-actions.drop-down,
+.friends-results .user-actions.drop-down {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-content .user-actions.drop-down > a,
+.header-content .user-actions.drop-down div.profile-icon,
+.header-content .user-actions.drop-down div.profile-icon > a,
+.friends-results .user-actions.drop-down > a,
+.friends-results .user-actions.drop-down div.profile-icon,
+.friends-results .user-actions.drop-down div.profile-icon > a {
+  padding: 16px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-content .user-actions.drop-down > a > a,
+.header-content .user-actions.drop-down div.profile-icon > a,
+.header-content .user-actions.drop-down div.profile-icon > a > a,
+.friends-results .user-actions.drop-down > a > a,
+.friends-results .user-actions.drop-down div.profile-icon > a,
+.friends-results .user-actions.drop-down div.profile-icon > a > a {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.header-content .user-actions.drop-down > a:hover,
+.header-content .user-actions.drop-down div.profile-icon:hover,
+.header-content .user-actions.drop-down div.profile-icon > a:hover,
+.friends-results .user-actions.drop-down > a:hover,
+.friends-results .user-actions.drop-down div.profile-icon:hover,
+.friends-results .user-actions.drop-down div.profile-icon > a:hover {
+  background-color: #fafafa;
+}
+
+.header-content .user-actions.drop-down .profile-icon,
+.friends-results .user-actions.drop-down .profile-icon {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.header-content .user-actions.drop-down .profile-icon > a,
+.friends-results .user-actions.drop-down .profile-icon > a {
+  display: none !important;
+}
+
+.header-content .user-actions.drop-down .profile-icon .user-pages-links,
+.friends-results .user-actions.drop-down .profile-icon .user-pages-links {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+  box-shadow: none;
+  width: 100%;
+}
+
+.header-content .user-actions.drop-down .profile-icon .user-pages-links a,
+.friends-results .user-actions.drop-down .profile-icon .user-pages-links a {
+  padding: 16px;
+  font-size: 18px;
+}
+
+.header-content .user-actions.drop-down .profile-icon .user-pages-links a svg,
+.friends-results .user-actions.drop-down .profile-icon .user-pages-links a svg {
+  height: 24px;
+  width: 24px;
+  margin-right: 10px;
+}
+
+.header-content .user-actions .drop-down-icon,
+.friends-results .user-actions .drop-down-icon {
+  font-size: 24px;
+  display: none;
+}
+
+@media screen and (max-width: 550px) {
+  .header-content .user-actions .drop-down-icon,
+  .friends-results .user-actions .drop-down-icon {
+    display: block;
+    margin: 16px;
+  }
+}
+
 .header-content .user-actions a,
 .header-content .user-actions .profile-icon,
 .friends-results .user-actions a,
 .friends-results .user-actions .profile-icon {
   margin: 0 8px;
+}
+
+.header-content .user-actions a .icon-text,
+.header-content .user-actions .profile-icon .icon-text,
+.friends-results .user-actions a .icon-text,
+.friends-results .user-actions .profile-icon .icon-text {
+  display: none;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 550px) {
+  .header-content .user-actions a .icon-text,
+  .header-content .user-actions .profile-icon .icon-text,
+  .friends-results .user-actions a .icon-text,
+  .friends-results .user-actions .profile-icon .icon-text {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header-content .user-actions a,
+  .header-content .user-actions .profile-icon,
+  .friends-results .user-actions a,
+  .friends-results .user-actions .profile-icon {
+    display: none;
+  }
 }
 
 .header-content .user-actions a img,

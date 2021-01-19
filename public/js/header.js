@@ -192,10 +192,17 @@ var createPost = __webpack_require__(/*! ./home/createPost */ "./resources/js/ho
 var profileDropdown = __webpack_require__(/*! ./components/profileDropdown */ "./resources/js/components/profileDropdown.js");
 
 var body = document.querySelector('body');
+var dropDownBtn = document.getElementById("drop-down-btn-id");
+var userActions = document.getElementById("user-actions-id");
+var closeDropDownBtn = dropDownBtn.addEventListener('click', showHideDropDown);
 body.addEventListener('click', profileDropdown.openCloseProfileMenu);
 createPost.addEvents();
 search.manageSearch();
 modal.addEvents();
+
+function showHideDropDown(e) {
+  userActions.classList.toggle("drop-down");
+}
 
 /***/ }),
 
