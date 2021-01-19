@@ -883,6 +883,18 @@ a {
   color: black;
 }
 
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body main {
+  max-width: 935px;
+  flex-grow: 1;
+  width: 100%;
+}
+
 a {
   text-decoration: none;
 }

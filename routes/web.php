@@ -20,6 +20,9 @@ use App\Http\Controllers\RelationshipController;
 
 
 
+Route::get('/error',function(){
+    return view('error');
+});
 
 //Route::resource('/posts',PostController::class);
 
