@@ -1,0 +1,33 @@
+@import 'base/global';
+
+body{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body main {
+    max-width: 935px;
+    flex-grow:1;
+}
+.notifications {
+    .round-profile-img {
+        flex-direction: row;
+        justify-content: flex-start;
+        margin: 0;
+        padding: 1rem;
+
+        .user-info{
+
+            span{
+                margin-left:16px;
+            }
+        }
+        &:hover, &.active {
+            background-color: $primary-bg-color;
+        }
+        .notification-message{
+            font-size:14px;
+        }
+    }
+}

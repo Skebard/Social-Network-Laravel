@@ -767,3 +767,24 @@ main {
   margin: 0 auto;
 }
 
+.bell-container {
+  position: relative;
+}
+
+.bell-container .number-notifications {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 17px;
+  height: 17px;
+  font-size: 11px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  z-index: 10;
+  transform: translate(35%, -35%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

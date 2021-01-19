@@ -21364,6 +21364,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/notifications.scss":
+/*!*******************************************!*\
+  !*** ./resources/sass/notifications.scss ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/profileHome.scss":
 /*!*****************************************!*\
   !*** ./resources/sass/profileHome.scss ***!
@@ -21387,9 +21398,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/login.scss ./resources/sass/home.scss ./resources/sass/profileHome.scss ./resources/sass/friends.scss ./resources/sass/profileSettings.scss ./resources/css/app.css ***!
-  \************************************************************************************************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/login.scss ./resources/sass/home.scss ./resources/sass/profileHome.scss ./resources/sass/friends.scss ./resources/sass/profileSettings.scss ./resources/sass/notifications.scss ./resources/css/app.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21399,6 +21410,7 @@ __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/
 __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/profileHome.scss */"./resources/sass/profileHome.scss");
 __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/friends.scss */"./resources/sass/friends.scss");
 __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/profileSettings.scss */"./resources/sass/profileSettings.scss");
+__webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/notifications.scss */"./resources/sass/notifications.scss");
 module.exports = __webpack_require__(/*! /home/skebard/MyProjects/SocialNetworkLaravel/resources/css/app.css */"./resources/css/app.css");
 
 

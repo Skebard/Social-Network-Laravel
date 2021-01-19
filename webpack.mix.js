@@ -28,4 +28,5 @@ mix.sass('resources/sass/login.scss', 'public/css')
     .sass('resources/sass/home.scss', 'public/css')
     .sass('resources/sass/profileHome.scss','public/css')
     .sass('resources/sass/friends.scss','public/css')
-    .sass('resources/sass/profileSettings.scss','public/css');
+    .sass('resources/sass/profileSettings.scss','public/css')
+    .sass('resources/sass/notifications.scss','public/css');

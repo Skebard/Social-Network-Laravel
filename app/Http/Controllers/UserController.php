@@ -126,7 +126,6 @@ class UserController extends Controller
         $user->profile_photo_path = $img_location;
         $user->save();
         $user->touch();
-        
         echo 'done';
     }
     /**
@@ -229,6 +228,12 @@ class UserController extends Controller
                     ->union($a)
                     ->get();
         return json_encode(['status'=>1,'users'=>$users]);
+    }
+
+    public function showNotifications()
+    {
+        Auth::user()->unreadNotifications->markAsRead();
+        return view('notifications');
     }
 
 

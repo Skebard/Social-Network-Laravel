@@ -32,14 +32,15 @@ Route::get('/register',function(){
 
 
 //USERS
-Route::get('/user/{username}',[UserController::class,'show']);
+
 Route::get('/{username}/saved',[UserController::class,'savedPosts'])->middleware('auth');
 // Route::get('/posts/saved',[UserController::class,'savedPosts']);
 Route::get('/{username}/archived',[UserController::class,'archivedPosts'])->middleware('auth');
 Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
 Route::get('/user/friends/search/{text}',[UserController::class,'searchUsersFriends']);
 Route::get('/user/{userId}/friends',[UserController::class,'showFriends']);
-
+Route::get('/notifications',[UserController::class,'showNotifications']);
+Route::get('/user/{username}',[UserController::class,'show']);
 //ACCOUNT
 Route::get('/accounts/edit',[UserController::class,'edit']);
 Route::get('/accounts/password',[UserController::class,'editPassword']);
@@ -97,9 +98,7 @@ Route::get('/{postId}/like/remove',[LikesController::class,'removeLikePost']);
 
 
 
-Route::get('/homePage',function (){
-    return view('homePage');
-});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('/');
 })->name('dashboard');
