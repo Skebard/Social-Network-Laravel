@@ -21,17 +21,9 @@ use stdClass;
 class PostController extends Controller
 {
 
-    // $this->middleware('auth')->except(['show']);
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
-
+        $this->middleware('auth')->except([]);
     }
 
 
@@ -46,7 +38,6 @@ class PostController extends Controller
     }
     public function posts()
     {
-
         if (isset($_GET['limit'], $_GET['offset'])) {
             $offset = intval($_GET['offset']);
             $limit = intval($_GET['limit']);
@@ -62,16 +53,6 @@ class PostController extends Controller
         return json_encode((object) ['status' => $status, 'data' => strval($postsView), 'count' => count($posts)]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -81,15 +62,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),
-        [
-            'content' => 'required',
-            'image.*' => 'image',
-        ],
-        [
-            'image.*.image'=>'Only images can be uploaded',
-            'content.required'=>'A post description is required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'content' => 'required',
+                'image.*' => 'image',
+            ],
+            [
+                'image.*.image' => 'Only images can be uploaded',
+                'content.required' => 'A post description is required',
+            ]
+        );
 
         if ($validator->fails()) {
             return Redirect()->back()->with('error', $validator->errors()->first());
@@ -149,7 +132,8 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         if (!$post) {
-            return view('error');
+            $message = 'Post does not exists or it is not available. Try to restore it.';
+            return view('error',compact('message'));
         }
         Post::getPostData($post);
         $user = User::find($post->user_id);
@@ -158,18 +142,6 @@ class PostController extends Controller
             $user->profile_photo_path = 'images/users/defaultProfileImage.png';
         }
         return view('posts.index', compact('post', 'user', 'relatedPosts'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        echo 'hi';
-        return view('posts.edit');
     }
 
     /**
@@ -182,19 +154,21 @@ class PostController extends Controller
     public function update(Request $request, $postId)
     {
 
-        $validator = Validator::make($request->all(),
-        [
-            'content' => 'required',
-            'image.*' => 'image',
-        ],
-        [
-            'image.*.image'=>'Only images can be uploaded',
-            'content.required'=>'A post description is required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'content' => 'required',
+                'image.*' => 'image',
+            ],
+            [
+                'image.*.image' => 'Only images can be uploaded',
+                'content.required' => 'A post description is required',
+            ]
+        );
 
 
         if ($validator->fails()) {
-            return json_encode(['status' => 0,'message'=>$validator->errors()->first()]);
+            return json_encode(['status' => 0, 'message' => $validator->errors()->first()]);
         }
 
         Post::where('user_id', Auth::user()->id)
@@ -217,7 +191,11 @@ class PostController extends Controller
                 $img_name = $name_gen . '.' . $img_ext;
                 $up_location = 'images/posts/';
                 $img_location = $up_location . $img_name;
-                $imagesFiles[$filesPos]->move($up_location, $img_name);
+                //$imagesFiles[$filesPos]->move($up_location, $img_name);
+                Image::make($imagesFiles[$filesPos])->fit(550, 550, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save($img_location);
                 $filesPos++;
 
                 //we have to insert them after we update and delete the existing images
@@ -238,6 +216,12 @@ class PostController extends Controller
             $img_position++;
         }
         //delete old images
+        $oldImages = PostImage::where('post_id', $postId)->get();
+        foreach ($oldImages as $image) {
+            if (file_exists(public_path() . '/' . $image->image)) {
+                unlink(public_path() . '/' . $image->image);
+            }
+        }
         PostImage::where('post_id', $postId)->delete();
         foreach ($imagesFilesToInsert as $image) {
             PostImage::insert($image);
@@ -263,7 +247,17 @@ class PostController extends Controller
 
     public function destroy($postId)
     {
-        Post::find($postId)->forceDelete();
+        //delete old images
+        $oldImages = PostImage::where('post_id', $postId)->get();
+        foreach ($oldImages as $image) {
+            if (file_exists(public_path() . '/' . $image->image)) {
+                unlink(public_path() . '/' . $image->image);
+            }
+        }
+        Post::
+        where('user_id', Auth::user()->id)
+        ->find($postId)
+        ->forceDelete();
         return  Redirect()->back()->with('success', 'Post deleted successfully');
     }
 
@@ -274,16 +268,8 @@ class PostController extends Controller
             ->where('user_id', Auth::user()->id)
             ->find($id)
             ->restore();
-        return Redirect('/user/' . Auth::user()->username)->with('success', 'Post Published Successfully');
+        return Redirect('/user/' . Auth::user()->username)->with('success', 'Post Restored Successfully');
     }
-
-    public function pdelete($id)
-    {
-        //! DELETE images from images/post
-        //$delete = Category::onlyTrashed()->find($id)->forceDelete();
-        return Redirect()->back()->with('success', 'Category Permanently Deleted');
-    }
-
 
     public function savePost($postId)
     {

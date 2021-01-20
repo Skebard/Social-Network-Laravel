@@ -123,7 +123,7 @@
             @endif
             <div class="hover-info">
                 @if($page=='archived')
-                <a style="z-index:100;color:white;" href="{{url('/posts/'.$post->id).'/restore'}}">RESTORE</a>
+                <a class='action-btn' style="z-index:100;color:white;" href="{{url('/posts/'.$post->id).'/restore'}}">RESTORE</a>
                 @endif
                 <div class="hover-info__bg">
                     <a class='post-link' href="{{url('/posts/'.$post->id)}}"></a>
