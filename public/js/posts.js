@@ -86,6 +86,185 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/home/editPost.js":
+/*!***************************************!*\
+  !*** ./resources/js/home/editPost.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var inputContainerContent = "\n    <button class=\" last multi-images-form__btn delete-image-btn multi-images-form__btn\"><i class=\"fas fa-trash-alt\"></i></button>\n    <button class=\"  add-image-btn multi-images-form__btn\"><i class=\"fas fa-plus\"></i></button>\n    <button class=\" active edit-image-btn  multi-images-form__btn\"><i class=\"far fa-edit\"></i></button>\n    <img class=\"image-display\" src=\"https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png\" alt=\"\">\n    <input  type=\"file\" name='image[]' class=\"multi-images-form__image-input\">";
+var imagesContainer = document.getElementById("edit-images-container-id");
+var POST_URL = '/api/posts/';
+var descriptionInput = document.getElementById('edit-content-id');
+var editPostForm = document.getElementById('edit-post-form-id');
+var firstInput = document.getElementById('edit-input-1-id');
+var editModal = document.getElementById('edit-modal-id');
+var optionsModal = document.getElementById('post-options-modal-id');
+var currentPostId;
+
+function showEditForm(e) {
+  if (e.target.tagName =  true && e.target.classList.contains('edit-post-option')) {
+    optionsModal.classList.add('hide');
+    var numImages = imagesContainer.children.length;
+    Array.from(imagesContainer.children).forEach(function (div, index) {
+      if (index < numImages - 1) {
+        div.remove();
+      }
+    });
+    var postId = e.target.dataset.post_id;
+    editModal.classList.remove('hide');
+    populateModal(postId);
+  }
+}
+
+function populateModal(postId) {
+  currentPostId = postId;
+  imagesContainer.addEventListener('click', deleteImageInput);
+  firstInput.addEventListener('change', handleImageInputs);
+  fetch(POST_URL + postId).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    //get description
+    descriptionInput.value = data.content; //get post images
+
+    data.images = data.images.sort(function (a, b) {
+      return b.position - a.position;
+    });
+    data.images.forEach(function (image) {
+      var imageContainer = createImageInput(image.image);
+      imagesContainer.insertAdjacentElement('afterbegin', imageContainer.container);
+      imageContainer.input.addEventListener('change', handleImageInputs);
+    });
+  });
+}
+/**
+ * 
+ * @param {} e 
+ */
+
+
+function deleteImageInput(e) {
+  if (e.target.classList.contains('fa-trash-alt')) {
+    e.target.parentElement.parentElement.remove();
+  }
+}
+
+function handleImageInputs(e) {
+  var input = e.currentTarget; //Check if a file has been selected
+
+  var inputContainer = input.parentElement;
+
+  if (input.files && input.files[0]) {
+    var imgDisplay = inputContainer.querySelector('.image-display');
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      imgDisplay.src = e.target.result;
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+    if (inputContainer === imagesContainer.lastElementChild) {
+      //show edit icon
+      inputContainer.querySelector('.add-image-btn').classList.remove('active');
+      inputContainer.querySelector('.edit-image-btn').classList.add('active');
+      var newInput = createImageInput();
+      imagesContainer.append(newInput.container);
+      newInput.input.addEventListener('change', handleImageInputs);
+    }
+  } else {
+    //if the user does not select an image remove the input unless is the last one
+    if (inputContainer !== imagesContainer.lastElementChild) {
+      inputContainer.remove();
+    }
+  }
+}
+/**
+ * Creates a new imageInput HTMLElement and returns it.
+ * @return {Object} Object whose properties are the html container of the input and the input itself
+ */
+
+
+function createImageInput() {
+  var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+  var inputContainer = document.createElement('div');
+  inputContainer.classList.add('input-container');
+  inputContainer.innerHTML = inputContainerContent;
+
+  if (url) {
+    inputContainer.querySelector('.image-display').src = '/' + url;
+    inputContainer.querySelector('.delete-image-btn.last').classList.remove('last');
+  } else {
+    //remove last class from the previous input
+    imagesContainer.querySelector('.delete-image-btn.last').classList.remove('last');
+  }
+
+  var inputImage = inputContainer.querySelector('.multi-images-form__image-input');
+  return {
+    container: inputContainer,
+    input: inputImage
+  };
+}
+
+editPostForm.addEventListener('submit', editPost);
+
+function editPost(e) {
+  e.preventDefault();
+  var formData = getFormData();
+  var postId = currentPostId;
+  token = editPostForm.querySelector('input[name=_token]');
+  fetch('/posts/' + postId + '/update', {
+    method: 'post',
+    body: formData,
+    headers: {
+      'X-CSRF-TOKEN': token.value
+    }
+  }).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    if (data.status == 1) {
+      //editModal.classList.add('hide');
+      location.reload();
+    }
+  });
+}
+/**
+ * Gets the data from the form and returns the images in the displayed order
+ * @return {Object} Ordered array of objects where each object represe
+ */
+
+
+function getFormData() {
+  var formData = new FormData();
+  var imagesData = [];
+  Array.from(imagesContainer.children).forEach(function (image, pos) {
+    var input = image.querySelector('input'); //the last input is always empty so it is not saved
+
+    if (!image.querySelector('.last')) {
+      //if there is no file (length 0)
+      if (input.files.length > 0) {
+        formData.append('imagesFiles[]', input.files[0]);
+        imagesData.push({
+          type: 'file'
+        });
+      } else {
+        imagesData.push({
+          type: 'src',
+          image: image.querySelector('.image-display').src
+        });
+      }
+    }
+  });
+  formData.append('images', JSON.stringify(imagesData));
+  formData.append('content', descriptionInput.value);
+  return formData;
+}
+
+exports.showEditForm = showEditForm;
+
+/***/ }),
+
 /***/ "./resources/js/home/modal.js":
 /*!************************************!*\
   !*** ./resources/js/home/modal.js ***!
@@ -504,7 +683,9 @@ var posts = __webpack_require__(/*! ./home/posts */ "./resources/js/home/posts.j
 var modal = __webpack_require__(/*! ./home/modal */ "./resources/js/home/modal.js"); // const editPost = require('./home/editPost');
 
 
-var postComments = __webpack_require__(/*! ./home/postComments */ "./resources/js/home/postComments.js"); //* HTMLElements */
+var postComments = __webpack_require__(/*! ./home/postComments */ "./resources/js/home/postComments.js");
+
+var editPost = __webpack_require__(/*! ./home/editPost */ "./resources/js/home/editPost.js"); //* HTMLElements */
 
 
 var body = document.querySelector('body');
@@ -515,6 +696,7 @@ body.addEventListener('click', posts.viewPostOptions);
 body.addEventListener('click', postComments.postComment);
 body.addEventListener('keydown', postComments.recommendUserTag);
 body.addEventListener('click', postComments.insertTagUser);
+body.addEventListener('click', editPost.showEditForm);
 modal.addEvents();
 
 /***/ }),

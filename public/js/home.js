@@ -240,7 +240,7 @@ function createImageInput() {
   inputContainer.innerHTML = inputContainerContent;
 
   if (url) {
-    inputContainer.querySelector('.image-display').src = url;
+    inputContainer.querySelector('.image-display').src = '/' + url;
     inputContainer.querySelector('.delete-image-btn.last').classList.remove('last');
   } else {
     //remove last class from the previous input
@@ -261,7 +261,7 @@ function editPost(e) {
   var formData = getFormData();
   var postId = currentPostId;
   token = editPostForm.querySelector('input[name=_token]');
-  fetch('posts/' + postId + '/update', {
+  fetch('/posts/' + postId + '/update', {
     method: 'post',
     body: formData,
     headers: {

@@ -96,7 +96,7 @@
                     </svg>
                 </a> -->
                 <a id='new-post-btn-id'>
-                    <i class="far fa-plus-square"></i>
+                    <i class="far clickable fa-plus-square"></i>
                     <span class="icon-text">Create Post</span>
 
                 </a>
