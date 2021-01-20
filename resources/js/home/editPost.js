@@ -134,6 +134,8 @@ function editPost(e) {
         .then(data => {
             if (data.status == 1) {
                 location.reload();
+            }else{
+                toastr.error(data.message);
             }
         });
 

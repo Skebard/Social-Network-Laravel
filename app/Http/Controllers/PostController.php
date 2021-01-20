@@ -14,6 +14,8 @@ use App\Models\PostComment;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Validator;
+use Image;
 use stdClass;
 
 class PostController extends Controller
@@ -79,11 +81,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $images = $request->file('image');
-        if (file_exists('images/posts/slider2.jpg')) {
+        $validator = Validator::make($request->all(),
+        [
+            'content' => 'required',
+            'image.*' => 'image',
+        ],
+        [
+            'image.*.image'=>'Only images can be uploaded',
+            'content.required'=>'A post description is required',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect()->back()->with('error', $validator->errors()->first());
         }
 
+        $images = $request->file('image');
         Post::insert([
             'user_id' => Auth::user()->id,
             'content' => $request->content,
@@ -105,7 +117,14 @@ class PostController extends Controller
                 $img_name = $name_gen . '.' . $img_ext;
                 $up_location = 'images/posts/';
                 $img_location = $up_location . $img_name;
-                $image->move($up_location, $img_name);
+                //default image size
+                //$image->move($up_location, $img_name);
+
+                //change image size so all the images have the same
+                Image::make($image)->fit(550, 550, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save($img_location);
 
                 PostImage::insert([
                     'post_id' => $postId,
@@ -162,6 +181,22 @@ class PostController extends Controller
      */
     public function update(Request $request, $postId)
     {
+
+        $validator = Validator::make($request->all(),
+        [
+            'content' => 'required',
+            'image.*' => 'image',
+        ],
+        [
+            'image.*.image'=>'Only images can be uploaded',
+            'content.required'=>'A post description is required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return json_encode(['status' => 0,'message'=>$validator->errors()->first()]);
+        }
+
         Post::where('user_id', Auth::user()->id)
             ->where('id', $postId)
             ->update([

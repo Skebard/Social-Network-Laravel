@@ -225,6 +225,8 @@ function editPost(e) {
   }).then(function (data) {
     if (data.status == 1) {
       location.reload();
+    } else {
+      toastr.error(data.message);
     }
   });
 }
