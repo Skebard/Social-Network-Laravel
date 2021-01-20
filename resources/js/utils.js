@@ -1,13 +1,9 @@
 
 function defaultResult(data)
 {
-    console.log('Result')
-    console.log(data);
 }
 function defaultError(error)
 {
-    console.log('Error')
-    console.log(error);
 }
 
 function defaultFinal(data)

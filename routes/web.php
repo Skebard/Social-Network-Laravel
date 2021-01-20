@@ -40,7 +40,7 @@ Route::get('/{username}/archived',[UserController::class,'archivedPosts'])->midd
 Route::get('/user/search/{text}',[UserController::class,'searchUsers']);
 Route::get('/user/friends/search/{text}',[UserController::class,'searchUsersFriends']);
 Route::get('/user/{userId}/friends',[UserController::class,'showFriends']);
-Route::get('/notifications',[UserController::class,'showNotifications'])->middleware('verifyAccountOwner');
+Route::get('/notifications',[UserController::class,'showNotifications']);
 Route::get('/user/{username}',[UserController::class,'show']);
 //ACCOUNT
 Route::get('/accounts/edit',[UserController::class,'edit']);

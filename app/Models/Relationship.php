@@ -75,4 +75,16 @@ class Relationship extends Model
         }
         return $relA===1 || $relB===1? true:false;
     }
+
+    public static function exists($userOneId,$userTwoId)
+    {
+        $relationshipA = Relationship::where('user_one_id', $userOneId)
+        ->where('user_two_id', $userTwoId);
+        $rel =  Relationship::where('user_one_id', $userTwoId)
+        ->where('user_two_id', $userOneId)
+        ->union($relationshipA)
+        ->first();
+        return $rel;
+    }
+
 }

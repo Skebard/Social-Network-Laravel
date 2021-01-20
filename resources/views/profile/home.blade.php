@@ -62,8 +62,8 @@
 
     <div class="profile-info__right-bottom">
         <h3 class='name'>{{$user->name .' '. $user->last_name}}</h3>
-        <p class='description'>this is a great
-            very great
+        <p class='description'>
+            {{ $user->description }}
         </p>
 
     </div>

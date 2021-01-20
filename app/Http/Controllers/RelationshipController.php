@@ -18,9 +18,10 @@ class RelationshipController extends Controller
 
     public function sendFriendRequest($userId)
     {
-        //! verify that it is not the user himself
-        //! verify that the $userId exists
-        //! verify that a relationship between both users does not exist
+
+        if(Relationship::exists($userId,Auth::user()->id) || $userId ===Auth::user()->id){
+            return json_encode(['status'=>0]);
+        }
         try {
             Relationship::insert([
                 'user_one_id' => Auth::user()->id,
@@ -30,9 +31,7 @@ class RelationshipController extends Controller
             ]);
         } catch (QueryException $e) {
             return json_encode(['status' => 0]);
-            //return  Redirect()->back()->with('error', 'Request could not be sent');
         }
-        //return Redirect()->back()->with('success','Request has been sent');
         NotificationsModel::deleteUserNotification($userId, Auth::user()->id);
         $user = Auth::user();
         $user->actionRelationship = 0; //request received
@@ -56,7 +55,7 @@ class RelationshipController extends Controller
         $user = Auth::user();
         $user->actionRelationship = 1; //request accepted
         User::find($userId)->notify(new RequestSentNotification($user));
-        return json_encode(['status' => 1, 'modified' => $relationship,'accetpt'=>true]);
+        return json_encode(['status' => 1, 'modified' => $relationship,'accept'=>true]);
     }
 
     public function declineRequest($userId)

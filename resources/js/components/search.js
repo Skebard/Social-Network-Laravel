@@ -33,17 +33,14 @@ function manageSearch() {
 }
 
 function searchUsers(text) {
-    console.log(text);
     //send text to server and print
     fetch('/user/search/' + text)
         .then(resp => resp.json())
         .then(data => {
             if (data.status == 1 && data.users.length>0) {
-                console.log(data.users);
                 let html = '';
                 data.users.forEach(user => {
-                    let profilePhoto = user.profile_photo_path ? user.profile_photo_path : user.profile_photo_url;
-                    //console.log(profilePhoto);
+                    let profilePhoto = user.profile_photo_path ?'/'+ user.profile_photo_path : user.profile_photo_url;
                     html += `<a href="/user/${user.username}">
                 <div class="profile-info">
                     <div class='round-profile-img'>

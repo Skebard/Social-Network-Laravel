@@ -10,10 +10,8 @@ body.addEventListener('click',handleNotificationBtn);
 
 function handleNotificationBtn(e)
 {
-    console.log('done');
     if(e.target.classList.contains("add-friend-btn") || e.target.classList.contains('remove-friend-btn')){
         e.preventDefault();
-        console.log('me');
         fetch(e.target.href)
     .then(()=>{
         if(e.target.classList.contains("add-friend-btn")){

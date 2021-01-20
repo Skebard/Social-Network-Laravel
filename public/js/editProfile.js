@@ -139,7 +139,6 @@ function showPhoto(file) {
   var reader = new FileReader();
 
   reader.onload = function (e) {
-    console.log(file.type);
     profileImgDisplay.src = e.target.result;
   };
 
@@ -156,10 +155,6 @@ function updateProfilePhoto(file) {
     headers: {
       'X-CSRF-TOKEN': tokenValue
     }
-  }).then(function (resp) {
-    return resp.text();
-  }).then(function (data) {
-    return console.log(data);
   });
 }
 

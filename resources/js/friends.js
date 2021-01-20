@@ -23,13 +23,14 @@ function populateFriends(data) {
     let friends = data.profileFriends;
     let html = '';
     friends.forEach(friend => {
+        let profilePhoto =friend.profile_photo_path ?'/'+ friend.profile_photo_path : friend.profile_photo_url;
         html += `
         <li>
                         <a href="/user/${friend.username}">
                             <div class="profile-info">
                                 <div class='round-profile-img'>
                                     <div class='profile-image-container'>
-                                        <img src="${friend.profile_photo_url}" alt="">
+                                        <img src="${profilePhoto}" alt="profile photo">
                                     </div>
                                 </div>
                             </div>
@@ -51,20 +52,20 @@ function populateFriends(data) {
             switch (rel[0].status) {
                 case 0:
                     if(rel[0].user_action_id===friend.id){
-                        html += `<a href='/user/friend/accept/${friend.id}' class='edit-btn m-width'>Accept Request</a>`;
+                        html += `<a href='/user/friend/accept/${friend.id}' class='accept-request edit-btn m-width friend-action'>Accept Request</a>`;
                     }else{
-                        html += `<a href='/user/friend/cancelRequest/${friend.id}' class='edit-btn m-width'>Request Sent</a>`;
+                        html += `<a href='/user/friend/cancelRequest/${friend.id}' class='remove-request edit-btn m-width friend-action'>Request Sent</a>`;
                     }
                     break;
                 case 1:
-                    html += `<a href='/user/friend/remove/${friend.id}' class='edit-btn m-width'>Remove Friend</a>`;
+                    html += `<a href='/user/friend/remove/${friend.id}' class='remove-friend  edit-btn m-width friend-action'>Remove Friend</a>`;
                     break;
                 case 2:
-                    html += `<a href='/user/friend/add/${friend.id}' class='edit-btn m-width'>Add Friend</a>`;
+                    html += `<a href='/user/friend/add/${friend.id}' class='add-friend edit-btn m-width friend-action action-btn'>Add Friend</a>`;
                     break;
                 case 3:
                     if(rel[0].user_action_id!==friend.id){
-                        html += `<a href='/user/friend/unblock/${friend.id}' class='edit-btn m-width'>Unblock</a>`;
+                        html += `<a href='/user/friend/unblock/${friend.id}' class='unblock-user edit-btn m-width friend-action'>Unblock</a>`;
                     }
                     break;
             }

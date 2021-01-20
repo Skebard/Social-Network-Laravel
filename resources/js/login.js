@@ -29,6 +29,6 @@ function showHidePassword(){
         inputPass.type='password';
         showPassBtn.textContent = 'Show';
     }
-    console.log(inputPass.type);
+
 
 }

@@ -156,7 +156,7 @@ function checkBlockUserBtn(e) {
         oldLink.remove();
         toastr.success('User blocked');
       } else {
-        toastr.info('Error ocurred');
+        toastr.info('Error ocurred. Please try again.');
       }
     });
   }
@@ -196,7 +196,8 @@ function populateFriends(data) {
   var friends = data.profileFriends;
   var html = '';
   friends.forEach(function (friend) {
-    html += "\n        <li>\n                        <a href=\"/user/".concat(friend.username, "\">\n                            <div class=\"profile-info\">\n                                <div class='round-profile-img'>\n                                    <div class='profile-image-container'>\n                                        <img src=\"").concat(friend.profile_photo_url, "\" alt=\"\">\n                                    </div>\n                                </div>\n                            </div>\n                            <span class='friends-modal__user-info'>\n                                <span class='search-username'>").concat(friend.username, "</span>\n                                <span class='search-name'>").concat(friend.name, "</span>\n                            </span>\n                        </a>\n                            ");
+    var profilePhoto = friend.profile_photo_path ? '/' + friend.profile_photo_path : friend.profile_photo_url;
+    html += "\n        <li>\n                        <a href=\"/user/".concat(friend.username, "\">\n                            <div class=\"profile-info\">\n                                <div class='round-profile-img'>\n                                    <div class='profile-image-container'>\n                                        <img src=\"").concat(profilePhoto, "\" alt=\"profile photo\">\n                                    </div>\n                                </div>\n                            </div>\n                            <span class='friends-modal__user-info'>\n                                <span class='search-username'>").concat(friend.username, "</span>\n                                <span class='search-name'>").concat(friend.name, "</span>\n                            </span>\n                        </a>\n                            ");
     var rel = data.loggedUserRelationships.filter(function (relationship) {
       if (friend.id == CURRENT_USER_ID) {
         return false;
@@ -211,24 +212,24 @@ function populateFriends(data) {
       switch (rel[0].status) {
         case 0:
           if (rel[0].user_action_id === friend.id) {
-            html += "<a href='/user/friend/accept/".concat(friend.id, "' class='edit-btn m-width'>Accept Request</a>");
+            html += "<a href='/user/friend/accept/".concat(friend.id, "' class='accept-request edit-btn m-width friend-action'>Accept Request</a>");
           } else {
-            html += "<a href='/user/friend/cancelRequest/".concat(friend.id, "' class='edit-btn m-width'>Request Sent</a>");
+            html += "<a href='/user/friend/cancelRequest/".concat(friend.id, "' class='remove-request edit-btn m-width friend-action'>Request Sent</a>");
           }
 
           break;
 
         case 1:
-          html += "<a href='/user/friend/remove/".concat(friend.id, "' class='edit-btn m-width'>Remove Friend</a>");
+          html += "<a href='/user/friend/remove/".concat(friend.id, "' class='remove-friend  edit-btn m-width friend-action'>Remove Friend</a>");
           break;
 
         case 2:
-          html += "<a href='/user/friend/add/".concat(friend.id, "' class='edit-btn m-width'>Add Friend</a>");
+          html += "<a href='/user/friend/add/".concat(friend.id, "' class='add-friend edit-btn m-width friend-action action-btn'>Add Friend</a>");
           break;
 
         case 3:
           if (rel[0].user_action_id !== friend.id) {
-            html += "<a href='/user/friend/unblock/".concat(friend.id, "' class='edit-btn m-width'>Unblock</a>");
+            html += "<a href='/user/friend/unblock/".concat(friend.id, "' class='unblock-user edit-btn m-width friend-action'>Unblock</a>");
           }
 
           break;
@@ -253,15 +254,9 @@ function populateFriends(data) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function defaultResult(data) {
-  console.log('Result');
-  console.log(data);
-}
+function defaultResult(data) {}
 
-function defaultError(error) {
-  console.log('Error');
-  console.log(error);
-}
+function defaultError(error) {}
 
 function defaultFinal(data) {}
 

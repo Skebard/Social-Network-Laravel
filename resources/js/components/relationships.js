@@ -62,7 +62,7 @@ function checkBlockUserBtn(e)
                 oldLink.remove();
                 toastr.success('User blocked');
             }else{
-                toastr.info('Error ocurred');
+                toastr.info('Error ocurred. Please try again.');
             }
         })
     }
