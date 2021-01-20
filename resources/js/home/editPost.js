@@ -133,7 +133,6 @@ function editPost(e) {
         .then(resp => resp.json())
         .then(data => {
             if (data.status == 1) {
-                //editModal.classList.add('hide');
                 location.reload();
             }
         });

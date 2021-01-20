@@ -67,8 +67,9 @@ function likeSaveEvent(e) {
     } else if (element.tagName === 'svg') {
         anchor = parentElement;
     }
-    if (anchor && !anchor.classList.contains('post-link')) {
+    if (anchor && (!anchor.classList.contains('post-link') && !anchor.classList.contains('my-link'))) {
         e.preventDefault();
+        console.log('here');
         let classes = anchor.classList;
 
         if (classes.contains('like')) {

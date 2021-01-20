@@ -271,7 +271,6 @@ function editPost(e) {
     return resp.json();
   }).then(function (data) {
     if (data.status == 1) {
-      //editModal.classList.add('hide');
       location.reload();
     }
   });
@@ -610,8 +609,9 @@ function likeSaveEvent(e) {
     anchor = parentElement;
   }
 
-  if (anchor && !anchor.classList.contains('post-link')) {
+  if (anchor && !anchor.classList.contains('post-link') && !anchor.classList.contains('my-link')) {
     e.preventDefault();
+    console.log('here');
     var classes = anchor.classList;
 
     if (classes.contains('like')) {
