@@ -143,10 +143,11 @@ function showPossibleTagUsers(users) {
     container.classList.add('container-tag-users');
     container.classList.add('box');
     users.forEach(user => {
+        let profilePhoto = user.profile_photo_path ?'/'+ user.profile_photo_path : user.profile_photo_url;
 
         container.innerHTML += `<div class="round-profile-img user-to-tag" >
                     <div class="profile-image-container">
-                        <img src="/${user.profile_photo_path}" alt="">
+                        <img src="${profilePhoto}" alt="">
     
                     </div>
                     <a href="http://localhost:8000/user/Tija" class="post__username">

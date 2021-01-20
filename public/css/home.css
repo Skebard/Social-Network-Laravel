@@ -567,6 +567,10 @@ header {
   margin-left: 8px;
 }
 
+.post__description .username-tag {
+  color: #00376b;
+}
+
 .post__comments {
   margin: 8px;
   font-size: 14px;

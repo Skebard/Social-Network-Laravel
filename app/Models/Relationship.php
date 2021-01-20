@@ -86,5 +86,19 @@ class Relationship extends Model
         ->first();
         return $rel;
     }
+    public static function userBlocked($userId,$action_user_id)
+    {
+        $relationshipA = Relationship::where('user_one_id', $userOneId)
+        ->where('user_two_id', $userTwoId)
+        ->where('status',3)
+        ->where('action_user_id',$action_user_id);
+        $rel =  Relationship::where('user_one_id', $userTwoId)
+        ->where('user_two_id', $userOneId)
+        ->where('status',3)
+        ->where('action_user_id',$action_user_id)
+        ->union($relationshipA)
+        ->first();
+        return $rel;
+    }
 
 }

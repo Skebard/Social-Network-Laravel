@@ -457,7 +457,8 @@ function showPossibleTagUsers(users) {
   container.classList.add('container-tag-users');
   container.classList.add('box');
   users.forEach(function (user) {
-    container.innerHTML += "<div class=\"round-profile-img user-to-tag\" >\n                    <div class=\"profile-image-container\">\n                        <img src=\"/".concat(user.profile_photo_path, "\" alt=\"\">\n    \n                    </div>\n                    <a href=\"http://localhost:8000/user/Tija\" class=\"post__username\">\n                        ").concat(user.username, "\n                    </a>\n                </div>");
+    var profilePhoto = user.profile_photo_path ? '/' + user.profile_photo_path : user.profile_photo_url;
+    container.innerHTML += "<div class=\"round-profile-img user-to-tag\" >\n                    <div class=\"profile-image-container\">\n                        <img src=\"".concat(profilePhoto, "\" alt=\"\">\n    \n                    </div>\n                    <a href=\"http://localhost:8000/user/Tija\" class=\"post__username\">\n                        ").concat(user.username, "\n                    </a>\n                </div>");
   });
   displayedUsers = container;
   form.append(container);

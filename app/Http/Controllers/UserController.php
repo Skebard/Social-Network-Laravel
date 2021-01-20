@@ -26,7 +26,8 @@ class UserController extends Controller
         //
         $user = User::where('username', $username)->first();
         if (!$user) {
-            return 'end';
+            $message = 'The user you are looking for does not exist.';
+            return view('error',compact('message'));
         }
         $posts = Post::getUserPosts($user->id);
         $page = 'home';
@@ -77,18 +78,13 @@ class UserController extends Controller
             'profile_photo' => 'required|image',
         ]);
         if ($validator->fails()) {
-            echo 'FAILED';
-            die();
+            return Redirect()->back()->with('error','Something went wrong.');
         }
-        // $validateData = $request->validate(
-        //     [
-        //         'profile_photo' => 'required|image',
-        //     ]
-        // );
         $user = User::find(Auth::user()->id);
         $image = $request->file('profile_photo');
         if(!$image){
-            return 'aeafasdfasdf';
+            return Redirect()->back()->with('error','Something went wrong.');
+
         }
         $name_gen = hexdec(uniqid());
         $img_ext = strtolower($image->getClientOriginalExtension());
@@ -99,7 +95,8 @@ class UserController extends Controller
         $user->profile_photo_path = $img_location;
         $user->save();
         $user->touch();
-        echo 'done';
+        return Redirect()->back()->with('success','Image successfully updated.');
+
     }
 
 
@@ -107,7 +104,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($username !== $user->username) {
-            return 'error';
+            return view('error');
         }
         $posts = Post::getSavedPosts();
         $page = 'saved';
@@ -128,7 +125,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($username !== $user->username) {
-            return 'error';
+            return view('error');
         }
         $page = 'archived';
         $posts = Post::getDeletedPosts();

@@ -107,7 +107,7 @@
         <a href="{{url('/user/'.$post->username)}}" class='post__username'>
             {{ $post->username }}
         </a>
-        {{ $post->content }}
+        <?= html_entity_decode(insertUsersLinks($post->content,'username-tag')) ?>
     </div>
     <div class="post__comments">
         @if(count($post->comments)>3)

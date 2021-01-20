@@ -21,15 +21,13 @@ use Auth;
 
 
 
-Route::get('/error',function(){
-    return view('error');
-});
+
 
 
 //TESTS
 Route::get('/register',function(){
     return view('auth.register2');
-})->name('register');
+})->name('register')->middleware('guest');
 
 
 //USERS

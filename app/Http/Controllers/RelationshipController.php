@@ -41,6 +41,7 @@ class RelationshipController extends Controller
 
     public function acceptRequest($userId)
     {
+
         $relationshipA = Relationship::where('user_one_id', Auth::user()->id)
             ->where('user_two_id', $userId);
         $relationship =  Relationship::where('user_one_id', $userId)
@@ -93,6 +94,9 @@ class RelationshipController extends Controller
 
     public function blockUser($userId)
     {
+        if(Relationship::userBlocked(Auth::user()->id,$userId)){
+            return json_encode(['status' => 0]);
+        }
         $newData = ['status' => 3, 'action_user_id' => Auth::user()->id];
         if (!Relationship::updateRelationship($userId, Auth::user()->id, $newData)) {
             Relationship::insert([

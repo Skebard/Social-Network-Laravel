@@ -137,6 +137,8 @@ function handleFriendAction(e) {
         e.target.insertAdjacentHTML('afterend', newHTMLlink);
         e.target.remove();
         toastr.success(notification);
+      } else {
+        toastr.error('Something went wrong.Please try again.');
       }
     });
   }
