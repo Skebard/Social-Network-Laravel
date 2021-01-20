@@ -11,7 +11,7 @@ const postComments = require('./home/postComments');
 
 const body = document.querySelector('body');
 
-stories.slideStoriesEvents();
+//stories.slideStoriesEvents();
 body.addEventListener('click', posts.postSlider);
 body.addEventListener('click',posts.likeSaveEvent);
 body.addEventListener('click',posts.viewAllComments);

@@ -8,7 +8,7 @@
 @section('content')
 
 <!-- STORIES -->
-<div class="stories box">
+<!-- <div class="stories box">
     <div class="left-arrow arrow-btn">
         <i id='stories-left-arrow-id' class="fas fa-chevron-circle-left"></i>
     </div>
@@ -215,7 +215,9 @@
     <div class="right-arrow arrow-btn">
         <i id='stories-right-arrow-id' class="fas fa-chevron-circle-right"></i>
     </div>
-</div>
+</div> -->
+
+<!-- end stories -->
 
 <div class="posts-container">
     <ul id='posts-list-id' class="posts">

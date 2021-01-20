@@ -104,8 +104,8 @@ var editPost = __webpack_require__(/*! ./home/editPost */ "./resources/js/home/e
 
 var postComments = __webpack_require__(/*! ./home/postComments */ "./resources/js/home/postComments.js");
 
-var body = document.querySelector('body');
-stories.slideStoriesEvents();
+var body = document.querySelector('body'); //stories.slideStoriesEvents();
+
 body.addEventListener('click', posts.postSlider);
 body.addEventListener('click', posts.likeSaveEvent);
 body.addEventListener('click', posts.viewAllComments);
