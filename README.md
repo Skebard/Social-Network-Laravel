@@ -60,15 +60,63 @@ Social network, build with Laravel 8, that implements main functionalities such 
 ###  Getting Started
 
 
+<!-- GETTING STARTED -->
+###  Getting Started
+
+
 1. Clone the repo
    ```sh
-   git clone 
+   git clone https://github.com/Skebard/Social-Network-Laravel.git
    ```
-2. Set your database credentials in App/config.php
-3. Finally start the database and the server. For this step you might use XAMPP or you could directly use MySql and run a server with php in the terminal
+2. Install composer dependencies
 ```
-php -S localhost:8000
+composer install
 ```
+3. Install NPM dependencies
+```
+npm install
+```
+4. Create a copy of your .env file
+```
+cp .env.example .env
+```
+4.Set up your database credentials in the .env file.
+```
+DB_CONNECTION=mysql
+DB_HOST=yourHost
+DB_PORT=3306
+DB_DATABASE=yourDatabaseName
+DB_USERNAME=yourUsername
+DB_PASSWORD=yourPassword
+```
+5. Generate an app encryption key
+```
+php artisan key:generate
+```
+6. Create an empty database. Make sure that the name in the .env file corresponds with the created database.
+7.Migrate the database
+```
+php artisan migrate
+```
+
+7. You can as well seed the database. When seeding you can see some errors due to the relationships between tables
+```
+php artisan db:seed
+```
+8.If you want to run a specific seeder use the following command changing UserSeeder for your desired seeder
+```
+php artisan db:seed --class=UserSeeder
+```
+
+9. Run the server. You can use artisan like this:
+```
+php artisan serve
+```
+
+10. Finally comment that when uploading files you might encounter problems if you php.info is not well configured.
+
+
+
 
 
 <!-- CONTRIBUTING -->
