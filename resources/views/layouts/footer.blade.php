@@ -76,6 +76,6 @@
                     <option value="sr">Српски</option>
                     <option value="uk">Українська</option>
                 </select></li>
-            <li>@2021 Instagram from Facebook</li>
+            <li>@2021 luk@us</li>
         </ul>
     </footer>

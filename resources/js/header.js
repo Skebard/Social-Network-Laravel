@@ -5,7 +5,7 @@ const profileDropdown = require('./components/profileDropdown');
 const body = document.querySelector('body');
 const dropDownBtn = document.getElementById("drop-down-btn-id");
 const userActions = document.getElementById("user-actions-id");
-const closeDropDownBtn = 
+
 
 
 dropDownBtn.addEventListener('click',showHideDropDown);

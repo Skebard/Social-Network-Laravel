@@ -19,6 +19,12 @@ header {
     align-items: center;
     height: 55px;
 
+    .logo-container{
+        >img{
+            width:100px;
+            height:30px;
+        }
+    }
     .search {
         display: flex;
         justify-content: center;

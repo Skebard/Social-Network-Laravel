@@ -2,6 +2,7 @@
 const utils = require('../utils');
 const body = document.querySelector('body');
 const PROFILE_USER_ID = document.getElementById('profile-userId-id').value;
+const {BASE_URL} = require('../config');
 
 
 function handleFriendAction(e)
@@ -20,24 +21,24 @@ function handleFriendAction(e)
         utils.handleRequest(friendBtn.href,(data)=>{
             if(data.status===1){
                 if(classes.contains('add-friend')){
-                    newHTMLlink = `<a class='remove-request friend-action edit-btn' href="/user/friend/remove/${userId}" class='edit-btn'> Request sent</a>`;
+                    newHTMLlink = `<a class='remove-request friend-action edit-btn' href="${BASE_URL}/user/friend/remove/${userId}" class='edit-btn'> Request sent</a>`;
                     notification = 'Friend request sent successfully';
                 }else if( classes.contains('accept-request')){
-                    newHTMLlink = `<a class='remove-friend friend-action edit-btn' href="/user/friend/remove/${userId}" class='edit-btn'>Remove Friend</a>`;
+                    newHTMLlink = `<a class='remove-friend friend-action edit-btn' href="${BASE_URL}/user/friend/remove/${userId}" class='edit-btn'>Remove Friend</a>`;
                     notification = 'New friend added';
                 }else if( classes.contains('decline-request')){
-                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
+                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="${BASE_URL}/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
                     notification = 'Request declined';
                 }else if( classes.contains('remove-friend')){
-                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
+                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="${BASE_URL}/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
                     notification = 'Friend removed';
                 }else if( classes.contains('unblock-user')){
                     e.target.closest('.icon-options').querySelector('.block-user-icon').classList.remove('hide');
                     notification = 'User unblocked';
-                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
+                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="${BASE_URL}/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
                 }else if( classes.contains('remove-request')){
                     notification = 'Friend request removed';
-                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
+                    newHTMLlink = `<a class='add-friend-btn add-friend friend-action edit-btn' href="${BASE_URL}/user/friend/add/${userId}" class='edit-btn'> Add Friend</a>`;
                 }
                 e.target.insertAdjacentHTML('afterend',newHTMLlink);
                 e.target.remove();

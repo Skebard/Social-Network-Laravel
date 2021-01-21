@@ -5,7 +5,7 @@
             Close modal
         </button> -->
 
-        <form id='new-post-form-id' class='new-post-form multi-images-form' action="/posts" method='POST' enctype="multipart/form-data">
+        <form id='new-post-form-id' class='new-post-form multi-images-form' action="{{ url('/posts')}}" method='POST' enctype="multipart/form-data">
             @csrf
             <textarea name="content" id="" cols="30" rows="10" placeholder='Post description' required></textarea>
             <div class="images-container" id='images-container-id'>

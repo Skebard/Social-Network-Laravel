@@ -99,6 +99,12 @@ header {
   height: 55px;
 }
 
+.header-content .logo-container > img,
+.friends-results .logo-container > img {
+  width: 100px;
+  height: 30px;
+}
+
 .header-content .search,
 .friends-results .search {
   display: flex;

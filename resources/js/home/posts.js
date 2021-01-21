@@ -1,5 +1,5 @@
 const POSTS_LIMIT = 10;
-
+const {BASE_URL} = require('../config');
 
 function postSlider(e) {
     //Check which arrow has been pressed: right(next) or left(prev)
@@ -69,7 +69,6 @@ function likeSaveEvent(e) {
     }
     if (anchor && (!anchor.classList.contains('post-link') && !anchor.classList.contains('my-link'))) {
         e.preventDefault();
-        console.log('here');
         let classes = anchor.classList;
 
         if (classes.contains('like')) {
@@ -131,7 +130,7 @@ let offset = 0;
  * Fetches new posts and appends them at the end of the container.
  */
 function loadPosts() {
-    fetch('/posts?offset=' + offset + '&limit=' + POSTS_LIMIT)
+    fetch(BASE_URL+'/posts?offset=' + offset + '&limit=' + POSTS_LIMIT)
         .then(resp => resp.json())
         .then(data => {
             if (data.status === 1) {
@@ -169,13 +168,13 @@ function viewPostOptions(e) {
 
             html = `
         <li>
-            <a class='options-modal__alert' href="/posts/${postId}/delete">Delete Post</a>
+            <a class='options-modal__alert' href="${BASE_URL}/posts/${postId}/delete">Delete Post</a>
         </li>
         <li>
             <a class='edit-post-option' data-post_id="${postId}" >Edit Post</a>
         </li>
         <li>
-            <a href="/posts/${postId}/archive">Archive Post</a>
+            <a href="${BASE_URL}/posts/${postId}/archive">Archive Post</a>
         </li>
         <li>
             <a class="close-modal">Cancel</a>

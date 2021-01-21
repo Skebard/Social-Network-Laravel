@@ -6,6 +6,7 @@ const ALLOWED_TYPES = ['jpeg','gif','png'];
 const profileImgDisplay = document.getElementById('profile-image-display-id');
 const changeImgInput = document.getElementById('change-image-input-id');
 const changeImgInputImage = document.getElementById('change-image-input-image-id');
+const {BASE_URL} = require('./config');
 
 privacyCheckbox.addEventListener('change', updateAccountPrivacy)
 changeImgInput.addEventListener('change',handleProfilePhoto);
@@ -18,7 +19,7 @@ function updateAccountPrivacy(e) {
     formData.append('private', privateVal);
     formData.append('_method', 'PUT');
     // x-www-form-urlencoded
-    fetch(URL_UPDATE_ACCOUNT_PRIVACY, {
+    fetch(BASE_URL+URL_UPDATE_ACCOUNT_PRIVACY, {
             method: 'POST',
             body: formData,
             headers: {
@@ -58,7 +59,7 @@ function updateProfilePhoto(file)
     let formData = new FormData();
     formData.append('_method','PUT');
     formData.append('profile_photo',file)
-    fetch('/accounts/photo/update', {
+    fetch(BASE_URL+'/accounts/photo/update', {
         method: 'POST',
         body: formData,
         headers: {

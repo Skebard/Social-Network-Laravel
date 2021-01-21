@@ -26,7 +26,6 @@ function addEvents(){
  * @param {} e 
  */
 function deleteImageInput(e){
-    console.log(e.target);
     if(e.target.classList.contains('fa-trash-alt')){
         e.target.parentElement.parentElement.remove();
     }
@@ -37,7 +36,6 @@ function handleImageInputs(e) {
     //Check if a file has been selected
     let inputContainer = input.parentElement;
     if (input.files && input.files[0]) {
-        console.log('YES')
         let imgDisplay = inputContainer.querySelector('.image-display');
         var reader = new FileReader();
 

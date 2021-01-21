@@ -3,11 +3,16 @@
 @import 'components/actionBtn';
 
 body {
-    height:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+main{
+    margin-top:100px;
+    @media screen and (max-width:365px){
+        margin-top:00px;
+    }
 }
 
 .main-content {

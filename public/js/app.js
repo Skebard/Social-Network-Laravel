@@ -21338,7 +21338,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open '/home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/friends.scss'\n    at runLoaders (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/webpack/lib/NormalModule.js:316:20)\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:203:19\n    at process.nextTick (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -21360,7 +21360,7 @@ throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open '/home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/login.scss'\n    at runLoaders (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/webpack/lib/NormalModule.js:316:20)\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:203:19\n    at process.nextTick (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -21371,7 +21371,7 @@ throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open '/home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/notifications.scss'\n    at runLoaders (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/webpack/lib/NormalModule.js:316:20)\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:203:19\n    at process.nextTick (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -21382,7 +21382,7 @@ throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open '/home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/profileHome.scss'\n    at runLoaders (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/webpack/lib/NormalModule.js:316:20)\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:203:19\n    at process.nextTick (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -21393,7 +21393,7 @@ throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open '/home/skebard/MyProjects/SocialNetworkLaravel/resources/sass/profileSettings.scss'\n    at runLoaders (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/webpack/lib/NormalModule.js:316:20)\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /home/skebard/MyProjects/SocialNetworkLaravel/node_modules/loader-runner/lib/LoaderRunner.js:203:19\n    at process.nextTick (/home/skebard/MyProjects/SocialNetworkLaravel/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 

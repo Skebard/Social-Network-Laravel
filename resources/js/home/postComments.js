@@ -1,6 +1,6 @@
 const currentUsername = document.getElementById('current-username-id').value;
 
-
+const {BASE_URL} = require('../config');
 
 /** 
  * 
@@ -16,7 +16,7 @@ function postComment(e) {
         formData.append('post_id', postId);
         formData.append('comment', comment);
         let token = commentForm.querySelector('input[name=_token]');
-        fetch('/' + postId + '/comment', {
+        fetch(BASE_URL+'/' + postId + '/comment', {
                 method: 'post',
                 body: formData,
                 headers: {
@@ -32,13 +32,13 @@ function postComment(e) {
                     commentWords = commentWords.map(word=>{
                         if(word.includes('@')){
                             let taggedUser = word.substr(1);
-                            return `<a class="username-tag" href="/user/${taggedUser}">${word}</a>`;
+                            return `<a class="username-tag" href="${BASE_URL}/user/${taggedUser}">${word}</a>`;
                         }
                         return word;
                     });
                     comment = commentWords.join(' ');
 
-                    newComment.innerHTML = ` <a href="/user/'.${currentUsername}" class='post__comments--username'>
+                    newComment.innerHTML = ` <a href="${BASE_URL}/user/'.${currentUsername}" class='post__comments--username'>
                     ${currentUsername}</a>
                     ${comment}`;
                     comments.querySelector('.post__comments--list').append(newComment);
@@ -121,7 +121,7 @@ function searchUser(text) {
     if (text.length === 0) {
         return false;
     }
-    fetch(SEARCH_USERS_URL + text)
+    fetch(BASE_URL+SEARCH_USERS_URL + text)
         .then(resp => resp.json())
         .then(data => {
             showPossibleTagUsers(data.users);

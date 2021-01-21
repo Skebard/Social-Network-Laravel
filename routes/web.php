@@ -6,7 +6,7 @@ use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RelationshipController;
-use Auth;
+//use Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ use Auth;
 
 //TESTS
 Route::get('/register',function(){
-    return view('auth.register2');
+    return view('auth.register');
 })->name('register')->middleware('guest');
 
 

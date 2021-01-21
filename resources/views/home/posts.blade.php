@@ -5,7 +5,7 @@
         <div class="profile-info">
             <div class='round-profile-img'>
                 <div class='profile-image-container'>
-                    <img src="{{asset($post->profile_photo_path)}}" alt="">
+                    <img src="{{ $post->profile_photo_path? asset($post->profile_photo_path):$post->profile_photo_url}}" alt="">
 
                 </div>
                 <a href="{{url('/user/'.$post->username)}}" class='post__username'>

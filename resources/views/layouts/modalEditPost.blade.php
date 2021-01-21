@@ -6,7 +6,7 @@
             Close modal
         </button> -->
 
-        <form id='edit-post-form-id' class='new-post-form multi-images-form' action="/posts" method='POST' enctype="multipart/form-data">
+        <form id='edit-post-form-id' class='new-post-form multi-images-form' action="{{url('/posts')}}" method='POST' enctype="multipart/form-data">
             @csrf
             <textarea id='edit-content-id' name="content" id="" cols="30" rows="10" required></textarea>
             <div class="images-container" id='edit-images-container-id'>

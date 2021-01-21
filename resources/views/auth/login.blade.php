@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network</title>
 
+    <link rel="shortcut icon" href="{{ asset('/images/app/favicon.png') }}">
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/9547750bbd.js" crossorigin="anonymous"></script>
     <!-- Scripts -->
@@ -30,11 +32,11 @@
         <div class="form-container">
 
             <div class="login box">
-                <img class='app-name' src="{{ asset('images/login/instagramTitle.png')}}" alt="">
+                <img class='app-name' src="{{ asset('images/app/logo.png')}}" alt="">
                 <form method="POST" action="{{ route('login') }}" class="login-form ">
                     @csrf
                     <label class='input-container'>
-                        <span class="upper-placeholder">Phone number, username, or email</span>
+                        <span class="upper-placeholder">Email</span>
                         <input type="text" name='email' >
                         <div class="input-container__end"></div>
                     </label>

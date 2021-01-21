@@ -86,6 +86,20 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  BASE_URL: '' //set the root of the project
+
+};
+
+/***/ }),
+
 /***/ "./resources/js/home.js":
 /*!******************************!*\
   !*** ./resources/js/home.js ***!
@@ -148,6 +162,10 @@ var editPostForm = document.getElementById('edit-post-form-id');
 var firstInput = document.getElementById('edit-input-1-id');
 var editModal = document.getElementById('edit-modal-id');
 var optionsModal = document.getElementById('post-options-modal-id');
+
+var _require = __webpack_require__(/*! ../config */ "./resources/js/config.js"),
+    BASE_URL = _require.BASE_URL;
+
 var currentPostId;
 
 function showEditForm(e) {
@@ -169,7 +187,7 @@ function populateModal(postId) {
   currentPostId = postId;
   imagesContainer.addEventListener('click', deleteImageInput);
   firstInput.addEventListener('change', handleImageInputs);
-  fetch(POST_URL + postId).then(function (resp) {
+  fetch(BASE_URL + POST_URL + postId).then(function (resp) {
     return resp.json();
   }).then(function (data) {
     //get description
@@ -240,7 +258,7 @@ function createImageInput() {
   inputContainer.innerHTML = inputContainerContent;
 
   if (url) {
-    inputContainer.querySelector('.image-display').src = '/' + url;
+    inputContainer.querySelector('.image-display').src = BASE_URL + '/' + url;
     inputContainer.querySelector('.delete-image-btn.last').classList.remove('last');
   } else {
     //remove last class from the previous input
@@ -261,7 +279,7 @@ function editPost(e) {
   var formData = getFormData();
   var postId = currentPostId;
   token = editPostForm.querySelector('input[name=_token]');
-  fetch('/posts/' + postId + '/update', {
+  fetch(BASE_URL + '/posts/' + postId + '/update', {
     method: 'post',
     body: formData,
     headers: {
@@ -350,13 +368,17 @@ exports.addEvents = addEvents;
   !*** ./resources/js/home/postComments.js ***!
   \*******************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 var currentUsername = document.getElementById('current-username-id').value;
+
+var _require = __webpack_require__(/*! ../config */ "./resources/js/config.js"),
+    BASE_URL = _require.BASE_URL;
 /** 
  * 
  * @param {Event} e 
  */
+
 
 function postComment(e) {
   if (e.target.classList.contains('post-comment-btn')) {
@@ -368,7 +390,7 @@ function postComment(e) {
     formData.append('post_id', postId);
     formData.append('comment', comment);
     var token = commentForm.querySelector('input[name=_token]');
-    fetch('/' + postId + '/comment', {
+    fetch(BASE_URL + '/' + postId + '/comment', {
       method: 'post',
       body: formData,
       headers: {
@@ -384,13 +406,13 @@ function postComment(e) {
         commentWords = commentWords.map(function (word) {
           if (word.includes('@')) {
             var taggedUser = word.substr(1);
-            return "<a class=\"username-tag\" href=\"/user/".concat(taggedUser, "\">").concat(word, "</a>");
+            return "<a class=\"username-tag\" href=\"".concat(BASE_URL, "/user/").concat(taggedUser, "\">").concat(word, "</a>");
           }
 
           return word;
         });
         comment = commentWords.join(' ');
-        newComment.innerHTML = " <a href=\"/user/'.".concat(currentUsername, "\" class='post__comments--username'>\n                    ").concat(currentUsername, "</a>\n                    ").concat(comment);
+        newComment.innerHTML = " <a href=\"".concat(BASE_URL, "/user/'.").concat(currentUsername, "\" class='post__comments--username'>\n                    ").concat(currentUsername, "</a>\n                    ").concat(comment);
         comments.querySelector('.post__comments--list').append(newComment);
         var numComments = comments.querySelector('.num-comments');
 
@@ -481,7 +503,7 @@ function searchUser(text) {
     return false;
   }
 
-  fetch(SEARCH_USERS_URL + text).then(function (resp) {
+  fetch(BASE_URL + SEARCH_USERS_URL + text).then(function (resp) {
     return resp.json();
   }).then(function (data) {
     showPossibleTagUsers(data.users);
@@ -537,9 +559,12 @@ exports.insertTagUser = insertTagUser;
   !*** ./resources/js/home/posts.js ***!
   \************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 var POSTS_LIMIT = 10;
+
+var _require = __webpack_require__(/*! ../config */ "./resources/js/config.js"),
+    BASE_URL = _require.BASE_URL;
 
 function postSlider(e) {
   //Check which arrow has been pressed: right(next) or left(prev)
@@ -614,7 +639,6 @@ function likeSaveEvent(e) {
 
   if (anchor && !anchor.classList.contains('post-link') && !anchor.classList.contains('my-link')) {
     e.preventDefault();
-    console.log('here');
     var classes = anchor.classList;
 
     if (classes.contains('like')) {
@@ -666,7 +690,7 @@ var offset = 0;
  */
 
 function loadPosts() {
-  fetch('/posts?offset=' + offset + '&limit=' + POSTS_LIMIT).then(function (resp) {
+  fetch(BASE_URL + '/posts?offset=' + offset + '&limit=' + POSTS_LIMIT).then(function (resp) {
     return resp.json();
   }).then(function (data) {
     if (data.status === 1) {
@@ -701,7 +725,7 @@ function viewPostOptions(e) {
     var postId = options.dataset.post_id;
 
     if (options.dataset.owner == 1) {
-      html = "\n        <li>\n            <a class='options-modal__alert' href=\"/posts/".concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a class='edit-post-option' data-post_id=\"").concat(postId, "\" >Edit Post</a>\n        </li>\n        <li>\n            <a href=\"/posts/").concat(postId, "/archive\">Archive Post</a>\n        </li>\n        <li>\n            <a class=\"close-modal\">Cancel</a>\n        </li>");
+      html = "\n        <li>\n            <a class='options-modal__alert' href=\"".concat(BASE_URL, "/posts/").concat(postId, "/delete\">Delete Post</a>\n        </li>\n        <li>\n            <a class='edit-post-option' data-post_id=\"").concat(postId, "\" >Edit Post</a>\n        </li>\n        <li>\n            <a href=\"").concat(BASE_URL, "/posts/").concat(postId, "/archive\">Archive Post</a>\n        </li>\n        <li>\n            <a class=\"close-modal\">Cancel</a>\n        </li>");
     } else {
       html = " <li>\n            <a class='options-modal__alert' href=\"#\">Report</a>\n        </li>\n        <li>\n            <a class=\"close-modal\">Cancel</a>\n        </li>";
     }

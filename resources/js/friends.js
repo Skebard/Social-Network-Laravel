@@ -6,13 +6,13 @@ const friendsContainer = document.getElementById('friends-container-id');
 
 const utils = require('./utils');
 const relationship = require('./components/relationships');
-
+const {BASE_URL} = require('./config');
 body.addEventListener("click",relationship.handleFriendAction);
 body.addEventListener("click", showFriends);
 
 function showFriends(e) {
     if (e.target.closest('#friends-btn-id')) {
-        utils.handleRequest('/user/' + PROFILE_USER_ID + '/friends',populateFriends);
+        utils.handleRequest(BASE_URL+'/user/' + PROFILE_USER_ID + '/friends',populateFriends);
     }
 
 }
@@ -23,10 +23,10 @@ function populateFriends(data) {
     let friends = data.profileFriends;
     let html = '';
     friends.forEach(friend => {
-        let profilePhoto =friend.profile_photo_path ?'/'+ friend.profile_photo_path : friend.profile_photo_url;
+        let profilePhoto =friend.profile_photo_path ?BASE_URL+'/'+ friend.profile_photo_path : friend.profile_photo_url;
         html += `
         <li>
-                        <a href="/user/${friend.username}">
+                        <a href="${BASE_URL}/user/${friend.username}">
                             <div class="profile-info">
                                 <div class='round-profile-img'>
                                     <div class='profile-image-container'>
@@ -52,20 +52,20 @@ function populateFriends(data) {
             switch (rel[0].status) {
                 case 0:
                     if(rel[0].user_action_id===friend.id){
-                        html += `<a href='/user/friend/accept/${friend.id}' class='accept-request edit-btn m-width friend-action'>Accept Request</a>`;
+                        html += `<a href='${BASE_URL}/user/friend/accept/${friend.id}' class='accept-request edit-btn m-width friend-action'>Accept Request</a>`;
                     }else{
-                        html += `<a href='/user/friend/cancelRequest/${friend.id}' class='remove-request edit-btn m-width friend-action'>Request Sent</a>`;
+                        html += `<a href='${BASE_URL}/user/friend/cancelRequest/${friend.id}' class='remove-request edit-btn m-width friend-action'>Request Sent</a>`;
                     }
                     break;
                 case 1:
-                    html += `<a href='/user/friend/remove/${friend.id}' class='remove-friend  edit-btn m-width friend-action'>Remove Friend</a>`;
+                    html += `<a href='${BASE_URL}/user/friend/remove/${friend.id}' class='remove-friend  edit-btn m-width friend-action'>Remove Friend</a>`;
                     break;
                 case 2:
-                    html += `<a href='/user/friend/add/${friend.id}' class='add-friend edit-btn m-width friend-action action-btn'>Add Friend</a>`;
+                    html += `<a href='${BASE_URL}/user/friend/add/${friend.id}' class='add-friend edit-btn m-width friend-action action-btn'>Add Friend</a>`;
                     break;
                 case 3:
                     if(rel[0].user_action_id!==friend.id){
-                        html += `<a href='/user/friend/unblock/${friend.id}' class='unblock-user edit-btn m-width friend-action'>Unblock</a>`;
+                        html += `<a href='${BASE_URL}/user/friend/unblock/${friend.id}' class='unblock-user edit-btn m-width friend-action'>Unblock</a>`;
                     }
                     break;
             }

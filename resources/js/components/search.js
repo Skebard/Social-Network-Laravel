@@ -2,6 +2,8 @@ const DEBOUNCE_TIME_MS = 1000;
 const searchInput = document.getElementById('search-input-id');
 const upArrow = document.getElementById('up-arrow-id');
 const resultsContainer = document.getElementById('search-results-id');
+const {BASE_URL} = require('../config');
+
 
 function manageSearch() {
     resultsContainer.classList.add('hide');
@@ -34,14 +36,14 @@ function manageSearch() {
 
 function searchUsers(text) {
     //send text to server and print
-    fetch('/user/search/' + text)
+    fetch(BASE_URL+'/user/search/' + text)
         .then(resp => resp.json())
         .then(data => {
             if (data.status == 1 && data.users.length>0) {
                 let html = '';
                 data.users.forEach(user => {
-                    let profilePhoto = user.profile_photo_path ?'/'+ user.profile_photo_path : user.profile_photo_url;
-                    html += `<a href="/user/${user.username}">
+                    let profilePhoto = user.profile_photo_path ?BASE_URL+'/'+ user.profile_photo_path : user.profile_photo_url;
+                    html += `<a href="${BASE_URL}/user/${user.username}">
                 <div class="profile-info">
                     <div class='round-profile-img'>
                         <div class='profile-image-container'>
@@ -51,7 +53,7 @@ function searchUsers(text) {
                 </div>
                 <span class='search-results__user-info'>
                     <span class='search-username'>${user.username}</span>
-                    <span class='search-name'>${user.name + user.last_name}</span>
+                    <span class='search-name'>${user.name} ${user.lastName?user.lastName:''}</span>
                 </span>
             </a>`;
 

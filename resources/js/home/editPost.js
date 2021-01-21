@@ -13,7 +13,7 @@ const editPostForm = document.getElementById('edit-post-form-id');
 const firstInput = document.getElementById('edit-input-1-id');
 const editModal = document.getElementById('edit-modal-id');
 const optionsModal = document.getElementById('post-options-modal-id');
-
+const {BASE_URL} = require('../config');
 let currentPostId;
 
 function showEditForm(e) {
@@ -36,7 +36,7 @@ function populateModal(postId) {
     currentPostId = postId;
     imagesContainer.addEventListener('click', deleteImageInput);
     firstInput.addEventListener('change', handleImageInputs)
-    fetch(POST_URL + postId)
+    fetch(BASE_URL+POST_URL + postId)
         .then(resp => resp.json())
         .then(data => {
             //get description
@@ -103,7 +103,7 @@ function createImageInput(url = undefined) {
     inputContainer.classList.add('input-container');
     inputContainer.innerHTML = inputContainerContent;
     if (url) {
-        inputContainer.querySelector('.image-display').src ='/'+ url;
+        inputContainer.querySelector('.image-display').src =BASE_URL+'/'+ url;
         inputContainer.querySelector('.delete-image-btn.last').classList.remove('last');
     } else {
         //remove last class from the previous input
@@ -123,7 +123,7 @@ function editPost(e) {
     let formData = getFormData();
     let postId = currentPostId;
     token = editPostForm.querySelector('input[name=_token]');
-    fetch('/posts/' + postId + '/update', {
+    fetch(BASE_URL+'/posts/' + postId + '/update', {
             method: 'post',
             body: formData,
             headers: {

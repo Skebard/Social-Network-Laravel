@@ -98,6 +98,9 @@ var utils = __webpack_require__(/*! ../utils */ "./resources/js/utils.js");
 var body = document.querySelector('body');
 var PROFILE_USER_ID = document.getElementById('profile-userId-id').value;
 
+var _require = __webpack_require__(/*! ../config */ "./resources/js/config.js"),
+    BASE_URL = _require.BASE_URL;
+
 function handleFriendAction(e) {
   var friendBtn = e.target.closest('.friend-action');
   checkBlockUserBtn(e);
@@ -114,24 +117,24 @@ function handleFriendAction(e) {
     utils.handleRequest(friendBtn.href, function (data) {
       if (data.status === 1) {
         if (classes.contains('add-friend')) {
-          newHTMLlink = "<a class='remove-request friend-action edit-btn' href=\"/user/friend/remove/".concat(userId, "\" class='edit-btn'> Request sent</a>");
+          newHTMLlink = "<a class='remove-request friend-action edit-btn' href=\"".concat(BASE_URL, "/user/friend/remove/").concat(userId, "\" class='edit-btn'> Request sent</a>");
           notification = 'Friend request sent successfully';
         } else if (classes.contains('accept-request')) {
-          newHTMLlink = "<a class='remove-friend friend-action edit-btn' href=\"/user/friend/remove/".concat(userId, "\" class='edit-btn'>Remove Friend</a>");
+          newHTMLlink = "<a class='remove-friend friend-action edit-btn' href=\"".concat(BASE_URL, "/user/friend/remove/").concat(userId, "\" class='edit-btn'>Remove Friend</a>");
           notification = 'New friend added';
         } else if (classes.contains('decline-request')) {
-          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"".concat(BASE_URL, "/user/friend/add/").concat(userId, "\" class='edit-btn'> Add Friend</a>");
           notification = 'Request declined';
         } else if (classes.contains('remove-friend')) {
-          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"".concat(BASE_URL, "/user/friend/add/").concat(userId, "\" class='edit-btn'> Add Friend</a>");
           notification = 'Friend removed';
         } else if (classes.contains('unblock-user')) {
           e.target.closest('.icon-options').querySelector('.block-user-icon').classList.remove('hide');
           notification = 'User unblocked';
-          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"".concat(BASE_URL, "/user/friend/add/").concat(userId, "\" class='edit-btn'> Add Friend</a>");
         } else if (classes.contains('remove-request')) {
           notification = 'Friend request removed';
-          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"/user/friend/add/".concat(userId, "\" class='edit-btn'> Add Friend</a>");
+          newHTMLlink = "<a class='add-friend-btn add-friend friend-action edit-btn' href=\"".concat(BASE_URL, "/user/friend/add/").concat(userId, "\" class='edit-btn'> Add Friend</a>");
         }
 
         e.target.insertAdjacentHTML('afterend', newHTMLlink);
@@ -168,6 +171,20 @@ exports.handleFriendAction = handleFriendAction;
 
 /***/ }),
 
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  BASE_URL: '' //set the root of the project
+
+};
+
+/***/ }),
+
 /***/ "./resources/js/friends.js":
 /*!*********************************!*\
   !*** ./resources/js/friends.js ***!
@@ -185,12 +202,15 @@ var utils = __webpack_require__(/*! ./utils */ "./resources/js/utils.js");
 
 var relationship = __webpack_require__(/*! ./components/relationships */ "./resources/js/components/relationships.js");
 
+var _require = __webpack_require__(/*! ./config */ "./resources/js/config.js"),
+    BASE_URL = _require.BASE_URL;
+
 body.addEventListener("click", relationship.handleFriendAction);
 body.addEventListener("click", showFriends);
 
 function showFriends(e) {
   if (e.target.closest('#friends-btn-id')) {
-    utils.handleRequest('/user/' + PROFILE_USER_ID + '/friends', populateFriends);
+    utils.handleRequest(BASE_URL + '/user/' + PROFILE_USER_ID + '/friends', populateFriends);
   }
 }
 
@@ -198,8 +218,8 @@ function populateFriends(data) {
   var friends = data.profileFriends;
   var html = '';
   friends.forEach(function (friend) {
-    var profilePhoto = friend.profile_photo_path ? '/' + friend.profile_photo_path : friend.profile_photo_url;
-    html += "\n        <li>\n                        <a href=\"/user/".concat(friend.username, "\">\n                            <div class=\"profile-info\">\n                                <div class='round-profile-img'>\n                                    <div class='profile-image-container'>\n                                        <img src=\"").concat(profilePhoto, "\" alt=\"profile photo\">\n                                    </div>\n                                </div>\n                            </div>\n                            <span class='friends-modal__user-info'>\n                                <span class='search-username'>").concat(friend.username, "</span>\n                                <span class='search-name'>").concat(friend.name, "</span>\n                            </span>\n                        </a>\n                            ");
+    var profilePhoto = friend.profile_photo_path ? BASE_URL + '/' + friend.profile_photo_path : friend.profile_photo_url;
+    html += "\n        <li>\n                        <a href=\"".concat(BASE_URL, "/user/").concat(friend.username, "\">\n                            <div class=\"profile-info\">\n                                <div class='round-profile-img'>\n                                    <div class='profile-image-container'>\n                                        <img src=\"").concat(profilePhoto, "\" alt=\"profile photo\">\n                                    </div>\n                                </div>\n                            </div>\n                            <span class='friends-modal__user-info'>\n                                <span class='search-username'>").concat(friend.username, "</span>\n                                <span class='search-name'>").concat(friend.name, "</span>\n                            </span>\n                        </a>\n                            ");
     var rel = data.loggedUserRelationships.filter(function (relationship) {
       if (friend.id == CURRENT_USER_ID) {
         return false;
@@ -214,24 +234,24 @@ function populateFriends(data) {
       switch (rel[0].status) {
         case 0:
           if (rel[0].user_action_id === friend.id) {
-            html += "<a href='/user/friend/accept/".concat(friend.id, "' class='accept-request edit-btn m-width friend-action'>Accept Request</a>");
+            html += "<a href='".concat(BASE_URL, "/user/friend/accept/").concat(friend.id, "' class='accept-request edit-btn m-width friend-action'>Accept Request</a>");
           } else {
-            html += "<a href='/user/friend/cancelRequest/".concat(friend.id, "' class='remove-request edit-btn m-width friend-action'>Request Sent</a>");
+            html += "<a href='".concat(BASE_URL, "/user/friend/cancelRequest/").concat(friend.id, "' class='remove-request edit-btn m-width friend-action'>Request Sent</a>");
           }
 
           break;
 
         case 1:
-          html += "<a href='/user/friend/remove/".concat(friend.id, "' class='remove-friend  edit-btn m-width friend-action'>Remove Friend</a>");
+          html += "<a href='".concat(BASE_URL, "/user/friend/remove/").concat(friend.id, "' class='remove-friend  edit-btn m-width friend-action'>Remove Friend</a>");
           break;
 
         case 2:
-          html += "<a href='/user/friend/add/".concat(friend.id, "' class='add-friend edit-btn m-width friend-action action-btn'>Add Friend</a>");
+          html += "<a href='".concat(BASE_URL, "/user/friend/add/").concat(friend.id, "' class='add-friend edit-btn m-width friend-action action-btn'>Add Friend</a>");
           break;
 
         case 3:
           if (rel[0].user_action_id !== friend.id) {
-            html += "<a href='/user/friend/unblock/".concat(friend.id, "' class='unblock-user edit-btn m-width friend-action'>Unblock</a>");
+            html += "<a href='".concat(BASE_URL, "/user/friend/unblock/").concat(friend.id, "' class='unblock-user edit-btn m-width friend-action'>Unblock</a>");
           }
 
           break;

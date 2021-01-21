@@ -91,10 +91,13 @@ class PostController extends Controller
         $postId = DB::getPdo()->lastInsertId();
 
         $img_position = 1;
-
+        
         if ($images) {
             foreach ($images as $image) {
-                echo 'ANOTHER IMAGE   ';
+                if($image->getSize()>500000){
+                    $errorImages = true;
+                    continue;
+                }
                 $name_gen = hexdec(uniqid());
                 $img_ext = strtolower($image->getClientOriginalExtension());
                 $img_name = $name_gen . '.' . $img_ext;
@@ -116,6 +119,10 @@ class PostController extends Controller
                     'created_at' => Carbon::now(),
                 ]);
             }
+        if($errorImages){
+            return Redirect()->back()->with('error','Some of your images are too big. Please be sure that each of your images do not exceed the 500Kb limit.');
+
+        }
         }
 
         return Redirect()->back()->with('success', 'Post created successfully');

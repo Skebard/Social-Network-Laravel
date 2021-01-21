@@ -115,12 +115,15 @@ exports.openCloseProfileMenu = openCloseProfileMenu;
   !*** ./resources/js/components/search.js ***!
   \*******************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 var DEBOUNCE_TIME_MS = 1000;
 var searchInput = document.getElementById('search-input-id');
 var upArrow = document.getElementById('up-arrow-id');
 var resultsContainer = document.getElementById('search-results-id');
+
+var _require = __webpack_require__(/*! ../config */ "./resources/js/config.js"),
+    BASE_URL = _require.BASE_URL;
 
 function manageSearch() {
   resultsContainer.classList.add('hide');
@@ -153,14 +156,14 @@ function manageSearch() {
 
 function searchUsers(text) {
   //send text to server and print
-  fetch('/user/search/' + text).then(function (resp) {
+  fetch(BASE_URL + '/user/search/' + text).then(function (resp) {
     return resp.json();
   }).then(function (data) {
     if (data.status == 1 && data.users.length > 0) {
       var html = '';
       data.users.forEach(function (user) {
-        var profilePhoto = user.profile_photo_path ? '/' + user.profile_photo_path : user.profile_photo_url;
-        html += "<a href=\"/user/".concat(user.username, "\">\n                <div class=\"profile-info\">\n                    <div class='round-profile-img'>\n                        <div class='profile-image-container'>\n                            <img src=\"").concat(profilePhoto, "\" alt=\"\">\n                        </div>\n                    </div>\n                </div>\n                <span class='search-results__user-info'>\n                    <span class='search-username'>").concat(user.username, "</span>\n                    <span class='search-name'>").concat(user.name + user.last_name, "</span>\n                </span>\n            </a>");
+        var profilePhoto = user.profile_photo_path ? BASE_URL + '/' + user.profile_photo_path : user.profile_photo_url;
+        html += "<a href=\"".concat(BASE_URL, "/user/").concat(user.username, "\">\n                <div class=\"profile-info\">\n                    <div class='round-profile-img'>\n                        <div class='profile-image-container'>\n                            <img src=\"").concat(profilePhoto, "\" alt=\"\">\n                        </div>\n                    </div>\n                </div>\n                <span class='search-results__user-info'>\n                    <span class='search-username'>").concat(user.username, "</span>\n                    <span class='search-name'>").concat(user.name, " ").concat(user.lastName ? user.lastName : '', "</span>\n                </span>\n            </a>");
       });
       resultsContainer.innerHTML = html;
       resultsContainer.classList.remove('hide');
@@ -170,6 +173,20 @@ function searchUsers(text) {
 }
 
 exports.manageSearch = manageSearch;
+
+/***/ }),
+
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  BASE_URL: '' //set the root of the project
+
+};
 
 /***/ }),
 
@@ -191,7 +208,7 @@ var profileDropdown = __webpack_require__(/*! ./components/profileDropdown */ ".
 var body = document.querySelector('body');
 var dropDownBtn = document.getElementById("drop-down-btn-id");
 var userActions = document.getElementById("user-actions-id");
-var closeDropDownBtn = dropDownBtn.addEventListener('click', showHideDropDown);
+dropDownBtn.addEventListener('click', showHideDropDown);
 body.addEventListener('click', profileDropdown.openCloseProfileMenu);
 createPost.addEvents();
 search.manageSearch();
@@ -228,8 +245,6 @@ function addEvents() {
 
 
 function deleteImageInput(e) {
-  console.log(e.target);
-
   if (e.target.classList.contains('fa-trash-alt')) {
     e.target.parentElement.parentElement.remove();
   }
@@ -241,7 +256,6 @@ function handleImageInputs(e) {
   var inputContainer = input.parentElement;
 
   if (input.files && input.files[0]) {
-    console.log('YES');
     var imgDisplay = inputContainer.querySelector('.image-display');
     var reader = new FileReader();
 
