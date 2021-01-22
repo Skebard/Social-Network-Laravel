@@ -88,12 +88,12 @@ class Relationship extends Model
     }
     public static function userBlocked($userId,$action_user_id)
     {
-        $relationshipA = Relationship::where('user_one_id', $userOneId)
-        ->where('user_two_id', $userTwoId)
+        $relationshipA = Relationship::where('user_one_id', $userId)
+        ->where('user_two_id', $action_user_id)
         ->where('status',3)
         ->where('action_user_id',$action_user_id);
-        $rel =  Relationship::where('user_one_id', $userTwoId)
-        ->where('user_two_id', $userOneId)
+        $rel =  Relationship::where('user_one_id', $action_user_id)
+        ->where('user_two_id', $userId)
         ->where('status',3)
         ->where('action_user_id',$action_user_id)
         ->union($relationshipA)
