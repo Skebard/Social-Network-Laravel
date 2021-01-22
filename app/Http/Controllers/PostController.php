@@ -119,7 +119,7 @@ class PostController extends Controller
                     'created_at' => Carbon::now(),
                 ]);
             }
-        if($errorImages){
+        if(isset($errorImages)){
             return Redirect()->back()->with('error','Some of your images are too big. Please be sure that each of your images do not exceed the 500Kb limit.');
 
         }
@@ -193,6 +193,10 @@ class PostController extends Controller
         foreach ($images as $image) {
             if ($image->type === 'file') {
                 //store new images
+                if($imagesFiles[$filesPos]->getSize()>500000){
+                    $errorImages = true;
+                    continue;
+                }
                 $name_gen = hexdec(uniqid());
                 $img_ext = strtolower($imagesFiles[$filesPos]->getClientOriginalExtension());
                 $img_name = $name_gen . '.' . $img_ext;
@@ -232,6 +236,9 @@ class PostController extends Controller
         PostImage::where('post_id', $postId)->delete();
         foreach ($imagesFilesToInsert as $image) {
             PostImage::insert($image);
+        }
+        if(isset($errorImages)){
+            return json_encode((object) ['status' => 0,'message'=>'Some of your images are too big. Please be sure that each of your images do not exceed the 500Kb limit.']);
         }
         return json_encode((object) ['status' => 1]);
     }
